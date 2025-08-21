@@ -1,214 +1,130 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IB Abaya & Textile — Links</title>
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
   <style>
-    :root {
-      --primary: #00f6ff;
-      --accent: #ff007a;
-      --bg-dark: #050510;
-      --card-bg: rgba(15,15,25,0.85);
-      --glow: 0 0 10px var(--primary), 0 0 20px var(--accent);
-    }
-
-    body {
-      font-family: 'Share Tech Mono', monospace;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--bg-dark);
-      overflow-x: hidden;
-      position: relative;
-      padding: 2rem;
-    }
-
-    /* Card Style */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--primary);
-      border-radius: 1rem;
-      padding: 2rem;
-      box-shadow: var(--glow);
-      backdrop-filter: blur(8px);
-      position: relative;
-      z-index: 1;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .title-font {
-      font-family: 'Orbitron', sans-serif;
-      color: var(--accent);
-      text-shadow: var(--glow);
-    }
-
-    .link-btn {
-      transition: all .3s ease;
-      border: 1px solid var(--primary);
-      background: transparent;
-      text-shadow: var(--glow);
-      padding: 0.75rem;
-      border-radius: 0.75rem;
-      display: block;
-      font-weight: bold;
-      margin: 0.5rem 0;
-    }
-
-    .link-btn:hover {
-      background: var(--primary);
-      color: #000;
-      transform: scale(1.05);
-      box-shadow: var(--glow);
-    }
-
-    .footer {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      color: #aaa;
-    }
-
-    /* Coverflow */
-    #coverflow {
-      perspective: 1000px;
-      margin-top: 1.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      height: 220px;
-      position: relative;
-    }
-
-    #coverflow img {
-      height: 200px;
-      width: 140px;
-      object-fit: cover;
-      margin: 0 10px;
-      border-radius: 12px;
-      cursor: grab;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      user-select: none;
-      box-shadow: var(--glow);
-    }
-
-    #coverflow img:active {
-      cursor: grabbing;
-    }
-
-    @media (max-width: 500px) {
-      #coverflow {
-        height: 180px;
-      }
-      #coverflow img {
-        height: 150px;
-        width: 110px;
-        margin: 0 5px;
-      }
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    h2 { color: #333; }
+    form { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px #ddd; margin-bottom: 20px; }
+    input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #28a745; color: white; padding: 10px; margin-top: 10px; border: none; cursor: pointer; border-radius: 5px; }
+    button:hover { opacity: 0.9; }
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+    .actions button { background: #007bff; margin: 2px; }
+    .delete { background: #dc3545; }
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <h1 class="mt-4 text-3xl title-font">IB Abaya & Textile</h1>
-    <p class="text-sm italic text-gray-300">Your Satisfaction is our pride</p>
-    <p class="mt-1 text-xs text-gray-400">No 9A1 Gidan Amas House, Kano, Nigeria</p>
 
-    <!-- Links -->
-    <div class="mt-6 flex flex-col gap-2">
-      <a href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" target="_blank" class="link-btn text-[#25D366]">💬 WhatsApp Orders</a>
-      <a href="https://selar.com/s955kc5355" target="_blank" class="link-btn text-[#FF6F00]">🛒 Selar Shop</a>
-      <a href="https://facebook.com/" target="_blank" class="link-btn text-[#1877F2]">📘 Facebook</a>
-      <a href="tel:+2349159565117" class="link-btn text-[#FF1744]">📞 Direct Call</a>
-      <a href="https://www.google.com/maps?q=12.0022,8.5919" target="_blank" class="link-btn text-[#00B0FF]">📍 View on Google Maps</a>
-    </div>
+  <h2>Admin Dashboard</h2>
 
-    <!-- Coverflow -->
-    <div id="coverflow">
-      <img src="https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg" alt="">
-      <img src="https://i.postimg.cc/hvb6b5VJ/IMG-20250821-WA0025.jpg" alt="">
-      <img src="https://i.postimg.cc/44zDgmjJ/IMG-20250821-WA0027.jpg" alt="">
-      <img src="https://i.postimg.cc/3wVsKpKw/IMG-20250821-WA0029.jpg" alt="">
-      <img src="https://i.postimg.cc/q7NfVQHY/IMG-20250821-WA0032.jpg" alt="">
-      <img src="https://i.postimg.cc/PJk0Djvs/IMG-20250821-WA0034.jpg" alt="">
-      <img src="https://i.postimg.cc/XJ5TXJJk/IMG-20250821-WA0036.jpg" alt="">
-      <img src="https://i.postimg.cc/QdMw1SCt/IMG-20250821-WA0038.jpg" alt="">
-      <img src="https://i.postimg.cc/52kG3vQm/IMG-20250821-WA0040.jpg" alt="">
-      <img src="https://i.postimg.cc/fbtPgLxQ/IMG-20250821-WA0041.jpg" alt="">
-    </div>
+  <!-- Product Form -->
+  <form id="productForm">
+    <input type="hidden" id="editIndex" value="">
+    <label>Title:</label>
+    <input type="text" id="title" required>
+    <label>Image URL (postimg.cc):</label>
+    <input type="url" id="image" required>
+    <label>Description:</label>
+    <textarea id="description" required></textarea>
+    <label>Price:</label>
+    <input type="number" id="price" required>
+    <label>Flutterwave Payment URL:</label>
+    <input type="url" id="payment_url" required>
+    <button type="submit">Save Product</button>
+  </form>
 
-    <p class="footer">© <span id="year"></span> IB Abaya & Textile</p>
-  </div>
+  <!-- Product List -->
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Payment URL</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="productList"></tbody>
+  </table>
+
+  <!-- Export JSON -->
+  <button onclick="downloadJSON()">Download JSON</button>
 
   <script>
-    // Update year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    let products = [];
 
-    // Coverflow functionality
-    const coverflow = document.getElementById('coverflow');
-    const imgs = coverflow.querySelectorAll('img');
-    let current = 0;
+    const form = document.getElementById("productForm");
+    const productList = document.getElementById("productList");
+    const editIndex = document.getElementById("editIndex");
 
-    function updateCoverflow() {
-      imgs.forEach((img, i) => {
-        const offset = i - current;
-        const scale = Math.max(0.5, 1 - Math.abs(offset) * 0.2);
-        const rotateY = offset * 30;
-        const x = offset * 140;
-        img.style.transform = `translateX(${x}px) scale(${scale}) rotateY(${rotateY}deg)`;
-        img.style.zIndex = imgs.length - Math.abs(offset);
-        img.style.opacity = scale;
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const product = {
+        title: document.getElementById("title").value,
+        image: document.getElementById("image").value,
+        description: document.getElementById("description").value,
+        price: document.getElementById("price").value,
+        payment_url: document.getElementById("payment_url").value
+      };
+
+      if (editIndex.value === "") {
+        products.push(product); // Add
+      } else {
+        products[editIndex.value] = product; // Update
+        editIndex.value = "";
+      }
+
+      form.reset();
+      renderProducts();
+    });
+
+    function renderProducts() {
+      productList.innerHTML = "";
+      products.forEach((p, i) => {
+        productList.innerHTML += `
+          <tr>
+            <td>${p.title}</td>
+            <td><img src="${p.image}" width="50"></td>
+            <td>${p.description}</td>
+            <td>$${p.price}</td>
+            <td><a href="${p.payment_url}" target="_blank">Link</a></td>
+            <td class="actions">
+              <button onclick="editProduct(${i})">Edit</button>
+              <button class="delete" onclick="deleteProduct(${i})">Delete</button>
+            </td>
+          </tr>
+        `;
       });
     }
 
-    // Auto-rotate
-    function nextImage() {
-      current = (current + 1) % imgs.length;
-      updateCoverflow();
+    function editProduct(i) {
+      const p = products[i];
+      document.getElementById("title").value = p.title;
+      document.getElementById("image").value = p.image;
+      document.getElementById("description").value = p.description;
+      document.getElementById("price").value = p.price;
+      document.getElementById("payment_url").value = p.payment_url;
+      editIndex.value = i;
     }
-    let autoRotate = setInterval(nextImage, 3000);
 
-    // Drag / swipe inertia
-    let startX = 0, isDragging = false, velocity = 0;
+    function deleteProduct(i) {
+      products.splice(i, 1);
+      renderProducts();
+    }
 
-    const pointerDown = e => {
-      isDragging = true;
-      startX = e.touches ? e.touches[0].clientX : e.clientX;
-      clearInterval(autoRotate);
-    };
-    const pointerMove = e => {
-      if (!isDragging) return;
-      const x = e.touches ? e.touches[0].clientX : e.clientX;
-      velocity = x - startX;
-    };
-    const pointerUp = e => {
-      if (!isDragging) return;
-      isDragging = false;
-      if (velocity > 20) current = (current - 1 + imgs.length) % imgs.length;
-      else if (velocity < -20) current = (current + 1) % imgs.length;
-      updateCoverflow();
-      autoRotate = setInterval(nextImage, 3000);
-      velocity = 0;
-    };
-
-    coverflow.addEventListener('mousedown', pointerDown);
-    coverflow.addEventListener('mousemove', pointerMove);
-    coverflow.addEventListener('mouseup', pointerUp);
-    coverflow.addEventListener('mouseleave', pointerUp);
-
-    coverflow.addEventListener('touchstart', pointerDown);
-    coverflow.addEventListener('touchmove', pointerMove);
-    coverflow.addEventListener('touchend', pointerUp);
-
-    updateCoverflow();
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(products, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "products.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
