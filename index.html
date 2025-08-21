@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>IB Abaya & Textile — Links</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>  
-
-  <!-- Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
@@ -29,9 +26,9 @@
       overflow-x: hidden;
       background: var(--bg-dark);
       position: relative;
+      padding: 1rem;
     }
 
-    /* Cyber Grid Background */
     body::before {
       content: "";
       position: fixed;
@@ -87,7 +84,6 @@
       color: #aaa;
     }
 
-    /* 3D Coverflow */
     .coverflow {
       perspective: 1000px;
       width: 100%;
@@ -98,6 +94,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      touch-action: pan-y;
     }
 
     .coverflow img {
@@ -110,69 +107,93 @@
       transition: transform 0.5s, opacity 0.5s;
       cursor: pointer;
     }
+
+    @media (max-width: 500px) {
+      .coverflow img {
+        width: 80px;
+        height: 110px;
+      }
+      .card {
+        padding: 1rem;
+      }
+      .link-btn {
+        padding: 0.75rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1 class="text-2xl title-font">IB Abaya & Textile</h1>
-    <p class="italic text-gray-300">Your Satisfaction is our Pride</p>
-    <p class="mt-1 text-xs text-gray-400">No 9A1 Gidan Amas House, Kano, Nigeria</p>
+<div class="card">
+  <h1 class="text-2xl title-font">IB Abaya & Textile</h1>
+  <p class="italic text-gray-300">Your Satisfaction is our Pride</p>
+  <p class="mt-1 text-xs text-gray-400">No 9A1 Gidan Amas House, Kano, Nigeria</p>
 
-    <!-- 3D Coverflow -->
-    <div class="coverflow" id="coverflow">
-      <img src="https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg" alt="">
-      <img src="https://i.postimg.cc/hvb6b5VJ/IMG-20250821-WA0025.jpg" alt="">
-      <img src="https://i.postimg.cc/44zDgmjJ/IMG-20250821-WA0027.jpg" alt="">
-      <img src="https://i.postimg.cc/3wVsKpKw/IMG-20250821-WA0029.jpg" alt="">
-      <img src="https://i.postimg.cc/q7NfVQHY/IMG-20250821-WA0032.jpg" alt="">
-      <img src="https://i.postimg.cc/PJk0Djvs/IMG-20250821-WA0034.jpg" alt="">
-      <img src="https://i.postimg.cc/XJ5TXJJk/IMG-20250821-WA0036.jpg" alt="">
-      <img src="https://i.postimg.cc/QdMw1SCt/IMG-20250821-WA0038.jpg" alt="">
-      <img src="https://i.postimg.cc/52kG3vQm/IMG-20250821-WA0040.jpg" alt="">
-      <img src="https://i.postimg.cc/fbtPgLxQ/IMG-20250821-WA0041.jpg" alt="">
-    </div>
-
-    <!-- Links -->
-    <div class="mt-6 flex flex-col gap-4">
-      <a href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" target="_blank" class="link-btn block py-3 rounded-lg text-[#25D366] border-[#25D366] hover:bg-[#25D366] hover:text-black">💬 WhatsApp Orders</a>
-      <a href="https://selar.com/s955kc5355" target="_blank" class="link-btn block py-3 rounded-lg text-[#FF5A5F] border-[#FF5A5F] hover:bg-[#FF5A5F] hover:text-black">🛒 Selar Shop</a>
-      <a href="https://facebook.com/" target="_blank" class="link-btn block py-3 rounded-lg text-[#1877F2] border-[#1877F2] hover:bg-[#1877F2] hover:text-black">📘 Facebook</a>
-      <a href="tel:+2349159565117" class="link-btn block py-3 rounded-lg text-[#FFD700] border-[#FFD700] hover:bg-[#FFD700] hover:text-black">📞 Call Us</a>
-      <a href="https://www.google.com/maps?q=12.0022,8.5919" target="_blank" class="link-btn block py-3 rounded-lg text-[#FF4500] border-[#FF4500] hover:bg-[#FF4500] hover:text-black">📍 Our Location</a>
-    </div>
-
-    <p class="footer">© <span id="year"></span> IB Abaya & Textile</p>
+  <div class="coverflow" id="coverflow">
+    <img src="https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg" alt="">
+    <img src="https://i.postimg.cc/hvb6b5VJ/IMG-20250821-WA0025.jpg" alt="">
+    <img src="https://i.postimg.cc/44zDgmjJ/IMG-20250821-WA0027.jpg" alt="">
+    <img src="https://i.postimg.cc/3wVsKpKw/IMG-20250821-WA0029.jpg" alt="">
+    <img src="https://i.postimg.cc/q7NfVQHY/IMG-20250821-WA0032.jpg" alt="">
+    <img src="https://i.postimg.cc/PJk0Djvs/IMG-20250821-WA0034.jpg" alt="">
+    <img src="https://i.postimg.cc/XJ5TXJJk/IMG-20250821-WA0036.jpg" alt="">
+    <img src="https://i.postimg.cc/QdMw1SCt/IMG-20250821-WA0038.jpg" alt="">
+    <img src="https://i.postimg.cc/52kG3vQm/IMG-20250821-WA0040.jpg" alt="">
+    <img src="https://i.postimg.cc/fbtPgLxQ/IMG-20250821-WA0041.jpg" alt="">
   </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  <div class="mt-6 flex flex-col gap-4">
+    <a href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" target="_blank" class="link-btn block py-3 rounded-lg text-[#25D366] border-[#25D366] hover:bg-[#25D366] hover:text-black">💬 WhatsApp Orders</a>
+    <a href="https://selar.com/s955kc5355" target="_blank" class="link-btn block py-3 rounded-lg text-[#FF5A5F] border-[#FF5A5F] hover:bg-[#FF5A5F] hover:text-black">🛒 Selar Shop</a>
+    <a href="https://facebook.com/" target="_blank" class="link-btn block py-3 rounded-lg text-[#1877F2] border-[#1877F2] hover:bg-[#1877F2] hover:text-black">📘 Facebook</a>
+    <a href="tel:+2349159565117" class="link-btn block py-3 rounded-lg text-[#FFD700] border-[#FFD700] hover:bg-[#FFD700] hover:text-black">📞 Call Us</a>
+    <a href="https://www.google.com/maps?q=12.0022,8.5919" target="_blank" class="link-btn block py-3 rounded-lg text-[#FF4500] border-[#FF4500] hover:bg-[#FF4500] hover:text-black">📍 Our Location</a>
+  </div>
 
-    // 3D Coverflow logic
-    const coverflow = document.getElementById('coverflow');
-    const imgs = coverflow.querySelectorAll('img');
-    let current = 0;
+  <p class="footer">© <span id="year"></span> IB Abaya & Textile</p>
+</div>
 
-    function updateCoverflow() {
-      imgs.forEach((img, i) => {
-        const offset = i - current;
-        const scale = Math.max(0.5, 1 - Math.abs(offset) * 0.2);
-        const rotateY = offset * 30;
-        const x = offset * 140;
-        img.style.transform = `translateX(${x}px) scale(${scale}) rotateY(${rotateY}deg)`;
-        img.style.zIndex = imgs.length - Math.abs(offset);
-        img.style.opacity = scale;
-      });
-    }
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
-    function nextImage() {
-      current = (current + 1) % imgs.length;
-      updateCoverflow();
-    }
+// Coverflow logic
+const coverflow = document.getElementById('coverflow');
+const imgs = coverflow.querySelectorAll('img');
+let current = 0;
 
-    updateCoverflow();
-    setInterval(nextImage, 3000);
-  </script>
+function updateCoverflow() {
+  imgs.forEach((img, i) => {
+    const offset = i - current;
+    const scale = Math.max(0.5, 1 - Math.abs(offset) * 0.2);
+    const rotateY = offset * 30;
+    const x = offset * 140;
+    img.style.transform = `translateX(${x}px) scale(${scale}) rotateY(${rotateY}deg)`;
+    img.style.zIndex = imgs.length - Math.abs(offset);
+    img.style.opacity = scale;
+  });
+}
+
+// Swipe support
+let startX = 0;
+coverflow.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+coverflow.addEventListener('touchend', e => {
+  const endX = e.changedTouches[0].clientX;
+  if (endX - startX > 30) current = (current - 1 + imgs.length) % imgs.length;
+  if (startX - endX > 30) current = (current + 1) % imgs.length;
+  updateCoverflow();
+});
+
+function nextImage() {
+  current = (current + 1) % imgs.length;
+  updateCoverflow();
+}
+
+updateCoverflow();
+setInterval(nextImage, 3000);
+</script>
 
 </body>
       </html>
