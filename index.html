@@ -1,202 +1,234 @@
-<!DOCTYPE html><html lang="en">
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IB Abaya & Textile — Your Satisfaction is our pride</title>
-  <meta name="description" content="IB Abaya & Textile — premium abayas, textiles, and accessories in Kano, Nigeria." />
+  <title>IB Abaya & Textile — Links</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --primary: #00f6ff;
+      --accent: #ff007a;
+      --bg-dark: #050510;
+      --card-bg: rgba(15,15,25,0.85);
+      --glow: 0 0 10px var(--primary), 0 0 20px var(--accent);
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
+      overflow-x: hidden;
+      position: relative;
     }
-    header {
+
+    /* Cyber Grid Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to right, rgba(0,246,255,0.1) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(0,246,255,0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: moveGrid 15s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes moveGrid {
+      from { background-position: 0 0; }
+      to { background-position: 40px 40px; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--primary);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 1;
+      max-width: 400px;
+      width: 90%;
       text-align: center;
-      padding: 20px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
     }
-    header h1 { margin: 0; font-size: 1.6rem; }
-    header p { margin: 5px 0 0; color: #555; }/* Gallery */
-.gallery-wrap { margin: 20px auto; max-width: 900px; }
-.gallery {
-  position: relative; height: 400px; perspective: 1400px; overflow: visible; display: grid; place-items: center;
-}
-.slides { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
-.slide {
-  position: absolute; top: 50%; left: 50%; transform-style: preserve-3d; width: 60%; aspect-ratio: 4/5; border-radius: 12px; overflow: hidden;
-  background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.gallery-controls { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; pointer-events: none; }
-.nav { pointer-events: auto; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; display: grid; place-items: center; cursor: pointer; border: none; }
-.dots { position: absolute; bottom: -20px; left: 0; right: 0; display: flex; gap: 6px; justify-content: center; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: #bbb; }
-.dot.active { background: #333; }
 
-/* Cards */
-.cards { max-width: 900px; margin: 30px auto; display: grid; gap: 20px; }
-.card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 16px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-.card h3 { margin-top: 0; }
-.card p { margin: 10px 0 0; font-size: 14px; color: #444; }
-.btn {
-  display: inline-block;
-  margin-top: 10px;
-  color: #fff;
-  padding: 8px 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-}
-.btn.whatsapp { background: #25D366; }
-.btn.selar { background: #6f42c1; }
-.btn.facebook { background: #1877f2; }
-.btn.maps { background: #d93025; }
-.btn.call { background: #0d6efd; }
+    .title-font {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--accent);
+      text-shadow: var(--glow);
+    }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #666;
-}
+    .link-btn {
+      transition: all .3s ease;
+      border: 1px solid var(--primary);
+      background: transparent;
+      text-shadow: var(--glow);
+    }
 
+    .link-btn:hover {
+      background: var(--primary);
+      color: #000;
+      transform: scale(1.05);
+      box-shadow: var(--glow);
+    }
+
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+
+    /* 3D Coverflow */
+    .coverflow-container {
+      perspective: 1000px;
+      margin-bottom: 1.5rem;
+    }
+
+    .coverflow {
+      display: flex;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+
+    .coverflow img {
+      width: 100px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 1rem;
+      margin: 0 5px;
+      transform-origin: center center;
+      transition: transform 0.5s, box-shadow 0.5s;
+      border: 2px solid var(--accent);
+      box-shadow: var(--glow);
+    }
+
+    .coverflow img.active {
+      transform: translateZ(60px) rotateY(0deg);
+    }
+
+    .coverflow img:not(.active) {
+      transform: translateZ(0) rotateY(30deg);
+      opacity: 0.5;
+    }
+
+    .coverflow-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    .coverflow-controls button {
+      background: var(--primary);
+      border: none;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .coverflow-controls button:hover {
+      background: var(--accent);
+      color: #fff;
+    }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>IB Abaya & Textile</h1>
-    <p>Your Satisfaction is our pride • Kano, Nigeria</p>
-    <p><a href="tel:+2349159565117">+234 915 956 5117</a></p>
-  </header>  <!-- 3D Coverflow Gallery -->  <section class="gallery-wrap">
-    <div class="gallery" id="gallery">
-      <div class="slides" id="slides"></div>
-      <div class="gallery-controls">
-        <button class="nav" id="prev">◀</button>
-        <button class="nav" id="next">▶</button>
+  <div class="card">
+    <!-- 3D Coverflow Gallery -->
+    <div class="coverflow-container">
+      <div class="coverflow" id="coverflow">
+        <img src="https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg" class="active">
+        <img src="https://i.postimg.cc/hvb6b5VJ/IMG-20250821-WA0025.jpg">
+        <img src="https://i.postimg.cc/44zDgmjJ/IMG-20250821-WA0027.jpg">
+        <img src="https://i.postimg.cc/3wVsKpKw/IMG-20250821-WA0029.jpg">
+        <img src="https://i.postimg.cc/q7NfVQHY/IMG-20250821-WA0032.jpg">
       </div>
-      <div class="dots" id="dots"></div>
+      <div class="coverflow-controls">
+        <button id="prev">◀</button>
+        <button id="next">▶</button>
+      </div>
     </div>
-  </section>  <!-- Cards Section -->  <section class="cards">
-    <div class="card">
-      <h3>WhatsApp Orders</h3>
-      <a class="btn whatsapp" href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order">💬 Chat on WhatsApp</a>
-      <p>Chat us instantly to place your order.</p>
-    </div><div class="card">
-  <h3>Selar Shop</h3>
-  <a class="btn selar" href="https://selar.com/s955kc5355">🛍 Shop Now</a>
-  <p>Secure checkout for featured collections.</p>
-</div>
 
-<div class="card">
-  <h3>Facebook</h3>
-  <a class="btn facebook" href="https://facebook.com/">📘 Visit Facebook</a>
-  <p>Follow updates, new drops, and promos.</p>
-</div>
+    <!-- Profile -->
+    <img src="https://i.postimg.cc/DZhK4QKC/IMG-20250820-WA0062.jpg" alt="IB Abaya Logo" class="w-28 h-28 rounded-full mx-auto border-4 border-[var(--accent)] object-cover shadow-lg">
 
-<div class="card">
-  <h3>Google Maps</h3>
-  <a class="btn maps" href="https://www.google.com/maps?q=12.0022,8.5919">📍 View Map</a>
-  <p>Find our store in Kano City.</p>
-</div>
+    <h1 class="mt-4 text-3xl title-font">IB Abaya & Textile</h1>
+    <p class="text-sm italic text-gray-300">Your Satisfaction is our Pride</p>
+    <p class="mt-1 text-xs text-gray-400">No 9A1 Gidan Amas House, Kano, Nigeria</p>
 
-<div class="card">
-  <h3>Direct Call</h3>
-  <a class="btn call" href="tel:+2349159565117">📞 Call Us</a>
-  <p>Call now: +234 915 956 5117</p>
-</div>
+    <!-- Links -->
+    <div class="mt-6 flex flex-col gap-4">
+      <a href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" target="_blank"
+         class="link-btn block py-3 rounded-lg font-semibold text-green-400">
+        💬 WhatsApp Orders
+      </a>
 
-<div class="card">
-  <h3>📍 Our Location</h3>
-  <a class="btn maps" href="https://www.google.com/maps?q=12.0022,8.5919">View on Google Maps</a>
-  <p><strong>Address:</strong> No 9A1 Gidan Amas House, Kano, Nigeria<br>
-     <strong>Nearby Landmark:</strong> Near Emir’s Palace (Gidan Rumfa), Kano City.<br>
-     <strong>Coordinates:</strong> 12.0022, 8.5919</p>
-</div>
+      <a href="https://selar.com/s955kc5355" target="_blank"
+         class="link-btn block py-3 rounded-lg font-semibold text-purple-400">
+        🛒 Selar Shop
+      </a>
 
-  </section>  <footer>
-    © <span id="year"></span> IB Abaya & Textile — Your Satisfaction is our pride
-  </footer>  <script>
-    const IMAGES = [
-      "https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg",
-      "https://i.postimg.cc/hvb6b5VJ/IMG-20250821-WA0025.jpg",
-      "https://i.postimg.cc/44zDgmjJ/IMG-20250821-WA0027.jpg",
-      "https://i.postimg.cc/3wVsKpKw/IMG-20250821-WA0029.jpg",
-      "https://i.postimg.cc/q7NfVQHY/IMG-20250821-WA0032.jpg",
-      "https://i.postimg.cc/PJk0Djvs/IMG-20250821-WA0034.jpg",
-      "https://i.postimg.cc/XJ5TXJJk/IMG-20250821-WA0036.jpg",
-      "https://i.postimg.cc/QdMw1SCt/IMG-20250821-WA0038.jpg",
-      "https://i.postimg.cc/52kG3vQm/IMG-20250821-WA0040.jpg",
-      "https://i.postimg.cc/fbtPgLxQ/IMG-20250821-WA0041.jpg"
-    ];
+      <a href="https://facebook.com/" target="_blank"
+         class="link-btn block py-3 rounded-lg font-semibold text-blue-400">
+        📘 Facebook
+      </a>
 
-    const slidesEl = document.getElementById('slides');
-    const dotsEl = document.getElementById('dots');
-    const prev = document.getElementById('prev');
-    const next = document.getElementById('next');
-    const yearEl = document.getElementById('year');
-    yearEl.textContent = new Date().getFullYear();
+      <a href="https://www.google.com/maps?q=12.0022,8.5919" target="_blank"
+         class="link-btn block py-3 rounded-lg font-semibold text-red-400">
+        📍 View on Google Maps
+      </a>
 
-    IMAGES.forEach((src, i) => {
-      const s = document.createElement('figure');
-      s.className = 'slide';
-      const img = document.createElement('img');
-      img.loading = 'lazy';
-      img.src = src;
-      img.alt = 'IB Abaya & Textile product photo';
-      s.appendChild(img);
-      slidesEl.appendChild(s);
+      <a href="tel:+2349159565117"
+         class="link-btn block py-3 rounded-lg font-semibold text-blue-400">
+        📞 Call Us
+      </a>
+    </div>
 
-      const d = document.createElement('span');
-      d.className = 'dot';
-      d.addEventListener('click', () => goTo(i));
-      dotsEl.appendChild(d);
-    });
+    <!-- Footer -->
+    <p class="footer">© <span id="year"></span> IB Abaya & Textile</p>
+  </div>
 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Coverflow JS
+    const coverflow = document.getElementById('coverflow');
+    const images = coverflow.querySelectorAll('img');
     let current = 0;
 
-    function update() {
-      const slides = [...document.querySelectorAll('.slide')];
-      const dots = [...document.querySelectorAll('.dot')];
-      const total = slides.length;
-
-      slides.forEach((el, i) => {
-        const offset = i - current;
-        const abs = Math.abs(offset);
-        const z = 100 - abs;
-        el.style.zIndex = z;
-        const rotate = offset * -35;
-        const translateX = offset * 240;
-        const translateZ = -Math.min(abs * 90, 600);
-        const scale = Math.max(0.6, 1 - abs * 0.08);
-        el.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotate}deg) scale(${scale})`;
-        el.style.filter = `blur(${Math.max(0, abs - 1) * 1.2}px)`;
-      });
-
-      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    function updateCoverflow() {
+      images.forEach((img, index) => img.classList.remove('active'));
+      images[current].classList.add('active');
     }
 
-    function goTo(i) {
-      const total = IMAGES.length;
-      current = (i + total) % total;
-      update();
-    }
+    document.getElementById('prev').addEventListener('click', () => {
+      current = (current - 1 + images.length) % images.length;
+      updateCoverflow();
+    });
 
-    function nextSlide() { goTo(current + 1); }
-    function prevSlide() { goTo(current - 1); }
+    document.getElementById('next').addEventListener('click', () => {
+      current = (current + 1) % images.length;
+      updateCoverflow();
+    });
 
-    next.addEventListener('click', nextSlide);
-    prev.addEventListener('click', prevSlide);
-
-    setInterval(nextSlide, 4000);
-    update();
-  </script></body>
-</html>
+    // Auto-slide every 3 seconds
+    setInterval(() => {
+      current = (current + 1) % images.length;
+      updateCoverflow();
+    }, 3000);
+  </script>
+</body>
+      </html>
