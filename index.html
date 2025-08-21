@@ -4,184 +4,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>IB Abaya & Textile — Your Satisfaction is our pride</title>
   <meta name="description" content="IB Abaya & Textile — premium abayas, textiles, and accessories in Kano, Nigeria. Order via WhatsApp or shop on Selar." />
-  <meta property="og:title" content="IB Abaya & Textile" />
-  <meta property="og:description" content="Your Satisfaction is our pride." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg" />
-  <meta name="theme-color" content="#0ea5e9" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%91%97%3C/text%3E%3C/svg%3E" />
   <style>
-    :root {
-      --bg: #0b1220;
-      --bg-2: #0f172a;
-      --glass: rgba(255,255,255,0.08);
-      --text: #f8fafc;
-      --muted: #cbd5e1;
-      --brand: #0ea5e9;
-      --brand-2: #22d3ee;
-      --ring: rgba(34,211,238,0.65);
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text);
-      background: radial-gradient(1200px 800px at 10% 10%, #0d1b2a 0%, var(--bg) 45%),
-                  radial-gradient(900px 600px at 90% 30%, #112240 0%, var(--bg-2) 55%);
-      background-attachment: fixed;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
     }
-    a { color: inherit; }
-    .container { max-width: 980px; margin: 0 auto; padding: 20px; }/* Header */
-.header { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; }
-.logo {
-  width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; font-size: 28px; background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  box-shadow: 0 10px 30px rgba(34,211,238,0.35), inset 0 0 14px rgba(255,255,255,0.3);
-}
-.biz { line-height: 1.2; }
-.biz h1 { margin: 0; font-size: clamp(1.2rem, 2.5vw, 1.8rem); letter-spacing: 0.4px; }
-.biz p { margin: 6px 0 0; color: var(--muted); font-size: 0.98rem; }
-.actions { display: flex; gap: 10px; }
-.btn {
-  appearance: none; border: 0; cursor: pointer; text-decoration: none; color: #0b1220; background: #ffffff; padding: 10px 14px; border-radius: 14px; font-weight: 700;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25), inset 0 -2px 0 rgba(0,0,0,0.08);
-  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
-  display: inline-flex; align-items: center; gap: 10px;
-}
-.btn:hover { transform: translateY(-2px); filter: brightness(1.02); box-shadow: 0 18px 36px rgba(0,0,0,0.35); }
-.btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
-.btn.brand { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: white; }
-
-/* 3D Coverflow Gallery */
-.gallery-wrap { margin-top: 28px; }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 { margin: 0; font-size: 1.6rem; }
+    header p { margin: 5px 0 0; color: #555; }/* Gallery */
+.gallery-wrap { margin: 20px auto; max-width: 900px; }
 .gallery {
-  position: relative; height: clamp(320px, 56vw, 520px); perspective: 1400px; overflow: visible; display: grid; place-items: center;
+  position: relative; height: 400px; perspective: 1400px; overflow: visible; display: grid; place-items: center;
 }
-.slides { position: relative; width: min(92vw, 920px); height: 100%; transform-style: preserve-3d; }
+.slides { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
 .slide {
-  position: absolute; top: 50%; left: 50%; transform-style: preserve-3d; width: 64%; aspect-ratio: 4/5; border-radius: 22px; overflow: hidden;
-  background: #0f172a; box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+  position: absolute; top: 50%; left: 50%; transform-style: preserve-3d; width: 60%; aspect-ratio: 4/5; border-radius: 12px; overflow: hidden;
+  background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.slide::after {
-  content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.0));
-}
 .gallery-controls { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; pointer-events: none; }
-.nav { pointer-events: auto; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.18); cursor: pointer; }
-.nav:hover { background: rgba(255,255,255,0.18); }
-.dots { position: absolute; bottom: -10px; left: 0; right: 0; display: flex; gap: 8px; justify-content: center; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.28); }
-.dot.active { background: white; }
+.nav { pointer-events: auto; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; display: grid; place-items: center; cursor: pointer; border: none; }
+.dots { position: absolute; bottom: -20px; left: 0; right: 0; display: flex; gap: 6px; justify-content: center; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #bbb; }
+.dot.active { background: #333; }
 
-/* Link Cards */
-.links { margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-.card { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.06)); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 16px; display: grid; gap: 6px; transition: transform .15s ease, box-shadow .2s ease; }
-.card:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(0,0,0,0.35); }
-.card h3 { margin: 0; font-size: 1.02rem; }
-.card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-
-/* Location */
-.location { margin-top: 24px; }
-.loc-box {
-  border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 16px; background: rgba(255,255,255,0.05); box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+/* Cards */
+.cards { max-width: 900px; margin: 30px auto; display: grid; gap: 20px; }
+.card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
-.loc-box h3 { margin-top: 0; }
-.maps-btn { display: inline-block; background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff; padding: 10px 16px; border-radius: 10px; text-decoration: none; font-weight: bold; }
-.loc-box p { margin-top: 12px; font-size: 14px; color: var(--text); }
-.loc-box strong { color: #e2e8f0; }
+.card h3 { margin-top: 0; }
+.card a.btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: #007BFF;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.card a.btn:hover { background: #0056b3; }
 
-/* Footer */
-footer { margin: 30px 0 60px; color: var(--muted); text-align: center; font-size: 0.9rem; }
-
-/* Floating Actions */
-.fab { position: fixed; bottom: 18px; right: 18px; display: grid; gap: 10px; }
-.fab a { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; text-decoration: none; color: #0b1220; background: #fff; box-shadow: 0 18px 32px rgba(0,0,0,0.35); border: 1px solid rgba(0,0,0,0.08); }
-.fab a.brand { background: linear-gradient(135deg, #25D366, #0bab4b); color: white; }
-
-/* Small screens tweaks */
-@media (max-width: 540px) {
-  .slide { width: 78%; }
-  .actions { grid-column: 1 / -1; }
-  .header { grid-template-columns: auto 1fr; }
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #666;
 }
 
   </style>
 </head>
 <body>
-  <div class="container">
-    <header class="header" aria-label="Profile header">
-      <div class="logo" aria-hidden="true">IB</div>
-      <div class="biz">
-        <h1>IB Abaya & Textile</h1>
-        <p>Your Satisfaction is our pride • Kano, Nigeria • <a href="tel:+2349159565117" aria-label="Call us directly">+234 915 956 5117</a></p>
+  <header>
+    <h1>IB Abaya & Textile</h1>
+    <p>Your Satisfaction is our pride • Kano, Nigeria</p>
+    <p><a href="tel:+2349159565117">+234 915 956 5117</a></p>
+  </header>  <!-- 3D Coverflow Gallery -->  <section class="gallery-wrap">
+    <div class="gallery" id="gallery">
+      <div class="slides" id="slides"></div>
+      <div class="gallery-controls">
+        <button class="nav" id="prev">◀</button>
+        <button class="nav" id="next">▶</button>
       </div>
-      <div class="actions">
-        <a class="btn brand" href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" aria-label="Order on WhatsApp">💬 WhatsApp</a>
-        <a class="btn" href="tel:+2349159565117" aria-label="Call IB Abaya">📞 Call</a>
-      </div>
-    </header><!-- 3D Coverflow Gallery -->
-<section class="gallery-wrap" aria-labelledby="galleryTitle">
-  <h2 id="galleryTitle" style="margin:0 0 10px 6px; font-size:1.05rem; color:var(--muted)">Featured Looks</h2>
-  <div class="gallery" id="gallery" role="region" aria-roledescription="carousel" aria-label="Product gallery">
-    <div class="slides" id="slides"></div>
-    <div class="gallery-controls" aria-hidden="false">
-      <button class="nav" id="prev" aria-label="Previous">◀</button>
-      <button class="nav" id="next" aria-label="Next">▶</button>
+      <div class="dots" id="dots"></div>
     </div>
-    <div class="dots" id="dots" aria-hidden="true"></div>
-  </div>
-</section>
-
-<!-- Link Cards -->
-<section class="links" aria-label="Quick actions">
-  <a class="card" href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" aria-label="Order on WhatsApp">
-    <h3>WhatsApp Orders</h3>
-    <p>Chat us instantly to place your order.</p>
-  </a>
-  <a class="card" href="https://selar.com/s955kc5355" aria-label="Shop on Selar">
-    <h3>Selar Shop</h3>
-    <p>Secure checkout for featured collections.</p>
-  </a>
-  <a class="card" href="https://facebook.com/" aria-label="Facebook profile">
-    <h3>Facebook</h3>
-    <p>Follow updates, new drops, and promos.</p>
-  </a>
-  <a class="card" href="https://www.google.com/maps?q=12.0022,8.5919" aria-label="View on Google Maps">
-    <h3>Google Maps</h3>
-    <p>Find our store in Kano City.</p>
-  </a>
-  <a class="card" href="tel:+2349159565117" aria-label="Call us">
-    <h3>Direct Call</h3>
-    <p>Call now: +234 915 956 5117</p>
-  </a>
-</section>
-
-<!-- Location Box (corrected & tailored) -->
-<section class="location" aria-label="Store location">
-  <div class="loc-box">
-    <h3>📍 Our Location</h3>
-    <a class="maps-btn" href="https://www.google.com/maps?q=12.0022,8.5919" target="_blank" rel="noopener" aria-label="Open on Google Maps">View on Google Maps</a>
-    <p>
-      <strong>Address:</strong> No 9A1 Gidan Amas House, Kano, Nigeria<br />
-      <strong>Nearby Landmark:</strong> Near Emir’s Palace (Gidan Rumfa), Kano City.<br />
-      <strong>Coordinates:</strong> 12.0022, 8.5919
-    </p>
-  </div>
-</section>
-
-<footer>
-  © <span id="year"></span> IB Abaya & Textile — Your Satisfaction is our pride
-</footer>
-
-  </div>  <!-- Floating quick actions -->  <div class="fab" aria-label="floating actions">
-    <a class="brand" href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order" title="WhatsApp">
-      💬
-    </a>
-    <a href="tel:+2349159565117" title="Call">
-      📞
-    </a>
-  </div>  <script>
-    // Content config — easy to tweak
+  </section>  <!-- Cards Section -->  <section class="cards">
+    <div class="card">
+      <h3>WhatsApp Orders</h3>
+      <p>Chat us instantly to place your order.</p>
+      <a class="btn" href="https://wa.me/2349159565117?text=Hello%20IB%2C%20I%20want%20to%20order">Open WhatsApp</a>
+    </div>
+    <div class="card">
+      <h3>Selar Shop</h3>
+      <p>Secure checkout for featured collections.</p>
+      <a class="btn" href="https://selar.com/s955kc5355">Shop Now</a>
+    </div>
+    <div class="card">
+      <h3>Facebook</h3>
+      <p>Follow updates, new drops, and promos.</p>
+      <a class="btn" href="https://facebook.com/">Visit Facebook</a>
+    </div>
+    <div class="card">
+      <h3>Google Maps</h3>
+      <p>Find our store in Kano City.</p>
+      <a class="btn" href="https://www.google.com/maps?q=12.0022,8.5919">View Map</a>
+    </div>
+    <div class="card">
+      <h3>Direct Call</h3>
+      <p>Call now: +234 915 956 5117</p>
+      <a class="btn" href="tel:+2349159565117">Call Us</a>
+    </div>
+    <div class="card">
+      <h3>📍 Our Location</h3>
+      <a class="btn" href="https://www.google.com/maps?q=12.0022,8.5919">View on Google Maps</a>
+      <p><strong>Address:</strong> No 9A1 Gidan Amas House, Kano, Nigeria<br>
+         <strong>Nearby Landmark:</strong> Near Emir’s Palace (Gidan Rumfa), Kano City.<br>
+         <strong>Coordinates:</strong> 12.0022, 8.5919</p>
+    </div>
+  </section>  <footer>
+    © <span id="year"></span> IB Abaya & Textile — Your Satisfaction is our pride
+  </footer>  <script>
     const IMAGES = [
       "https://i.postimg.cc/TYfZYTXn/IMG-20250821-WA0024.jpg",
       "https://i.postimg.cc/hvb6b5VJ/IMG-20250821-WA0025.jpg",
@@ -202,19 +137,13 @@ footer { margin: 30px 0 60px; color: var(--muted); text-align: center; font-size
     const yearEl = document.getElementById('year');
     yearEl.textContent = new Date().getFullYear();
 
-    // Create slides
     IMAGES.forEach((src, i) => {
       const s = document.createElement('figure');
       s.className = 'slide';
-      s.setAttribute('role','group');
-      s.setAttribute('aria-roledescription','slide');
-      s.setAttribute('aria-label', `Gallery item ${i+1} of ${IMAGES.length}`);
-
       const img = document.createElement('img');
       img.loading = 'lazy';
       img.src = src;
       img.alt = 'IB Abaya & Textile product photo';
-      img.onerror = () => { img.style.objectFit = 'contain'; img.style.background = '#0f172a'; };
       s.appendChild(img);
       slidesEl.appendChild(s);
 
@@ -236,13 +165,12 @@ footer { margin: 30px 0 60px; color: var(--muted); text-align: center; font-size
         const abs = Math.abs(offset);
         const z = 100 - abs;
         el.style.zIndex = z;
-        const rotate = offset * -35; // degrees
-        const translateX = offset * 240; // px
-        const translateZ = -Math.min(abs * 90, 600); // depth
+        const rotate = offset * -35;
+        const translateX = offset * 240;
+        const translateZ = -Math.min(abs * 90, 600);
         const scale = Math.max(0.6, 1 - abs * 0.08);
         el.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotate}deg) scale(${scale})`;
-        el.style.filter = `blur(${Math.max(0, abs - 1) * 1.2}px) saturate(${1 - abs*0.05})`;
-        el.setAttribute('aria-hidden', abs === 0 ? 'false' : 'true');
+        el.style.filter = `blur(${Math.max(0, abs - 1) * 1.2}px)`;
       });
 
       dots.forEach((d, i) => d.classList.toggle('active', i === current));
@@ -260,23 +188,7 @@ footer { margin: 30px 0 60px; color: var(--muted); text-align: center; font-size
     next.addEventListener('click', nextSlide);
     prev.addEventListener('click', prevSlide);
 
-    // Keyboard & swipe
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') nextSlide();
-      if (e.key === 'ArrowLeft') prevSlide();
-    });
-
-    let startX = 0; let dragging = false;
-    slidesEl.addEventListener('pointerdown', (e) => { dragging = true; startX = e.clientX; slidesEl.setPointerCapture(e.pointerId); });
-    slidesEl.addEventListener('pointerup', (e) => { dragging = false; const dx = e.clientX - startX; if (Math.abs(dx) > 30) { dx < 0 ? nextSlide() : prevSlide(); } });
-
-    // Autoplay (pause on hover)
-    let timer = setInterval(nextSlide, 4000);
-    const gallery = document.getElementById('gallery');
-    gallery.addEventListener('mouseenter', () => clearInterval(timer));
-    gallery.addEventListener('mouseleave', () => timer = setInterval(nextSlide, 4000));
-
-    // Start
+    setInterval(nextSlide, 4000);
     update();
   </script></body>
-  </html>
+</html>
