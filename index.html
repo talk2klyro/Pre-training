@@ -1,0 +1,123 @@
+<!<!doctype html>
+<html lang="en">  
+<head>  
+  <meta charset="utf-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  
+  <title>Cyber Man — Links</title>  
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>  
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>  
+    :root {  
+      --primary: #00f6ff;  
+      --accent: #ff007a;  
+      --bg-dark: #050510;  
+      --card-bg: rgba(15,15,25,0.85);  
+      --glow: 0 0 10px var(--primary), 0 0 20px var(--accent);  
+    }  
+
+    body {  
+      font-family: 'Share Tech Mono', monospace;  
+      background: radial-gradient(circle at top, #0f0f1a, #050510 70%);  
+      color: var(--primary);  
+      min-height: 100vh;  
+      display: flex;  
+      flex-direction: column;  
+      align-items: center;  
+      justify-content: center;  
+      overflow-x: hidden;
+    }  
+
+    .card {  
+      background: var(--card-bg);  
+      border: 1px solid var(--primary);  
+      border-radius: 1rem;  
+      padding: 2rem;  
+      box-shadow: var(--glow);  
+      backdrop-filter: blur(8px);
+    }  
+
+    .title-font {  
+      font-family: 'Orbitron', sans-serif;  
+      color: var(--accent);  
+      text-shadow: var(--glow);  
+    }  
+
+    .link-btn {  
+      transition: all .3s ease;  
+      border: 1px solid var(--primary);  
+      background: transparent;  
+      text-shadow: var(--glow);  
+    }  
+
+    .link-btn:hover {  
+      background: var(--primary);  
+      color: #000;  
+      transform: scale(1.05);  
+      box-shadow: var(--glow);  
+    }  
+
+    .footer {  
+      margin-top: 2rem;  
+      font-size: 0.75rem;  
+      color: #aaa;  
+    }  
+  </style>  
+</head>  
+
+<body>  
+  <div class="card text-center max-w-md w-full">  
+    <!-- Profile -->  
+    <img src="https://i.postimg.cc/DZhK4QKC/IMG-20250820-WA0062.jpg" alt="Cyber Man" class="w-28 h-28 rounded-full mx-auto border-4 border-[var(--accent)] object-cover shadow-lg">  
+    
+    <h1 class="mt-4 text-3xl title-font">Cyber Man</h1>  
+    <p class="text-sm italic text-gray-300">Cyber Security Analyst</p>  
+    <p class="mt-1 text-xs text-gray-400">Potiskum — Protecting Digital Identity</p>  
+
+    <!-- Links -->  
+    <div class="mt-6 flex flex-col gap-4">  
+      <a href="https://wa.me/2349069642529?text=Hello%20Cyber%20Man%2C%20I%20need%20help%20with%20cyber%20security"  
+         target="_blank"  
+         class="link-btn block py-3 rounded-lg font-semibold text-[var(--primary)]">  
+        💬 Chat on WhatsApp  
+      </a>  
+
+      <a href="https://www.tiktok.com/@cyber.man001" target="_blank"   
+         class="link-btn block py-3 rounded-lg font-semibold text-[var(--primary)]">  
+        🎵 TikTok Profile  
+      </a>  
+
+      <a href="https://facebook.com/yusuf.ismailmuhammed" target="_blank"   
+         class="link-btn block py-3 rounded-lg font-semibold text-[var(--primary)]">  
+        📘 Facebook  
+      </a>  
+
+      <a href="https://instagram.com/yusuf_cyber01" target="_blank"   
+         class="link-btn block py-3 rounded-lg font-semibold text-[var(--primary)]">  
+        📸 Instagram  
+      </a>  
+
+      <a href="https://goo.gl/maps/" target="_blank"   
+         class="link-btn block py-3 rounded-lg font-semibold text-[var(--primary)]">  
+        📍 Find Me in Potiskum  
+      </a>  
+
+      <a href="tel:+2349069642529"   
+         class="link-btn block py-3 rounded-lg font-semibold text-[var(--primary)]">  
+        📞 Call Me  
+      </a>  
+    </div>  
+
+    <!-- Footer -->  
+    <p class="footer">© <span id="year"></span> Cyber Man</p>  
+  </div>  
+
+  <script>  
+    document.getElementById('year').textContent = new Date().getFullYear();  
+  </script>  
+</body>  
+</html>
