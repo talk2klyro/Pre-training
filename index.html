@@ -2,129 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A. Sadiq Computers • Cybersecurity Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
-    h2 { color: #333; }
-    form { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px #ddd; margin-bottom: 20px; }
-    input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; }
-    button { background: #28a745; color: white; padding: 10px; margin-top: 10px; border: none; cursor: pointer; border-radius: 5px; }
-    button:hover { opacity: 0.9; }
-    table { width: 100%; border-collapse: collapse; background: #fff; }
-    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-    .actions button { background: #007bff; margin: 2px; }
-    .delete { background: #dc3545; }
+    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#f8f9fa; color:#333; }
+    a { text-decoration:none; }
+    .hero { text-align:center; padding:60px 20px; background:#222; color:#fff; }
+    .avatar { width:150px; border-radius:50%; border:5px solid #fff; }
+    .cta .btn { display:inline-block; margin:5px; padding:10px 20px; background:#ff5722; color:#fff; border-radius:5px; }
+    .section-title { font-family:'Playfair Display', serif; margin-bottom:15px; font-size:28px; }
+    .card { background:#fff; padding:30px; margin:20px auto; max-width:900px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    ul.clean { list-style:none; padding:0; }
+    ul.clean li { margin-bottom:10px; }
+    .gallery img { max-width:200px; margin:10px; border-radius:10px; }
+    footer { text-align:center; padding:20px; background:#222; color:#fff; margin-top:40px; }
+    .map-btn { padding:10px 20px; background:#2196F3; color:#fff; border-radius:5px; }
   </style>
 </head>
 <body>
 
-  <h2>Admin Dashboard</h2>
+  <!-- HERO -->
+  <header class="hero">
+    <img src="client-avatar.jpg" alt="A. Sadiq Computers" class="avatar">
+    <h1>A. Sadiq Computers</h1>
+    <div class="subtitle">Sayar da Kwamfuta Mai Aminci & Gyaran Kwamfuta na Kwarai a Potiskum</div>
+    <div class="cta">
+      <a class="btn" href="#">Yi Rijista don Gyara</a>
+      <a class="btn" href="#">Duba Kwamfutoci</a>
+      <a class="btn" href="https://wa.me/07040144657">📞 07040144657</a>
+    </div>
+  </header>
 
-  <!-- Product Form -->
-  <form id="productForm">
-    <input type="hidden" id="editIndex" value="">
-    <label>Title:</label>
-    <input type="text" id="title" required>
-    <label>Image URL (postimg.cc):</label>
-    <input type="url" id="image" required>
-    <label>Description:</label>
-    <textarea id="description" required></textarea>
-    <label>Price:</label>
-    <input type="number" id="price" required>
-    <label>Flutterwave Payment URL:</label>
-    <input type="url" id="payment_url" required>
-    <button type="submit">Save Product</button>
-  </form>
+  <main>
 
-  <!-- Product List -->
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Payment URL</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="productList"></tbody>
-  </table>
+    <!-- About / Services -->
+    <section class="card">
+      <h2 class="section-title">Ayyukan da Muke Bayarwa</h2>
+      <h3>Gyara</h3>
+      <ul class="clean">
+        <li>Gyaran Laptop & Desktop</li>
+        <li>Cire Virus & Malware</li>
+        <li>Haɓaka RAM & SSD</li>
+        <li>Shigarwa & Gyaran Software</li>
+        <li>Canza Fuska (Screen) & Keyboard</li>
+      </ul>
+      <h3>Sayarwa</h3>
+      <ul class="clean">
+        <li>Sabbin Kwamfuta & Laptop</li>
+        <li>Kwamfuta ta gyara (Refurbished)</li>
+        <li>Kayan haɗi: Keyboards, Mice, Printers</li>
+        <li>Gina PC na musamman</li>
+      </ul>
+    </section>
 
-  <!-- Export JSON -->
-  <button onclick="downloadJSON()">Download JSON</button>
+    <!-- Why Choose -->
+    <section class="card">
+      <h2 class="section-title">Me Yasa Zabi A. Sadiq?</h2>
+      <ul class="clean">
+        <li>✅ Kwararrun Masu Gyara a Potiskum</li>
+        <li>✅ Farashi Mai Sauƙi da Gaskiya</li>
+        <li>✅ Kayayyaki Na Gaskiya Tare da Garanti</li>
+        <li>✅ Gyara cikin Lokaci Mai Sauri</li>
+        <li>✅ Muna Bauta wa Potiskum da Kewayenta</li>
+      </ul>
+      <blockquote>“A. Sadiq ya gyara laptop dina cikin kwanaki 2 kacal! Ina ba da shawara sosai.” – Musa Y., Potiskum</blockquote>
+      <blockquote>“Na sayi laptop da aka gyara, tana aiki da kyau sosai, kuma farashinta yayi daidai.” – Hauwa B., Potiskum</blockquote>
+    </section>
 
-  <script>
-    let products = [];
+    <!-- Products -->
+    <section class="card">
+      <h2 class="section-title">Kayayyakin da Aka Fito</h2>
+      <ul class="clean">
+        <li>Dell Inspiron 15 – Intel i5, 8GB RAM, 512GB SSD – ₦250,000 – <a href="#">Saya Yanzu</a></li>
+        <li>HP Pavilion – Intel i7, 16GB RAM, 1TB SSD – ₦450,000 – <a href="#">Saya Yanzu</a></li>
+        <li>Lenovo ThinkPad – Refurbished, 8GB RAM, 256GB SSD – ₦180,000 – <a href="#">Saya Yanzu</a></li>
+        <li>Logitech Keyboard & Mouse – Wireless Combo – ₦15,000 – <a href="#">Saya Yanzu</a></li>
+      </ul>
+    </section>
 
-    const form = document.getElementById("productForm");
-    const productList = document.getElementById("productList");
-    const editIndex = document.getElementById("editIndex");
+    <!-- How it Works -->
+    <section class="card">
+      <h2 class="section-title">Yadda Ake Aiki</h2>
+      <h3>Gyara</h3>
+      <ol>
+        <li>Tuntuɓe mu ta waya ko WhatsApp (07040144657)</li>
+        <li>Ka kawo na’urarka ko tsara ɗauko a Potiskum</li>
+        <li>Muna tantance & gyara na’urarka</li>
+        <li>Karɓi na’urarka ko a kawo maka</li>
+      </ol>
+      <h3>Sayarwa</h3>
+      <ol>
+        <li>Duba kayayyaki a kan layi</li>
+        <li>Biya ta banki, Paystack, ko COD</li>
+        <li>Karɓi kayan ko ɗauko daga shagonmu a Potiskum</li>
+      </ol>
+    </section>
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const product = {
-        title: document.getElementById("title").value,
-        image: document.getElementById("image").value,
-        description: document.getElementById("description").value,
-        price: document.getElementById("price").value,
-        payment_url: document.getElementById("payment_url").value
-      };
+    <!-- Contact -->
+    <section class="card">
+      <h2 class="section-title">Tuntuɓi Mu</h2>
+      <p>Waya / WhatsApp: 07040144657</p>
+      <p>Email: info.asadiq@example.com</p>
+      <p>Adireshi: 5 Main Market Road, Potiskum, Yobe State</p>
+      <p><a class="map-btn" href="#">📍 View My Location on Map</a></p>
+      <form>
+        <input type="text" placeholder="Suna" required><br><br>
+        <input type="email" placeholder="Email / Waya" required><br><br>
+        <select required>
+          <option>Gyara</option>
+          <option>Tambaya Sayarwa</option>
+        </select><br><br>
+        <textarea placeholder="Saƙo" required></textarea><br><br>
+        <button type="submit">Aika Saƙo</button>
+      </form>
+    </section>
 
-      if (editIndex.value === "") {
-        products.push(product); // Add
-      } else {
-        products[editIndex.value] = product; // Update
-        editIndex.value = "";
-      }
+    <!-- FAQ -->
+    <section class="card">
+      <h2 class="section-title">Tambayoyi Akai-akai (FAQ)</h2>
+      <ul class="clean">
+        <li><strong>Q:</strong> Nawa ne lokaci ake ɗauka don gyara? <br> <strong>A:</strong> Yawancin gyare-gyare ana kammala su cikin kwanaki 1–3.</li>
+        <li><strong>Q:</strong> Kuna bayar da garanti? <br> <strong>A:</strong> I, 3 watanni don gyara, 6 watanni don kayan gyara (refurbished).</li>
+        <li><strong>Q:</strong> Kuna kawo kaya waje da Potiskum? <br> <strong>A:</strong> I, isarwa a duk Yobe State ta hanyar courier.</li>
+        <li><strong>Q:</strong> Ta yaya zan sami farashin gyara? <br> <strong>A:</strong> Tuntuɓe mu a 07040144657 ta waya ko WhatsApp.</li>
+      </ul>
+    </section>
 
-      form.reset();
-      renderProducts();
-    });
+  </main>
 
-    function renderProducts() {
-      productList.innerHTML = "";
-      products.forEach((p, i) => {
-        productList.innerHTML += `
-          <tr>
-            <td>${p.title}</td>
-            <td><img src="${p.image}" width="50"></td>
-            <td>${p.description}</td>
-            <td>$${p.price}</td>
-            <td><a href="${p.payment_url}" target="_blank">Link</a></td>
-            <td class="actions">
-              <button onclick="editProduct(${i})">Edit</button>
-              <button class="delete" onclick="deleteProduct(${i})">Delete</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
+  <footer>
+    © 2025 A. Sadiq Computers • Cybersecurity Portfolio <br>
+  </footer>
 
-    function editProduct(i) {
-      const p = products[i];
-      document.getElementById("title").value = p.title;
-      document.getElementById("image").value = p.image;
-      document.getElementById("description").value = p.description;
-      document.getElementById("price").value = p.price;
-      document.getElementById("payment_url").value = p.payment_url;
-      editIndex.value = i;
-    }
-
-    function deleteProduct(i) {
-      products.splice(i, 1);
-      renderProducts();
-    }
-
-    function downloadJSON() {
-      const blob = new Blob([JSON.stringify(products, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "products.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  </script>
 </body>
 </html>
