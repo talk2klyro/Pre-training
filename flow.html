@@ -1,0 +1,75 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Madarasatun Nisa SaaS Flow</title>
+<style>
+  body { font-family: sans-serif; background:#f4f4f8; padding:2rem; }
+  h1 { text-align:center; margin-bottom:2rem; }
+  .flow-container { display:flex; flex-direction:column; align-items:center; gap:1rem; }
+  .node { 
+    display:inline-block; padding:1rem 1.5rem; border-radius:12px;
+    background:rgba(255,255,255,0.8); backdrop-filter:blur(6px);
+    box-shadow:0 5px 15px rgba(0,0,0,0.1); cursor:pointer; transition:0.3s;
+    min-width:160px; text-align:center; 
+  }
+  .node:hover { transform:scale(1.05); box-shadow:0 10px 20px rgba(0,0,0,0.2); }
+  .arrow { font-weight:bold; font-size:1.5rem; align-self:center; margin:0 0.5rem; }
+  #details { margin-top:2rem; padding:1rem; background:#fff; border-radius:10px; max-width:800px; text-align:center; }
+  .layer { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:0.5rem; }
+</style>
+</head>
+<body>
+
+<h1>Madarasatun Nisa SaaS Flow</h1>
+
+<div class="flow-container">
+
+  <!-- Frontend Layer -->
+  <div class="layer">
+    <a href="index.html" target="_blank" class="node" data-desc="Dashboard: Attendance summary, donation stats, student overview">Dashboard</a>
+    <span class="arrow">→</span>
+    <a href="add-student.html" target="_blank" class="node" data-desc="Add/Edit Students: CRUD operations, bulk import CSV">Add Students</a>
+    <span class="arrow">→</span>
+    <a href="attendance.html" target="_blank" class="node" data-desc="Attendance Page: Weekly checkboxes, % attendance, export CSV/PDF">Attendance</a>
+    <span class="arrow">→</span>
+    <a href="support.html" target="_blank" class="node" data-desc="Support Page: Donations, reward tiers, Stripe/Paystack integration">Support</a>
+  </div>
+
+  <!-- Backend Layer -->
+  <div class="layer">
+    <a href="#" class="node" data-desc="API: /api/students → Add/List/Delete Students">/api/students</a>
+    <span class="arrow">→</span>
+    <a href="#" class="node" data-desc="API: /api/attendance → Update attendance, weekly register">/api/attendance</a>
+    <span class="arrow">→</span>
+    <a href="#" class="node" data-desc="API: /api/export → Export CSV / PDF of students/attendance">/api/export</a>
+    <span class="arrow">→</span>
+    <a href="#" class="node" data-desc="API: /api/create-checkout-session → Stripe payment sessions">/api/create-checkout-session</a>
+    <span class="arrow">→</span>
+    <a href="#" class="node" data-desc="API: /api/_notion.js → Notion CRUD helper, multi-client-ready">/api/_notion.js</a>
+  </div>
+
+  <!-- Database Layer -->
+  <div class="layer">
+    <a href="#" class="node" data-desc="Notion / Database: Stores students, attendance, donations">Notion / Database</a>
+  </div>
+
+</div>
+
+<div id="details">Click a node to see details</div>
+
+<script>
+  const nodes = document.querySelectorAll('.node');
+  const details = document.getElementById('details');
+
+  nodes.forEach(node => {
+    node.addEventListener('click', e => {
+      // prevent navigating if href="#"
+      if(node.getAttribute('href') === '#') e.preventDefault();
+      details.textContent = node.dataset.desc;
+    });
+  });
+</script>
+
+</body>
+</html>
