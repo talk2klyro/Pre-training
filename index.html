@@ -1,75 +1,52 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Madarasatun Nisa SaaS Flow</title>
-<style>
-  body { font-family: sans-serif; background:#f4f4f8; padding:2rem; }
-  h1 { text-align:center; margin-bottom:2rem; }
-  .flow-container { display:flex; flex-direction:column; align-items:center; gap:1rem; }
-  .node { 
-    display:inline-block; padding:1rem 1.5rem; border-radius:12px;
-    background:rgba(255,255,255,0.8); backdrop-filter:blur(6px);
-    box-shadow:0 5px 15px rgba(0,0,0,0.1); cursor:pointer; transition:0.3s;
-    min-width:160px; text-align:center; 
-  }
-  .node:hover { transform:scale(1.05); box-shadow:0 10px 20px rgba(0,0,0,0.2); }
-  .arrow { font-weight:bold; font-size:1.5rem; align-self:center; margin:0 0.5rem; }
-  #details { margin-top:2rem; padding:1rem; background:#fff; border-radius:10px; max-width:800px; text-align:center; }
-  .layer { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:0.5rem; }
-</style>
+<title>Madarasatun Nisa SaaS Flow (Live Sandbox)</title>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+</script>
 </head>
 <body>
+<h1>Madarasatun Nisa SaaS Flow (Sandbox)</h1>
 
-<h1>Madarasatun Nisa SaaS Flow</h1>
+<div class="mermaid">
+graph TD
+    %% Frontend Pages
+    A[Dashboard]:::page --> B[Add Students]:::page
+    B --> C[Attendance]:::page
+    C --> D[Support]:::page
 
-<div class="flow-container">
+    %% Backend APIs
+    B --> E[/api/students/]:::api
+    C --> F[/api/attendance/]:::api
+    C --> G[/api/export/]:::api
+    D --> H[/api/create-checkout-session/]:::api
 
-  <!-- Frontend Layer -->
-  <div class="layer">
-    <a href="index.html" target="_blank" class="node" data-desc="Dashboard: Attendance summary, donation stats, student overview">Dashboard</a>
-    <span class="arrow">→</span>
-    <a href="add-student.html" target="_blank" class="node" data-desc="Add/Edit Students: CRUD operations, bulk import CSV">Add Students</a>
-    <span class="arrow">→</span>
-    <a href="attendance.html" target="_blank" class="node" data-desc="Attendance Page: Weekly checkboxes, % attendance, export CSV/PDF">Attendance</a>
-    <span class="arrow">→</span>
-    <a href="support.html" target="_blank" class="node" data-desc="Support Page: Donations, reward tiers, Stripe/Paystack integration">Support</a>
-  </div>
+    %% Notion / Database
+    E --> I[Notion / Database]:::db
+    F --> I
+    G --> I
+    H --> I
 
-  <!-- Backend Layer -->
-  <div class="layer">
-    <a href="#" class="node" data-desc="API: /api/students → Add/List/Delete Students">/api/students</a>
-    <span class="arrow">→</span>
-    <a href="#" class="node" data-desc="API: /api/attendance → Update attendance, weekly register">/api/attendance</a>
-    <span class="arrow">→</span>
-    <a href="#" class="node" data-desc="API: /api/export → Export CSV / PDF of students/attendance">/api/export</a>
-    <span class="arrow">→</span>
-    <a href="#" class="node" data-desc="API: /api/create-checkout-session → Stripe payment sessions">/api/create-checkout-session</a>
-    <span class="arrow">→</span>
-    <a href="#" class="node" data-desc="API: /api/_notion.js → Notion CRUD helper, multi-client-ready">/api/_notion.js</a>
-  </div>
+    %% Donations Flow
+    D --> J[Donation Tiers & Rewards]:::donation
+    J --> I
 
-  <!-- Database Layer -->
-  <div class="layer">
-    <a href="#" class="node" data-desc="Notion / Database: Stores students, attendance, donations">Notion / Database</a>
-  </div>
+classDef page fill:#a8d5ba,stroke:#2b7a0b,stroke-width:2px;
+classDef api fill:#fdd39e,stroke:#e87b00,stroke-width:2px;
+classDef db fill:#d0c0f0,stroke:#5b35b1,stroke-width:2px;
+classDef donation fill:#f9b0c4,stroke:#d1246d,stroke-width:2px;
 
+%% Clickable live sandbox links
+click B href "add-student.html" "Open Add Students Demo Page"
+click C href "attendance.html" "Open Attendance Demo Page"
+click D href "support.html" "Open Support / Donation Demo Page"
+click J href "support.html#donation" "Go to Donations Sandbox"
+click F href "attendance.html#weekly" "Open Attendance Table Sandbox"
 </div>
 
-<div id="details">Click a node to see details</div>
-
-<script>
-  const nodes = document.querySelectorAll('.node');
-  const details = document.getElementById('details');
-
-  nodes.forEach(node => {
-    node.addEventListener('click', e => {
-      // prevent navigating if href="#"
-      if(node.getAttribute('href') === '#') e.preventDefault();
-      details.textContent = node.dataset.desc;
-    });
-  });
-</script>
-
+<p>Click frontend & donation nodes to test live demos.</p>
 </body>
 </html>
