@@ -2,51 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Madarasatun Nisa SaaS Flow (Live Sandbox)</title>
+<title>Madarasatun Nisa SaaS Flow (Mermaid.js)</title>
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
 </script>
 </head>
 <body>
-<h1>Madarasatun Nisa SaaS Flow (Sandbox)</h1>
+<h1>Madarasatun Nisa SaaS Flow</h1>
 
 <div class="mermaid">
 graph TD
     %% Frontend Pages
-    A[Dashboard]:::page --> B[Add Students]:::page
-    B --> C[Attendance]:::page
-    C --> D[Support]:::page
+    A[Dashboard] --> B[Add Students]
+    B --> C[Attendance]
+    C --> D[Support]
 
     %% Backend APIs
-    B --> E[/api/students/]:::api
-    C --> F[/api/attendance/]:::api
-    C --> G[/api/export/]:::api
-    D --> H[/api/create-checkout-session/]:::api
+    B --> E[/api/students/]
+    C --> F[/api/attendance/]
+    C --> G[/api/export/]
+    D --> H[/api/create-checkout-session/]
 
     %% Notion / Database
-    E --> I[Notion / Database]:::db
+    E --> I[Notion / Database]
     F --> I
     G --> I
     H --> I
 
     %% Donations Flow
-    D --> J[Donation Tiers & Rewards]:::donation
+    D --> J[Donation Tiers & Reward System]
     J --> I
 
-classDef page fill:#a8d5ba,stroke:#2b7a0b,stroke-width:2px;
-classDef api fill:#fdd39e,stroke:#e87b00,stroke-width:2px;
-classDef db fill:#d0c0f0,stroke:#5b35b1,stroke-width:2px;
-classDef donation fill:#f9b0c4,stroke:#d1246d,stroke-width:2px;
+    %% Multi-client Config
+    K[config.js] --> A
+    K --> B
+    K --> C
+    K --> D
 
-%% Clickable live sandbox links
-click B href "add-student.html" "Open Add Students Demo Page"
-click C href "attendance.html" "Open Attendance Demo Page"
-click D href "support.html" "Open Support / Donation Demo Page"
-click J href "support.html#donation" "Go to Donations Sandbox"
-click F href "attendance.html#weekly" "Open Attendance Table Sandbox"
+    %% Styling & Helpers
+    L[style.css & main.js] --> A
+    L --> B
+    L --> C
+    L --> D
 </div>
 
-<p>Click frontend & donation nodes to test live demos.</p>
+<script>
+  // Optional: add clickable links for nodes
+  mermaid.mermaidAPI.render('theGraph', document.querySelector('.mermaid').innerHTML, (svgCode) => {
+      document.querySelector('.mermaid').innerHTML = svgCode;
+
+      // Add click handlers
+      document.querySelectorAll('text').forEach(node => {
+          const txt = node.textContent.trim();
+          if(txt === 'Dashboard') node.parentNode.addEventListener('click', ()=> window.open('index.html', '_blank'));
+          if(txt === 'Add Students') node.parentNode.addEventListener('click', ()=> window.open('add-student.html', '_blank'));
+          if(txt === 'Attendance') node.parentNode.addEventListener('click', ()=> window.open('attendance.html', '_blank'));
+          if(txt === 'Support') node.parentNode.addEventListener('click', ()=> window.open('support.html', '_blank'));
+      });
+  });
+</script>
+
+<p>Click nodes to navigate to real pages. Backend/API nodes are for reference.</p>
 </body>
 </html>
