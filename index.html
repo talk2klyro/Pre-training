@@ -1,500 +1,120 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🌍 Multi-Client Portal — Ultimate Build</title>
-  <meta name="description" content="All-in-one Multi-Client Portal with particles, auth, Notion API stubs, announcements, events, analytics, i18n, mobile preview, and admin tools." />
-  <style>
-    /* =============== Design System =============== */
-    :root{
-      --bg:#0d0d0d; --bg-soft:rgba(255,255,255,0.04); --text:#fff; --muted:#cfcfcf;
-      --accent:#00f5d4; --accent-2:#ffda79; --danger:#ff5e57; --card:rgba(255,255,255,0.06);
-      --card-border:rgba(255,255,255,0.1); --radius:18px; --glass: blur(12px);
-    }
-    [data-theme="light"]{ --bg:#f8fafc; --text:#0b1020; --muted:#475569; --card:rgba(0,0,0,0.04); --card-border:rgba(0,0,0,0.08); }
-    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}
-    a{color:inherit}/* Skip link */
-.skip{position:absolute;left:-9999px} .skip:focus{left:1rem;top:1rem;padding:.5rem 1rem;background:var(--accent);color:#000;border-radius:8px}
-
-/* Canvas */
-canvas#particles{position:fixed;inset:0;z-index:-1}
-
-header.hero{padding:2.2rem 1rem;text-align:center;background:var(--bg-soft);backdrop-filter:var(--glass);border-bottom:1px solid var(--card-border)}
-header.hero h1{margin:0;font-size:clamp(1.6rem,2.6vw,2.8rem);color:var(--accent-2)}
-header.hero p{margin:.4rem 0 0;font-size:1rem;opacity:.9}
-
-/* Controls */
-.controls{display:grid;grid-template-columns:1fr auto auto;gap:.75rem;align-items:center;padding:1rem;max-width:1200px;margin:0 auto}
-.search{display:flex;align-items:center;gap:.6rem;background:var(--card);border:1px solid var(--card-border);padding:.7rem 1rem;border-radius:14px}
-.search input{background:transparent;border:0;outline:none;color:var(--text);font-size:1rem}
-.chips{display:flex;gap:.5rem}
-.chip{background:var(--card);border:1px solid var(--card-border);padding:.5rem .75rem;border-radius:12px;cursor:pointer;font-weight:600}
-.chip[aria-pressed="true"]{box-shadow:0 10px 30px rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.22)}
-.seg{display:flex;gap:.5rem}
-.btn{background:var(--card);border:1px solid var(--card-border);padding:.5rem .9rem;border-radius:12px;cursor:pointer}
-.btn.primary{background:var(--accent);color:#03120f;font-weight:700}
-
-/* Main grid */
-main.container{flex:1;padding:1.2rem 1rem;overflow:auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:1200px;margin:0 auto}
-
-.card{background:var(--card);border-radius:var(--radius);padding:1rem;border:1px solid var(--card-border);backdrop-filter:var(--glass);box-shadow:0 10px 30px rgba(0,0,0,0.35);position:relative;cursor:pointer;transition:all .25s}
-.card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(0,0,0,0.55);border-color:rgba(255,255,255,0.24)}
-.card h3{margin:0 0 .4rem;font-size:1.05rem;color:var(--accent)}
-.card p{margin:0;font-size:.95rem;opacity:.95}
-.tags{margin-top:.7rem;display:flex;gap:.35rem;flex-wrap:wrap}
-.tag{font-size:.72rem;padding:.25rem .5rem;border-radius:999px;background:rgba(0,0,0,0.08)}
-.fav{position:absolute;right:.6rem;top:.6rem;border:0;background:transparent;font-size:1.1rem;cursor:pointer}
-
-footer.footer{padding:.9rem;text-align:center;background:var(--bg-soft);border-top:1px solid var(--card-border);font-size:.9rem;color:var(--muted)}
-
-/* Modal / overlays */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.82);display:none;align-items:center;justify-content:center;z-index:1100}
-.modal{background:rgba(255,255,255,0.06);padding:1rem;border-radius:18px;max-width:760px;width:min(94vw,760px);box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid var(--card-border);}
-.modal h2{margin:0 0 .5rem;color:var(--accent-2)}
-.modal p{margin:0 0 1rem}
-.modal .row{display:flex;gap:.6rem;flex-wrap:wrap}
-
-/* Settings floating */
-.settings{position:fixed;right:1rem;bottom:1rem;z-index:1200;display:grid;gap:.6rem}
-.settings-panel{display:none;background:var(--card);padding:1rem;border-radius:12px;border:1px solid var(--card-border);backdrop-filter:var(--glass)}
-
-/* Mobile preview */
-.mobile-preview{width:320px;height:640px;border-radius:18px;border:12px solid rgba(255,255,255,0.06);box-shadow:0 20px 50px rgba(0,0,0,0.6);overflow:hidden;background:linear-gradient(180deg,rgba(0,0,0,0.2),transparent)}
-
-/* Forms */
-input[type="text"],input[type="password"],select,textarea{background:transparent;border:1px solid var(--card-border);color:var(--text);padding:.5rem .6rem;border-radius:8px;outline:none}
-label{font-size:.85rem;color:var(--muted)}
-
-/* small screens */
-@media (max-width:640px){.controls{grid-template-columns:1fr auto;gap:.5rem;padding:.6rem}.seg{display:none}}
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive SaaS Roadmap Dashboard</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0d0d0d;
+    color: #fff;
+  }
+  header {
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  header h1 { font-size:2.5rem; color:#ffda79; margin:0; }
+  header p { opacity:0.8; }
+  .container { display:flex; flex-wrap:wrap; padding:2rem; gap:2rem; max-width:1200px; margin:auto; }
+  .phase-card {
+    flex:1 1 250px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 15px;
+    padding: 1.5rem;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .phase-card:hover { transform:scale(1.05); border:1px solid rgba(255,255,255,0.3); }
+  .phase-card h2 { color:#00f5d4; margin-bottom:0.5rem; }
+  .phase-card p { font-size:0.9rem; opacity:0.9; }
+  .modal {
+    display:none;
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.85);
+    justify-content:center; align-items:center;
+    z-index:1000;
+  }
+  .modal-content {
+    background: rgba(255,255,255,0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 700px;
+    text-align:center;
+    animation:fadeIn 0.3s ease;
+  }
+  .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
+  .modal-content p { margin-bottom:1rem; line-height:1.5; }
+  .close-btn {
+    background:#ff5e57; border:none; padding:0.7rem 1.5rem;
+    border-radius:8px; cursor:pointer; color:#fff; font-weight:bold;
+  }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
+</style>
 </head>
 <body>
-  <a href="#main" class="skip">Skip to content</a>
-  <canvas id="particles" aria-hidden="true"></canvas>  <header class="hero" role="banner">
-    <h1>🌍 Multi-Client Portal</h1>
-    <p id="tagline">Explore, connect, and grow — all in one place.</p><div class="controls" role="region" aria-label="Portal controls">
-  <div class="search" role="search">
-    <span aria-hidden="true">🔎</span>
-    <input id="search" type="search" placeholder="Search projects, tags, or descriptions..." aria-label="Search projects" />
-  </div>
 
-  <div class="chips" role="group" aria-label="Filters">
-    <button class="chip" data-filter="all" aria-pressed="true">All</button>
-    <button class="chip" data-filter="education" aria-pressed="false">Education</button>
-    <button class="chip" data-filter="community" aria-pressed="false">Community</button>
-    <button class="chip" data-filter="future" aria-pressed="false">Future</button>
-  </div>
+<header>
+  <h1>🌐 Interactive SaaS Roadmap</h1>
+  <p>Investor Demo: Visualizing Multi-Client SaaS Phases & Modules</p>
+</header>
 
-  <div class="seg" role="group" aria-label="Actions">
-    <button id="sort-btn" class="btn" title="Sort A→Z">↕️</button>
-    <button id="settings-btn" class="btn" title="Settings">⚙️</button>
+<section class="container" id="phase-container">
+  <!-- Phase cards generated via JS -->
+</section>
+
+<!-- Modal for Phase Details -->
+<div class="modal" id="phase-modal">
+  <div class="modal-content">
+    <h3 id="modal-title"></h3>
+    <p id="modal-description"></p>
+    <button class="close-btn" id="modal-close">Close</button>
   </div>
 </div>
 
-  </header>  <main id="main" class="container">
-    <div class="grid" id="project-grid" aria-live="polite"></div>
-  </main>  <footer class="footer">&copy; 2025 Multi-Client Platform • Built for scale 🚀</footer>  <!-- OVERLAYS: Modal templates for Project, Auth, Announcements, Events, Analytics, Mobile Preview -->  <div class="overlay" id="overlay-project" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <h2 id="modal-title">Project</h2>
-      <p id="modal-desc"></p>
-      <div class="row">
-        <button id="open-experience" class="btn primary">🌟 Enter Experience</button>
-        <button id="open-portal" class="btn">🔗 Open Portal</button>
-        <button id="modal-fav" class="btn">⭐ Add to Favorites</button>
-      </div>
-      <div style="margin-top:.8rem"><button id="close-project" class="btn">Close</button></div>
-    </div>
-  </div>  <div class="overlay" id="overlay-auth" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <h2 id="auth-title">Sign In</h2>
-      <p>Use the mock auth (stored locally) or connect to Notion-backed auth in your server.</p>
-      <div style="margin:.6rem 0">
-        <label>Username</label><input id="auth-user" type="text" placeholder="username" />
-      </div>
-      <div style="margin:.6rem 0">
-        <label>Password</label><input id="auth-pass" type="password" placeholder="password" />
-      </div>
-      <div class="row">
-        <button id="auth-login" class="btn primary">Sign In</button>
-        <button id="auth-logout" class="btn">Sign Out</button>
-      </div>
-      <div style="margin-top:.6rem"><small id="auth-note" style="color:var(--muted)"></small></div>
-    </div>
-  </div>  <div class="overlay" id="overlay-ann" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ann-title">
-      <h2 id="ann-title">Announcements</h2>
-      <div id="ann-list"></div>
-      <div style="margin-top:.8rem"><button id="close-ann" class="btn">Close</button></div>
-    </div>
-  </div>  <div class="overlay" id="overlay-events" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="events-title">
-      <h2 id="events-title">Events</h2>
-      <div id="events-list"></div>
-      <div style="margin-top:.8rem"><button id="close-events" class="btn">Close</button></div>
-    </div>
-  </div>  <div class="overlay" id="overlay-analytics" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="analytics-title">
-      <h2 id="analytics-title">Analytics (Admin)</h2>
-      <div id="analytics-content"></div>
-      <div style="margin-top:.8rem"><button id="close-analytics" class="btn">Close</button></div>
-    </div>
-  </div>  <div class="overlay" id="overlay-mobile" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mobile-title">
-      <h2 id="mobile-title">Mobile App Preview</h2>
-      <div style="display:flex;gap:1rem;align-items:center;justify-content:center">
-        <div class="mobile-preview" id="mobile-frame"></div>
-      </div>
-      <div style="margin-top:.8rem"><button id="close-mobile" class="btn">Close</button></div>
-    </div>
-  </div>  <!-- Settings -->  <div class="settings">
-    <button id="open-settings" class="btn">⚙️</button>
-    <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="false" aria-labelledby="settings-title">
-      <h3 id="settings-title">Settings</h3>
-      <div style="margin:.6rem 0"><label>Theme</label><select id="theme-select"><option value="system">System</option><option value="dark" selected>Dark</option><option value="light">Light</option></select></div>
-      <div style="margin:.6rem 0"><label>High Contrast</label><input type="checkbox" id="contrast-toggle" /></div>
-      <div style="margin:.6rem 0"><label>Particles</label><input id="particles-range" type="range" min="0" max="300" step="10" value="100" /></div>
-      <div style="margin:.6rem 0"><label>Language</label><select id="lang-select"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option></select></div>
-      <div style="margin-top:.6rem"><button id="open-auth" class="btn">🔐 Sign In</button></div>
-      <div style="margin-top:.6rem"><button id="open-ann" class="btn">📢 Announcements</button></div>
-    </div>
-  </div>  <script>
-    /* =========================
-       CONFIG — Notion API placeholders
-       Replace these with your real keys on the server. Do NOT expose secret keys in client-side code.
-       This file includes example fetch wrappers that should be moved to a secure backend before production.
-       ========================= */
-    const CONFIG = {
-      NOTION_API_KEY: 'NOTION_API_KEY_PLACEHOLDER',
-      NOTION_PROJECTS_DB: 'NOTION_PROJECTS_DB_ID',
-      NOTION_ANN_DB: 'NOTION_ANNOUNCEMENTS_DB',
-      NOTION_EVENTS_DB: 'NOTION_EVENTS_DB',
-      BACKEND_ENDPOINT: '' // optional: your own server to proxy Notion requests
-    };
+<script>
+const phases = [
+  { id:1, title:"Phase 1: Multi-Client Portal Base", description:"Dashboard with project selection, role-based access, particle animation visuals." },
+  { id:2, title:"Phase 2: Interactive Cards & Overlays", description:"Hover cards with overlays displaying project details and demo links." },
+  { id:3, title:"Phase 3: Role-Based Analytics & Charts", description:"Interactive charts showing flagged/deleted messages and anomalies." },
+  { id:4, title:"Phase 4: AI-Assisted Recommendations", description:"Backend AI module suggesting actions based on analytics, integrated with notification center." },
+  { id:5, title:"Phase 5: Automated Reports", description:"PDF report generation including analytics, notifications, and recommendations; optional scheduled reports." },
+  { id:6, title:"Phase 6: Multi-Client Sandbox + Notion", description:"Live Notion-powered sandbox environment for each project with role-based access." },
+  { id:7, title:"Phase 7: Real-Time Notifications + Socket.IO", description:"Sandbox actions trigger live notifications and AI recommendations via WebSockets." },
+  { id:8, title:"Phase 8: Unified Multi-Client Dashboard", description:"Central dashboard showing analytics, notifications, and recommendations for all clients." },
+  { id:9, title:"Phase 9: Advanced Sandbox Analytics", description:"Track user interactions in sandbox, linked to notifications and recommendations." },
+  { id:10, title:"Phase 10: Predictive Anomaly Alerts", description:"AI/ML predicts spikes in flagged/deleted messages, triggering proactive alerts." },
+  { id:11, title:"Phase 11: Advanced Reports & KPIs", description:"Automated weekly/monthly reports with unified analytics, sandbox metrics, and AI insights." }
+];
 
-    /* ==================================================
-       UTILITIES & STATE
-       ================================================== */
-    const $ = (s, ctx=document) => ctx.querySelector(s);
-    const $$ = (s, ctx=document) => Array.from(ctx.querySelectorAll(s));
+const container = document.getElementById('phase-container');
+const modal = document.getElementById('phase-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalDescription = document.getElementById('modal-description');
+const modalClose = document.getElementById('modal-close');
 
-    const state = {
-      user: null, // {username, role: 'admin'|'user'}
-      favorites: new Set(JSON.parse(localStorage.getItem('favorites')||'[]')),
-      projects: [],
-      announcements: [],
-      events: [],
-      search: '', filter: 'all', sortAsc: true, particles: Number(localStorage.getItem('particles')||100),
-      lang: localStorage.getItem('lang')||'en', theme: localStorage.getItem('theme')||'dark', contrast: localStorage.getItem('contrast')==='true'
-    };
+phases.forEach(phase=>{
+  const card = document.createElement('div');
+  card.className='phase-card';
+  card.innerHTML=`<h2>${phase.title}</h2><p>${phase.description.substring(0,80)}...</p>`;
+  card.onclick = ()=>{
+    modal.style.display='flex';
+    modalTitle.textContent=phase.title;
+    modalDescription.textContent=phase.description;
+  };
+  container.appendChild(card);
+});
 
-    function saveFavorites(){ localStorage.setItem('favorites', JSON.stringify([...state.favorites])); }
-    function setTheme(mode){ const root=document.documentElement; if(mode==='system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme',mode); localStorage.setItem('theme',mode); }
-    function setContrast(v){ document.documentElement.setAttribute('data-contrast',v?'high':'normal'); localStorage.setItem('contrast',String(v)); }
+modalClose.onclick = ()=>{ modal.style.display='none'; };
+window.onclick = (e)=>{ if(e.target==modal) modal.style.display='none'; };
+</script>
 
-    /* ==================================================
-       NOTION API WRAPPERS (Client-side STUBS)
-       IMPORTANT: Do not ship secrets in frontend. Use these as dev/test helpers or move them to backend.
-       ================================================== */
-    async function notionFetchDatabase(dbId, body={page_size:100}){
-      // If BACKEND_ENDPOINT is configured, use it to proxy requests securely.
-      if(CONFIG.BACKEND_ENDPOINT) return fetch(`${CONFIG.BACKEND_ENDPOINT}/notion/db/${dbId}`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}).then(r=>r.json());
-
-      // Client-side direct call (development only)
-      const url = `https://api.notion.com/v1/databases/${dbId}/query`;
-      const res = await fetch(url,{
-        method:'POST', headers: {
-          'Authorization': `Bearer ${CONFIG.NOTION_API_KEY}`,
-          'Notion-Version': '2022-06-28', 'Content-Type': 'application/json'
-        }, body: JSON.stringify(body)
-      });
-      return res.json();
-    }
-
-    function notionPageToProject(page){
-      // Transform Notion page object to internal project model. This assumes certain properties exist.
-      try{
-        const props = page.properties || {};
-        return {
-          id: page.id,
-          title: (props.Name?.title?.[0]?.plain_text) || 'Untitled',
-          description: (props.Description?.rich_text?.[0]?.plain_text) || '',
-          portal: (props.Portal?.rich_text?.[0]?.plain_text) || '#',
-          experience: (props.Experience?.rich_text?.[0]?.plain_text) || '#',
-          category: (props.Category?.select?.name) || 'future',
-          color: (props.Color?.rich_text?.[0]?.plain_text) || 'rgba(255,255,255,0.85)',
-          tags: (props.Tags?.multi_select || []).map(t=>t.name)
-        };
-      }catch(e){ console.warn('Notion page parse failed', e); return null; }
-    }
-
-    /* ==================================================
-       LOCAL FALLBACK DATA — used when Notion is not configured
-       ================================================== */
-    const localDefaults = [
-      { id:'nisa', title:'📚 MADARASATUN-NISA', description:'Online Islamic school: student records, attendance and immersive learning demos.', portal:'madarasatun-nisa/index.html', experience:'madarasatun-nisa/demo-sandbox-nisa.html', category:'education', color:'rgba(0,245,212,0.9)', tags:['school','attendance','lms'] },
-      { id:'chef', title:'🍴 CHEF-COMMUNITY', description:'Culinary hub for classes, collaborative meals, and chef-led events.', portal:'chef-community/index.html', experience:'chef-community/demo-sandbox-chef.html', category:'community', color:'rgba(255,165,0,0.9)', tags:['events','recipes','bookings'] },
-      { id:'future', title:'🚀 FUTURE CLIENT', description:'Placeholder for next project. Add and manage via the admin dashboard.', portal:'#', experience:'#', category:'future', color:'rgba(138,180,248,0.95)', tags:['coming-soon'] }
-    ];
-
-    /* ==================================================
-       RENDERERS
-       ================================================== */
-    function projectCardHTML(p){
-      const fav = state.favorites.has(p.id) ? '⭐' : '☆';
-      const tags = (p.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
-      return `
-        <article class="card" tabindex="0" role="button" aria-label="${escapeHtml(p.title)}" data-id="${p.id}" data-color="${p.color}">
-          <button class="fav" data-fav="${p.id}" title="Toggle favorite">${fav}</button>
-          <h3>${escapeHtml(p.title)}</h3>
-          <p>${escapeHtml(p.description)}</p>
-          <div class="tags">${tags}</div>
-        </article>
-      `;
-    }
-
-    function renderProjects(){
-      const list = filterSearchSort(state.projects);
-      $('#project-grid').innerHTML = list.map(projectCardHTML).join('');
-      bindProjectInteractions();
-    }
-
-    function filterSearchSort(list){
-      let out = list.slice();
-      if(state.filter && state.filter!=='all') out = out.filter(p=>p.category===state.filter);
-      if(state.search && state.search.trim()){
-        const q = state.search.toLowerCase(); out = out.filter(p=>(p.title+' '+p.description+' '+(p.tags||[]).join(' ')).toLowerCase().includes(q));
-      }
-      out.sort((a,b)=>{
-        const favA = state.favorites.has(a.id)?0:1; const favB = state.favorites.has(b.id)?0:1; if(favA!==favB) return favA-favB;
-        return state.sortAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
-      });
-      return out;
-    }
-
-    function bindProjectInteractions(){
-      $$('.card').forEach(card=>{
-        const id = card.dataset.id;
-        card.addEventListener('mouseenter',()=>setHover(card,card.dataset.color));
-        card.addEventListener('mousemove',e=>setHoverPoint(e.clientX,e.clientY));
-        card.addEventListener('mouseleave',clearHover);
-        card.addEventListener('click',()=>openProjectModal(id));
-        card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); openProjectModal(id); } });
-      });
-      $$('button.fav').forEach(btn=>btn.addEventListener('click',e=>{ e.stopPropagation(); const id=btn.dataset.fav; toggleFav(id); }));
-    }
-
-    /* ==================================================
-       MODALS: Project modal
-       ================================================== */
-    function openProjectModal(id){
-      const p = state.projects.find(x=>x.id===id); if(!p) return; $('#modal-title').textContent = p.title; $('#modal-desc').textContent = p.description;
-      $('#open-experience').onclick = ()=>window.location.href = p.experience||p.portal||'#';
-      $('#open-portal').onclick = ()=>window.location.href = p.portal||'#';
-      $('#modal-fav').onclick = ()=>{ toggleFav(p.id); };
-      showOverlay('#overlay-project'); currentColor = p.color||'rgba(255,255,255,0.85)';
-    }
-
-    $('#close-project').addEventListener('click',()=>{ hideOverlay('#overlay-project'); clearHover(); });
-
-    /* ==================================================
-       AUTH MODULE (mock local + backend-ready hooks)
-       - Mock: store user in localStorage
-       - Backend-ready: functions loginServer()/logoutServer() to call your server which interacts with Notion
-       ================================================== */
-    function mockLogin(username,password){
-      // Very simple mock: if username present, accept. In production use secure auth.
-      const user = { username, role: username==='admin'? 'admin':'user' };
-      state.user = user; localStorage.setItem('user', JSON.stringify(user)); updateAuthUI(); Analytics.log('login',{user:username});
-      return user;
-    }
-    function mockLogout(){ state.user=null; localStorage.removeItem('user'); updateAuthUI(); Analytics.log('logout',{}); }
-
-    async function loginServer(username,password){
-      // Example: POST to your server which validates with Notion or other DB
-      if(!CONFIG.BACKEND_ENDPOINT) return mockLogin(username,password);
-      const res = await fetch(CONFIG.BACKEND_ENDPOINT+'/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({username,password})});
-      const data = await res.json(); state.user = data.user; localStorage.setItem('user',JSON.stringify(state.user)); updateAuthUI(); return state.user;
-    }
-    async function logoutServer(){ if(CONFIG.BACKEND_ENDPOINT){ await fetch(CONFIG.BACKEND_ENDPOINT+'/auth/logout',{method:'POST'}); } mockLogout(); }
-
-    function updateAuthUI(){ const user = state.user; $('#auth-note').textContent = user ? `Signed in as ${user.username} (${user.role})` : 'Not signed in'; }
-
-    $('#open-auth').addEventListener('click',()=>{ showOverlay('#overlay-auth'); });
-    $('#auth-login').addEventListener('click',()=>{ const u=$('#auth-user').value.trim(); const p=$('#auth-pass').value; if(!u) return alert('Enter username'); loginServer(u,p); });
-    $('#auth-logout').addEventListener('click',()=>{ logoutServer(); });
-    // Restore user from storage
-    (function(){ const u=localStorage.getItem('user'); if(u){ state.user = JSON.parse(u); updateAuthUI(); } })();
-
-    $('#overlay-auth').addEventListener('click',(e)=>{ if(e.target.id==='overlay-auth') hideOverlay('#overlay-auth'); });
-
-    /* ==================================================
-       ANNOUNCEMENTS MODULE
-       - Fetch from Notion DB (if configured) or use local sample
-       ================================================== */
-    async function fetchAnnouncements(){
-      try{
-        if(CONFIG.NOTION_ANN_DB && CONFIG.NOTION_API_KEY && !CONFIG.BACKEND_ENDPOINT){
-          const res = await notionFetchDatabase(CONFIG.NOTION_ANN_DB); // raw Notion response
-          const items = (res.results||[]).map(r=>({ id:r.id, title: r.properties?.Title?.title?.[0]?.plain_text||'Update', body: r.properties?.Body?.rich_text?.[0]?.plain_text||'', date: r.properties?.Date?.date?.start }));
-          state.announcements = items; return items;
-        }
-      }catch(e){ console.warn('Notion announcements fetch failed',e); }
-      // fallback
-      state.announcements = [{id:'ann1',title:'Welcome to the Portal',body:'This is the central hub. Check projects and events!',date:new Date().toISOString()}];
-      return state.announcements;
-    }
-
-    async function showAnnouncements(){ await fetchAnnouncements(); const list = state.announcements.map(a=>`<div style="margin-bottom:.6rem"><strong>${escapeHtml(a.title)}</strong><div style="font-size:.95rem;color:var(--muted)">${escapeHtml(a.body)}</div></div>`).join(''); $('#ann-list').innerHTML = list; showOverlay('#overlay-ann'); }
-
-    $('#open-ann').addEventListener('click',()=>showAnnouncements());
-    $('#close-ann').addEventListener('click',()=>hideOverlay('#overlay-ann'));
-
-    /* ==================================================
-       EVENTS MODULE
-       - Fetch events from Notion (if available) or sample
-       - Support per-project events filtering
-       ================================================== */
-    async function fetchEvents(){
-      try{
-        if(CONFIG.NOTION_EVENTS_DB && CONFIG.NOTION_API_KEY && !CONFIG.BACKEND_ENDPOINT){
-          const res = await notionFetchDatabase(CONFIG.NOTION_EVENTS_DB);
-          const items = (res.results||[]).map(r=>({ id:r.id, title:r.properties?.Title?.title?.[0]?.plain_text||'Event', date: r.properties?.Date?.date?.start, project: r.properties?.Project?.relation?.[0]?.id }));
-          state.events = items; return items;
-        }
-      }catch(e){ console.warn('Notion events fetch failed', e); }
-      state.events = [{id:'e1',title:'Orientation',date:new Date(Date.now()+86400000).toISOString(),project:'nisa'}]; return state.events;
-    }
-
-    async function showEvents(projectId){ await fetchEvents(); const list = state.events.filter(ev=>!projectId||ev.project===projectId).map(ev=>`<div style="margin-bottom:.6rem"><strong>${escapeHtml(ev.title)}</strong><div style="font-size:.95rem;color:var(--muted)">${new Date(ev.date).toLocaleString()}</div></div>`).join(''); $('#events-list').innerHTML = list; showOverlay('#overlay-events'); }
-
-    $('#close-events').addEventListener('click',()=>hideOverlay('#overlay-events'));
-
-    /* ==================================================
-       ANALYTICS MODULE (Admin)
-       - Client-side simulated stats + hook for server logging
-       ================================================== */
-    const Analytics = {
-      log(event,payload={}){ console.info('[analytics]',event,payload); if(CONFIG.BACKEND_ENDPOINT) fetch(CONFIG.BACKEND_ENDPOINT+'/analytics',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event,payload})}); }
-    };
-
-    function computeAnalytics(){
-      const topVisited = state.projects.slice(0,5).map(p=>({title:p.title,visits: Math.floor(Math.random()*500)}));
-      const topFavs = [...state.favorites].map(id=>state.projects.find(p=>p.id===id)).filter(Boolean).map(p=>({title:p.title,favs:Math.floor(Math.random()*100)}));
-      return {topVisited,topFavs, userCount: Math.floor(Math.random()*1200)};
-    }
-
-    function showAnalytics(){ if(!state.user||state.user.role!=='admin') return alert('Admin access required'); const a=computeAnalytics(); $('#analytics-content').innerHTML = `<div><strong>Active users:</strong> ${a.userCount}</div><div style="margin-top:.6rem"><strong>Top visited</strong><ul>${a.topVisited.map(t=>`<li>${escapeHtml(t.title)} — ${t.visits} visits</li>`).join('')}</ul></div><div style="margin-top:.6rem"><strong>Top favorites</strong><ul>${a.topFavs.map(t=>`<li>${escapeHtml(t.title)} — ${t.favs} favs</li>`).join('')}</ul></div>`; showOverlay('#overlay-analytics'); }
-    $('#close-analytics').addEventListener('click',()=>hideOverlay('#overlay-analytics'));
-
-    /* ==================================================
-       MOBILE PREVIEW
-       - Renders a simple snapshot of the portal inside the mobile frame
-       ================================================== */
-    function showMobilePreview(){ const mobile = $('#mobile-frame'); mobile.innerHTML = `<div style="padding:12px;font-size:14px"><strong>${escapeHtml(document.querySelector('header.hero h1').textContent)}</strong><div style="margin-top:8px">${state.projects.slice(0,4).map(p=>`<div style='padding:.6rem;border-radius:8px;margin-bottom:.5rem;background:rgba(0,0,0,0.08)'><div style='font-weight:700'>${escapeHtml(p.title)}</div><div style='font-size:.85rem;color:var(--muted)'>${escapeHtml(p.description)}</div></div>`).join('')}</div></div>`; showOverlay('#overlay-mobile'); }
-    $('#close-mobile').addEventListener('click',()=>hideOverlay('#overlay-mobile'));
-
-    /* ==================================================
-       FAVORITES
-       ================================================== */
-    function toggleFav(id){ if(state.favorites.has(id)) state.favorites.delete(id); else state.favorites.add(id); saveFavorites(); renderProjects(); Analytics.log('fav_toggle',{id, fav: state.favorites.has(id)}); }
-
-    /* ==================================================
-       FILTER / SEARCH / SORT / SETTINGS bindings
-       ================================================== */
-    $('#search').addEventListener('input',e=>{ state.search=e.target.value; renderProjects(); });
-    $$('.chip').forEach(ch=>ch.addEventListener('click',()=>{ $$('.chip').forEach(c=>c.setAttribute('aria-pressed','false')); ch.setAttribute('aria-pressed','true'); state.filter = ch.dataset.filter; renderProjects(); }));
-    $('#sort-btn').addEventListener('click',()=>{ state.sortAsc=!state.sortAsc; renderProjects(); });
-    $('#settings-btn').addEventListener('click',()=>{ const panel=$('#settings-panel'); panel.style.display = panel.style.display==='block' ? 'none' : 'block'; });
-
-    // Settings controls
-    $('#theme-select').addEventListener('change',e=>{ state.theme=e.target.value; setTheme(state.theme); });
-    $('#contrast-toggle').addEventListener('change',e=>{ state.contrast=e.target.checked; setContrast(state.contrast); });
-    $('#particles-range').addEventListener('input',e=>{ state.particles = Number(e.target.value); localStorage.setItem('particles',String(state.particles)); initParticles(); });
-    $('#lang-select').addEventListener('change',e=>{ state.lang=e.target.value; localStorage.setItem('lang',state.lang); applyI18n(); });
-    $('#open-settings').addEventListener('click',()=>{ $('#settings-panel').style.display = 'block'; });
-
-    $('#open-ann').addEventListener('click',()=>showAnnouncements());
-    $('#open-auth').addEventListener('click',()=>showOverlay('#overlay-auth'));
-
-    /* ==================================================
-       HOVER TARGET (for particles)
-       ================================================== */
-    let hoverTarget = null; let currentColor = 'rgba(255,255,255,0.85)';
-    function setHover(el,color){ const r=el.getBoundingClientRect(); hoverTarget={x:r.left+r.width/2,y:r.top+r.height/2}; currentColor = color||currentColor; }
-    function setHoverPoint(x,y){ hoverTarget={x,y}; }
-    function clearHover(){ hoverTarget=null; currentColor='rgba(255,255,255,0.85)'; }
-
-    /* ==================================================
-       PARTICLE SYSTEM
-       ================================================== */
-    const canvas = document.getElementById('particles'); const ctx = canvas.getContext('2d'); let particlesArr = [];
-    function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize',resizeCanvas); resizeCanvas();
-
-    class Particle{ constructor(){ this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.size=Math.random()*2+0.6; this.vx=(Math.random()-0.5)*1.2; this.vy=(Math.random()-0.5)*1.2; }
-      update(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width) this.vx*=-1; if(this.y<0||this.y>canvas.height) this.vy*=-1; if(hoverTarget){ const dx=hoverTarget.x-this.x; const dy=hoverTarget.y-this.y; const d=Math.hypot(dx,dy); if(d<160){ this.x+=dx*0.018; this.y+=dy*0.018; } } }
-      draw(){ ctx.fillStyle=currentColor; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
-    }
-
-    function initParticles(){ particlesArr=[]; const c=state.particles||100; for(let i=0;i<c;i++) particlesArr.push(new Particle()); }
-    function connect(){ for(let a=0;a<particlesArr.length;a++){ for(let b=a+1;b<particlesArr.length;b++){ const dx=particlesArr[a].x-particlesArr[b].x; const dy=particlesArr[a].y-particlesArr[b].y; const d=Math.hypot(dx,dy); if(d<120){ const alpha = Math.max(0.04,1-d/120); ctx.strokeStyle = currentColor.replace(/rgba([^)]+)/, (m,inner)=>{ const parts = inner.split(',').map(s=>s.trim()); if(parts.length===4){ parts[3]=alpha.toFixed(2); return `rgba(${parts.join(', ')})`; } return `rgba(255,255,255,${alpha.toFixed(2)})`; }); ctx.lineWidth=0.5; ctx.beginPath(); ctx.moveTo(particlesArr[a].x,particlesArr[a].y); ctx.lineTo(particlesArr[b].x,particlesArr[b].y); ctx.stroke(); } } } }
-
-    function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); for(const p of particlesArr){ p.update(); p.draw(); } connect(); requestAnimationFrame(animate); }
-    initParticles(); animate();
-
-    /* ==================================================
-       I18N (Multi-language)
-       Simple inline dictionary. Expandable to external files / Notion translations.
-       ================================================== */
-    const DICT = {
-      en: { explore: 'Explore, connect, and grow — all in one place.', signin:'Sign In', announcements:'Announcements', events:'Events' },
-      fr: { explore: 'Explorez, connectez-vous et grandissez — tout en un seul endroit.', signin:'Se connecter', announcements:'Annonces', events:'Événements' },
-      ar: { explore: 'استكشف، تواصل، وانمِ — كل ذلك في مكان واحد.', signin:'تسجيل الدخول', announcements:'الإعلانات', events:'الأحداث' }
-    };
-    function applyI18n(){ const d = DICT[state.lang]||DICT.en; $('#tagline').textContent = d.explore; $('#open-ann').textContent = `📢 ${d.announcements}`; $('#open-auth').textContent = `🔐 ${d.signin}`; }
-    applyI18n();
-
-    /* ==================================================
-       BOOTSTRAP: Load projects from Notion (or fallback)
-       ================================================== */
-    async function loadProjectsFromNotion(){
-      if(CONFIG.NOTION_PROJECTS_DB && CONFIG.NOTION_API_KEY && !CONFIG.BACKEND_ENDPOINT){
-        try{ const res = await notionFetchDatabase(CONFIG.NOTION_PROJECTS_DB); const pages = res.results||[]; const list = pages.map(notionPageToProject).filter(Boolean); state.projects = list.length? list : localDefaults; return state.projects; }catch(e){ console.warn('Notion projects load failed',e); state.projects = localDefaults; return state.projects; }
-      }
-      state.projects = localDefaults; return state.projects;
-    }
-
-    async function boot(){ await loadProjectsFromNotion(); renderProjects(); }
-    boot();
-
-    /* ==================================================
-       Small helpers & UI utilities
-       ================================================== */
-    function showOverlay(sel){ document.querySelectorAll('.overlay').forEach(o=>o.style.display='none'); const el = document.querySelector(sel); if(el){ el.style.display='flex'; el.setAttribute('aria-hidden','false'); } }
-    function hideOverlay(sel){ const el = document.querySelector(sel); if(el){ el.style.display='none'; el.setAttribute('aria-hidden','true'); } }
-
-    function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-
-    // Announcements / events shortcuts
-    $('#open-ann').addEventListener('click',()=>showAnnouncements());
-    function showAnnouncements(){ showAnnouncements; } // placeholder to avoid lint warning (real handler above)
-
-    // Analytics admin open
-    document.addEventListener('keydown',e=>{ if(e.key==='A'&&e.ctrlKey&&state.user&&state.user.role==='admin'){ showAnalytics(); } });
-
-    // quick bindings for overlays
-    $('#open-settings').addEventListener('click',()=>{ const p=$('#settings-panel'); p.style.display = p.style.display==='block' ? 'none' : 'block'; });
-    $('#open-ann').addEventListener('click',()=>showAnnouncements());
-    $('#open-auth').addEventListener('click',()=>showOverlay('#overlay-auth'));
-
-    // small fixes: ensure overlay click outside closes
-    $$('.overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.style.display='none'; }));
-
-    // expose some functions for debugging in console
-    window.__PORTAL = { state, CONFIG, notionFetchDatabase, notionPageToProject, mockLogin, mockLogout, loginServer, logoutServer };
-
-  </script></body>
-  </html>
+</body>
+</html>
