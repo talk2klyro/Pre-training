@@ -1,299 +1,456 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Client</title>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Client</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🌍 Multi-Client Portal — Outstanding Build</title>
+  <meta name="description" content="A scalable, accessible, and visually immersive multi-client portal with dynamic data, search, filters, favorites, theming, and particle background." />
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background: #0d0d0d;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    /* =============================
+       DESIGN SYSTEM (CSS Variables)
+       ============================= */
+    :root {
+      --bg: #0d0d0d;
+      --bg-soft: rgba(255,255,255,0.05);
+      --text: #ffffff;
+      --muted: #cfcfcf;
+      --accent: #00f5d4; /* default accent */
+      --accent-2: #ffda79;
+      --danger: #ff5e57;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255,255,255,0.12);
+      --card-border-hover: rgba(255,255,255,0.3);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --shadow-strong: 0 15px 40px rgba(0,0,0,0.55);
+      --radius: 20px;
+      --radius-lg: 24px;
+      --glass-blur: blur(15px);
+      --transition: 220ms ease;
+    }/* Light theme */
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-soft: rgba(0,0,0,0.04);
+  --text: #0b1020;
+  --muted: #475569;
+  --card: rgba(0,0,0,0.04);
+  --card-border: rgba(0,0,0,0.12);
+  --card-border-hover: rgba(0,0,0,0.28);
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-strong: 0 15px 40px rgba(0,0,0,0.12);
+}
 
-    canvas#particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
+/* High contrast mode */
+[data-contrast="high"] {
+  --bg: #000;
+  --text: #fff;
+  --muted: #ddd;
+  --bg-soft: #111;
+  --card: #111;
+  --card-border: #333;
+  --card-border-hover: #777;
+  --shadow: none;
+  --shadow-strong: none;
+}
 
-    .hero {
-      text-align: center;
-      padding: 3rem 1rem;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
+/* Base resets */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; padding: 0; overflow: hidden;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
+  color: var(--text); background: var(--bg);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: #ffda79;
-    }
+/* Accessibility: Skip link */
+.skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.skip-link:focus { left: 1rem; top: 1rem; width: auto; height: auto; background: var(--accent); color: #000; padding: .5rem 1rem; border-radius: 10px; }
 
-    .hero p {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
+/* Canvas background */
+canvas#particles { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; }
 
-    .container {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-    }
+/* Header / Hero */
+.hero {
+  text-align: center; padding: 2.5rem 1rem 1.25rem;
+  background: var(--bg-soft); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+}
+.hero h1 { font-size: clamp(1.8rem, 2.5vw, 3rem); margin: 0 0 .4rem; color: var(--accent-2); }
+.hero p { font-size: 1.05rem; opacity: .9; margin: 0; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      width: 100%;
-      max-width: 900px;
-    }
+/* Controls bar */
+.controls {
+  display: grid; grid-template-columns: 1fr auto auto; gap: .75rem; align-items: center;
+  padding: 1rem; max-width: 1100px; margin: 0 auto;
+}
+.search {
+  display: flex; align-items: center; gap: .6rem; background: var(--card);
+  border: 1px solid var(--card-border); border-radius: var(--radius);
+  padding: .75rem 1rem; box-shadow: var(--shadow);
+}
+.search input { flex: 1; background: transparent; border: 0; color: var(--text); font-size: 1rem; outline: none; }
 
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transform-style: preserve-3d;
-      position: relative;
-      z-index: 2;
-    }
+.seg { display: flex; gap: .5rem; }
+.seg button, .btn {
+  background: var(--card); border: 1px solid var(--card-border);
+  color: var(--text); padding: .6rem .9rem; border-radius: 12px; cursor: pointer;
+  font-weight: 600; transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.seg button[aria-pressed="true"], .btn.primary { border-color: var(--card-border-hover); box-shadow: var(--shadow-strong); }
+.btn.primary { background: var(--accent); color: #03120f; }
+.btn.icon { padding: .6rem; aspect-ratio: 1 / 1; display: grid; place-items: center; }
 
-    .card:hover {
-      transform: translateY(-10px) scale(1.05) rotateX(5deg);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
+/* Container / Grid */
+.container { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 1.5rem; overflow: auto; }
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;
+  width: 100%; max-width: 1100px;
+}
 
-    .card h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.5rem;
-      color: #00f5d4;
-    }
+/* Card */
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 1.2rem 1.2rem 1rem; text-align: left; cursor: pointer;
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease; backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--card-border); box-shadow: var(--shadow); position: relative; z-index: 2; outline: none;
+}
+.card:hover, .card:focus-visible { transform: translateY(-8px) scale(1.02); box-shadow: var(--shadow-strong); border-color: var(--card-border-hover); }
+.card h2 { margin: 0 0 .35rem; font-size: 1.25rem; color: var(--accent); display: flex; align-items: center; gap: .5rem; }
+.card p { margin: 0; font-size: .98rem; opacity: .92; line-height: 1.45; }
+.tags { margin-top: .75rem; display: flex; flex-wrap: wrap; gap: .35rem; }
+.tag { font-size: .75rem; padding: .25rem .5rem; border-radius: 999px; background: var(--bg-soft); border: 1px solid var(--card-border); }
+.fav { position: absolute; top: .6rem; right: .6rem; background: transparent; border: 0; font-size: 1.2rem; cursor: pointer; }
 
-    .card p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
+/* Footer */
+.footer { text-align: center; padding: .9rem; background: var(--bg-soft); border-top: 1px solid var(--card-border); font-size: .95rem; color: var(--muted); }
 
-    .footer {
-      text-align: center;
-      padding: 1rem;
-      background: rgba(255,255,255,0.05);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.9rem;
-      color: #ccc;
-    }
+/* Overlay (Modal) */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); display: none; align-items: center; justify-content: center; z-index: 1000; }
+.overlay-content {
+  background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: var(--radius-lg); max-width: 680px; width: min(92vw, 680px);
+  text-align: left; box-shadow: var(--shadow-strong); backdrop-filter: blur(12px); animation: fadeIn .25s ease;
+  border: 1px solid var(--card-border);
+}
+.overlay-title { margin: 0 0 .5rem; color: var(--accent-2); font-size: 1.4rem; }
+.overlay-desc { margin: 0 0 1rem; line-height: 1.6; }
+.overlay-buttons { display: flex; gap: .6rem; flex-wrap: wrap; }
+.close-btn { margin-top: 1rem; background: var(--danger); color: #fff; }
 
-    /* Overlay */
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
+/* Settings Panel (floating) */
+.settings {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 1100; display: grid; gap: .6rem; justify-items: end;
+}
+.settings-panel {
+  display: none; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
+  padding: 1rem; width: min(92vw, 360px); box-shadow: var(--shadow-strong); backdrop-filter: var(--glass-blur);
+}
+.settings-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .75rem; margin-bottom: .6rem; }
+.range { width: 140px; }
 
-    .overlay-content {
-      background: rgba(255,255,255,0.1);
-      padding: 2rem;
-      border-radius: 20px;
-      max-width: 600px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 0.3s ease;
-    }
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
+@keyframes pulse { 0%,100%{ box-shadow: 0 0 10px var(--accent);} 50%{ box-shadow: 0 0 24px var(--accent);} }
 
-    .overlay-content h2 {
-      color: #ffda79;
-      margin-bottom: 1rem;
-    }
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .overlay-content { animation: none; }
+}
 
-    .overlay-content p {
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-
-    .overlay-buttons button {
-      background: #00f5d4;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: transform 0.3s, box-shadow 0.3s;
-      animation: pulse 2s infinite;
-    }
-
-    .overlay-buttons button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 20px #00f5d4;
-    }
-
-    .close-btn {
-      margin-top: 1.5rem;
-      background: #ff5e57 !important;
-      animation: none !important;
-      color: #fff;
-    }
-
-    .close-btn:hover {
-      background: #cc4943 !important;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 10px #00f5d4; }
-      50% { box-shadow: 0 0 25px #00f5d4; }
-    }
   </style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
-
-  <header class="hero">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <canvas id="particles" aria-hidden="true"></canvas>  <header class="hero" role="banner">
     <h1>🌍 Multi-Client Portal</h1>
-    <p>Select a project to explore</p>
-  </header>
-
-  <section class="container">
-    <div class="grid">
-      <div class="card" data-client="nisa">
-        <h2>📚 MADARASATUN-NISA</h2>
-        <p>Online Islamic school with student management & attendance tracking.</p>
-      </div>
-      <div class="card" data-client="chef">
-        <h2>🍴 CHEF-COMMUNITY</h2>
-        <p>Cooking classes, community meals, and chef-led events.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2025 Multi-Client Platform | Powered by You 🚀</p>
-  </footer>
-
-  <!-- Overlay -->
-  <div class="overlay" id="overlay">
-    <div class="overlay-content">
-      <h2 id="overlay-title">Project Title</h2>
-      <p id="overlay-description">Project description goes here...</p>
-      <div class="overlay-buttons">
-        <button id="experience-btn">🌟 Enter Experience</button>
-      </div>
-      <button class="close-btn" id="close-btn">❌ Close</button>
-    </div>
+    <p>Explore, connect, and grow — all in one place.</p><div class="controls" role="region" aria-label="Portal controls">
+  <div class="search" role="search">
+    <span aria-hidden="true">🔎</span>
+    <input id="search" type="search" placeholder="Search projects, tags, or descriptions…" autocomplete="off" aria-label="Search projects" />
   </div>
 
-  <script>
-    const overlay = document.getElementById('overlay');
-    const overlayTitle = document.getElementById('overlay-title');
-    const overlayDescription = document.getElementById('overlay-description');
-    const experienceBtn = document.getElementById('experience-btn');
-    const closeBtn = document.getElementById('close-btn');
+  <div class="seg" role="group" aria-label="Category filter">
+    <button class="chip" data-filter="all" aria-pressed="true">All</button>
+    <button class="chip" data-filter="education" aria-pressed="false">Education</button>
+    <button class="chip" data-filter="community" aria-pressed="false">Community</button>
+    <button class="chip" data-filter="future" aria-pressed="false">Future</button>
+  </div>
 
-    const projects = {
-      nisa: {
-        title: "📚 MADARASATUN-NISA",
-        description: "Explore the Islamic school platform with an immersive demo and hands-on sandbox in one place.",
-        experience: "madarasatun-nisa/demo-sandbox-nisa.html"
+  <div class="seg" role="group" aria-label="Sort">
+    <button id="sort-btn" class="btn icon" title="Sort A→Z" aria-pressed="false">↕️</button>
+    <button id="settings-btn" class="btn icon" title="Settings" aria-haspopup="true" aria-expanded="false">⚙️</button>
+  </div>
+</div>
+
+  </header>  <main id="main" class="container" role="main">
+    <div class="grid" id="project-grid" aria-live="polite"></div>
+  </main>  <footer class="footer">&copy; 2025 Multi-Client Platform • Built for scale 🚀</footer>  <!-- Overlay / Modal -->  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+    <div class="overlay-content">
+      <h2 id="overlay-title" class="overlay-title">Project Title</h2>
+      <p id="overlay-description" class="overlay-desc">Project description goes here…</p>
+      <div class="overlay-buttons">
+        <button id="experience-btn" class="btn primary">🌟 Enter Experience</button>
+        <button id="visit-btn" class="btn">🔗 Open Portal</button>
+        <button id="fav-btn" class="btn">⭐ Add to Favorites</button>
+      </div>
+      <button class="btn close-btn" id="close-btn">❌ Close</button>
+    </div>
+  </div>  <!-- Settings (Theme, Contrast, Particles) -->  <div class="settings" aria-label="Settings">
+    <div class="settings-panel" id="settings-panel" role="dialog" aria-modal="false" aria-labelledby="settings-title">
+      <h3 id="settings-title" style="margin:0 0 .5rem">Settings</h3>
+      <div class="settings-row">
+        <label for="theme-select">Theme</label>
+        <select id="theme-select" aria-label="Theme">
+          <option value="system">System</option>
+          <option value="dark" selected>Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <label for="contrast-toggle">High Contrast</label>
+        <input type="checkbox" id="contrast-toggle" />
+      </div>
+      <div class="settings-row">
+        <label for="particles-range">Particles</label>
+        <input type="range" id="particles-range" class="range" min="0" max="200" step="10" value="100" />
+      </div>
+    </div>
+  </div>  <script>
+    /* =====================================================
+       DATA MODEL — Editable project registry (extend freely)
+       ===================================================== */
+    const projects = [
+      {
+        id: 'nisa',
+        title: '📚 MADARASATUN-NISA',
+        description: 'Online Islamic school: student records, attendance tracking, and immersive learning demos.',
+        portal: 'madarasatun-nisa/index.html',
+        experience: 'madarasatun-nisa/demo-sandbox-nisa.html',
+        category: 'education',
+        color: 'rgba(0,245,212,0.85)',
+        tags: ['school', 'attendance', 'LMS']
       },
-      chef: {
-        title: "🍴 CHEF-COMMUNITY",
-        description: "Join the culinary hub with interactive demos and sandbox cooking features together.",
-        experience: "chef-community/demo-sandbox-chef.html"
+      {
+        id: 'chef',
+        title: '🍴 CHEF-COMMUNITY',
+        description: 'Culinary hub for classes, shared meals, and chef-led events with interactive demos.',
+        portal: 'chef-community/index.html',
+        experience: 'chef-community/demo-sandbox-chef.html',
+        category: 'community',
+        color: 'rgba(255,165,0,0.9)',
+        tags: ['events', 'recipes', 'bookings']
+      },
+      {
+        id: 'future',
+        title: '🚀 FUTURE CLIENT',
+        description: 'Placeholder for the next big idea. Clone this card and create new experiences fast.',
+        portal: 'future-client/index.html',
+        experience: 'future-client/demo.html',
+        category: 'future',
+        color: 'rgba(138, 180, 248, 0.95)',
+        tags: ['coming-soon', 'concept']
       }
+    ];
+
+    /* =====================================================
+       STATE & UTILITIES (favorites, theme, filtering, sorting)
+       ===================================================== */
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+    const state = {
+      favorites: new Set(JSON.parse(localStorage.getItem('favorites') || '[]')),
+      search: '',
+      filter: 'all',
+      sortAsc: true,
+      theme: localStorage.getItem('theme') || 'dark',
+      contrast: localStorage.getItem('contrast') === 'true',
+      particleCount: Number(localStorage.getItem('particleCount') || 100)
     };
 
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        const clientKey = card.getAttribute('data-client');
-        const project = projects[clientKey];
+    const saveFavorites = () => localStorage.setItem('favorites', JSON.stringify([...state.favorites]));
+    const setTheme = (mode) => {
+      const root = document.documentElement;
+      if (mode === 'system') {
+        root.removeAttribute('data-theme');
+      } else {
+        root.setAttribute('data-theme', mode);
+      }
+      localStorage.setItem('theme', mode);
+    };
+    const setContrast = (high) => {
+      document.documentElement.setAttribute('data-contrast', high ? 'high' : 'normal');
+      localStorage.setItem('contrast', String(high));
+    };
 
-        overlayTitle.textContent = project.title;
-        overlayDescription.textContent = project.description;
-        experienceBtn.onclick = () => window.location.href = project.experience;
+    /* =====================================================
+       RENDER — Cards, Filters, Search, Sorting, Hover Tracking
+       ===================================================== */
+    const grid = $('#project-grid');
+    const overlay = $('#overlay');
+    const overlayTitle = $('#overlay-title');
+    const overlayDescription = $('#overlay-description');
+    const experienceBtn = $('#experience-btn');
+    const visitBtn = $('#visit-btn');
+    const favBtn = $('#fav-btn');
 
-        overlay.style.display = 'flex';
+    function cardTemplate(p) {
+      const isFav = state.favorites.has(p.id);
+      return `
+        <article class="card" role="button" tabindex="0" aria-label="${p.title}" data-id="${p.id}" data-color="${p.color}">
+          <button class="fav" title="Toggle favorite" aria-label="Toggle favorite for ${p.title}" data-fav="${p.id}">${isFav ? '⭐' : '☆'}</button>
+          <h2 style="--accent:${p.color}"><span>${p.title}</span></h2>
+          <p>${p.description}</p>
+          <div class="tags">${p.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+        </article>
+      `;
+    }
+
+    function filterSortSearch(list) {
+      let out = list.slice();
+      // filter
+      if (state.filter !== 'all') out = out.filter(p => p.category === state.filter);
+      // search
+      if (state.search.trim()) {
+        const q = state.search.toLowerCase();
+        out = out.filter(p => `${p.title} ${p.description} ${p.tags.join(' ')}`.toLowerCase().includes(q));
+      }
+      // sort (favorites first, then alpha asc/desc)
+      out.sort((a, b) => {
+        const favA = state.favorites.has(a.id) ? 0 : 1;
+        const favB = state.favorites.has(b.id) ? 0 : 1;
+        if (favA !== favB) return favA - favB;
+        return state.sortAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
       });
+      return out;
+    }
+
+    function render() {
+      grid.innerHTML = filterSortSearch(projects).map(cardTemplate).join('');
+      bindCardInteractions();
+    }
+
+    function bindCardInteractions() {
+      $$('.card', grid).forEach(card => {
+        const id = card.dataset.id;
+        // Hover -> influence particle color and attraction target
+        card.addEventListener('mouseenter', (e) => setHoverTarget(card, card.dataset.color));
+        card.addEventListener('mousemove', (e) => updateHoverPoint(e.clientX, e.clientY));
+        card.addEventListener('mouseleave', clearHoverTarget);
+        // Open modal on click/Enter
+        card.addEventListener('click', () => openModal(id));
+        card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(id); } });
+      });
+
+      // Favorite toggles
+      $$('button.fav', grid).forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = btn.getAttribute('data-fav');
+          if (state.favorites.has(id)) state.favorites.delete(id); else state.favorites.add(id);
+          saveFavorites();
+          render();
+        });
+      });
+    }
+
+    function openModal(id) {
+      const p = projects.find(x => x.id === id);
+      if (!p) return;
+      overlayTitle.textContent = p.title;
+      overlayDescription.textContent = p.description;
+      experienceBtn.onclick = () => location.href = p.experience;
+      visitBtn.onclick = () => location.href = p.portal;
+      favBtn.textContent = state.favorites.has(p.id) ? '⭐ Remove Favorite' : '⭐ Add to Favorites';
+      favBtn.onclick = () => { if (state.favorites.has(p.id)) state.favorites.delete(p.id); else state.favorites.add(p.id); saveFavorites(); render(); };
+      overlay.style.display = 'flex';
+      overlay.focus();
+      // particles color shift to project color while modal open
+      currentColor = p.color;
+    }
+
+    $('#close-btn').addEventListener('click', () => { overlay.style.display = 'none'; clearHoverTarget(); });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) { overlay.style.display = 'none'; clearHoverTarget(); } });
+
+    // Controls: search, filter chips, sort, settings toggle
+    const searchInput = $('#search');
+    searchInput.addEventListener('input', (e) => { state.search = e.target.value; render(); });
+
+    $$('.chip').forEach(btn => btn.addEventListener('click', () => {
+      $$('.chip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      state.filter = btn.dataset.filter; render();
+    }));
+
+    const sortBtn = $('#sort-btn');
+    sortBtn.addEventListener('click', () => { state.sortAsc = !state.sortAsc; sortBtn.setAttribute('aria-pressed', String(!state.sortAsc)); render(); });
+
+    const settingsBtn = $('#settings-btn');
+    const settingsPanel = $('#settings-panel');
+    settingsBtn.addEventListener('click', () => {
+      const open = settingsPanel.style.display === 'block';
+      settingsPanel.style.display = open ? 'none' : 'block';
+      settingsBtn.setAttribute('aria-expanded', String(!open));
     });
 
-    closeBtn.addEventListener('click', () => {
-      overlay.style.display = 'none';
-    });
+    // Settings: theme, contrast, particles count
+    const themeSelect = $('#theme-select');
+    const contrastToggle = $('#contrast-toggle');
+    const particlesRange = $('#particles-range');
 
-    /* Particle Background */
-    const canvas = document.getElementById("particles");
-    const ctx = canvas.getContext("2d");
+    // Initialize settings from state
+    (function initSettings() {
+      setTheme(state.theme);
+      themeSelect.value = state.theme;
+      setContrast(state.contrast);
+      contrastToggle.checked = state.contrast;
+      particlesRange.value = state.particleCount;
+    })();
+
+    themeSelect.addEventListener('change', () => { state.theme = themeSelect.value; setTheme(state.theme); });
+    contrastToggle.addEventListener('change', () => { state.contrast = contrastToggle.checked; setContrast(state.contrast); });
+    particlesRange.addEventListener('input', () => { state.particleCount = Number(particlesRange.value); localStorage.setItem('particleCount', String(state.particleCount)); initParticles(); });
+
+    /* =====================================================
+       PARTICLE BACKGROUND — with hover attraction & color
+       ===================================================== */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
     let particles = [];
+    let hoverTarget = null; // {x, y}
+    let currentColor = 'rgba(255,255,255,0.85)';
 
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 1.5;
-        this.speedY = (Math.random() - 0.5) * 1.5;
+        this.size = Math.random() * 2.2 + 0.8;
+        this.speedX = (Math.random() - 0.5) * 1.2;
+        this.speedY = (Math.random() - 0.5) * 1.2;
       }
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.speedX; this.y += this.speedY;
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        if (hoverTarget) {
+          const dx = hoverTarget.x - this.x; const dy = hoverTarget.y - this.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 160) { this.x += dx * 0.018; this.y += dy * 0.018; }
+        }
       }
       draw() {
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillStyle = currentColor; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
       }
     }
 
     function initParticles() {
       particles = [];
-      for (let i = 0; i < 100; i++) {
-        particles.push(new Particle());
-      }
+      const count = state.particleCount;
+      for (let i = 0; i < count; i++) particles.push(new Particle());
     }
 
     function connectParticles() {
@@ -301,14 +458,16 @@
         for (let b = a + 1; b < particles.length; b++) {
           const dx = particles[a].x - particles[b].x;
           const dy = particles[a].y - particles[b].y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
+          const dist = Math.hypot(dx, dy);
           if (dist < 120) {
-            ctx.strokeStyle = "rgba(255,255,255,"+(1 - dist / 120).toFixed(2)+")";
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(particles[b].x, particles[b].y);
-            ctx.stroke();
+            const alpha = Math.max(0.05, 1 - dist / 120);
+            // Attempt to preserve incoming rgba alpha if provided as rgba(r,g,b,alpha)
+            ctx.strokeStyle = currentColor.replace(/rgba([^)]+)/, (m, inner) => {
+              const parts = inner.split(',').map(s => s.trim());
+              if (parts.length === 4) { parts[3] = String(alpha.toFixed(2)); return `rgba(${parts.join(', ')})`; }
+              return `rgba(255,255,255,${alpha.toFixed(2)})`;
+            });
+            ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(particles[a].x, particles[a].y); ctx.lineTo(particles[b].x, particles[b].y); ctx.stroke();
           }
         }
       }
@@ -316,16 +475,42 @@
 
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
+      for (const p of particles) { p.update(); p.draw(); }
       connectParticles();
       requestAnimationFrame(animateParticles);
     }
 
+    function setHoverTarget(el, color) {
+      const rect = el.getBoundingClientRect();
+      hoverTarget = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+      currentColor = color || 'rgba(255,255,255,0.85)';
+    }
+    function updateHoverPoint(x, y) { hoverTarget = { x, y }; }
+    function clearHoverTarget() { hoverTarget = null; currentColor = 'rgba(255,255,255,0.85)'; }
+
+    // Init
     initParticles();
     animateParticles();
-  </script>
-</body>
-</html>
+
+    /* =====================================================
+       INIT RENDER
+       ===================================================== */
+    render();
+
+    /* =====================================================
+       ANALYTICS (simple, client-side) — Optional stub
+       ===================================================== */
+    const Analytics = {
+      log(event, payload={}) {
+        // For now: send to console. Replace with real endpoint later.
+        console.info(`[analytics] ${event}`, payload);
+      }
+    };
+
+    // Example tracking
+    document.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if (card) Analytics.log('card_click', { id: card.dataset.id });
+    });
+  </script></body>
+      </html>
