@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Select Client</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
@@ -105,7 +104,6 @@
   </style>
 </head>
 <body>
-  <!-- Particle background -->
   <canvas id="particles"></canvas>
 
   <header class="hero">
@@ -135,6 +133,7 @@
     const ctx = canvas.getContext("2d");
     let particles = [];
     let hoverTarget = null;
+    let currentColor = "rgba(255,255,255,0.8)"; // default white
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -169,7 +168,7 @@
         }
       }
       draw() {
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
+        ctx.fillStyle = currentColor;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -190,7 +189,7 @@
           const dy = particles[a].y - particles[b].y;
           const dist = Math.sqrt(dx*dx + dy*dy);
           if (dist < 120) {
-            ctx.strokeStyle = `rgba(255,255,255,${1 - dist / 120})`;
+            ctx.strokeStyle = currentColor.replace("0.8", (1 - dist / 120).toFixed(2));
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(particles[a].x, particles[a].y);
@@ -211,27 +210,30 @@
       requestAnimationFrame(animateParticles);
     }
 
-    function trackHover(card) {
+    // Hover tracking + color switching
+    function trackHover(card, color) {
       card.addEventListener("mouseenter", () => {
         const rect = card.getBoundingClientRect();
         hoverTarget = {
           x: rect.left + rect.width / 2,
           y: rect.top + rect.height / 2
         };
+        currentColor = color;
       });
       card.addEventListener("mousemove", (e) => {
         hoverTarget = { x: e.clientX, y: e.clientY };
       });
       card.addEventListener("mouseleave", () => {
         hoverTarget = null;
+        currentColor = "rgba(255,255,255,0.8)";
       });
     }
 
-    trackHover(document.getElementById("card-nisa"));
-    trackHover(document.getElementById("card-chef"));
+    trackHover(document.getElementById("card-nisa"), "rgba(0,245,212,0.8)"); // cyan
+    trackHover(document.getElementById("card-chef"), "rgba(255,165,0,0.8)"); // orange
 
     initParticles();
     animateParticles();
   </script>
 </body>
-  </html>
+</html>
