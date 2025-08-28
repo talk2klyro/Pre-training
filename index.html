@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive SaaS Roadmap Dashboard</title>
+<title>Interactive SaaS Investor Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   body {
     margin: 0;
@@ -46,52 +47,86 @@
     background: rgba(255,255,255,0.1);
     padding: 2rem;
     border-radius: 15px;
-    max-width: 700px;
+    max-width: 900px;
     text-align:center;
     animation:fadeIn 0.3s ease;
+    overflow-y:auto;
+    max-height:90vh;
   }
   .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
   .modal-content p { margin-bottom:1rem; line-height:1.5; }
   .close-btn {
     background:#ff5e57; border:none; padding:0.7rem 1.5rem;
     border-radius:8px; cursor:pointer; color:#fff; font-weight:bold;
+    margin-top:1rem;
   }
+  .dashboard {
+    display:flex; justify-content:space-between; margin-top:1rem;
+    gap:1rem; flex-wrap:wrap;
+  }
+  .notifications, .sandbox-preview, .charts {
+    background: rgba(255,255,255,0.08);
+    padding:1rem;
+    border-radius:12px;
+    flex:1 1 300px;
+    max-height:400px;
+    overflow-y:auto;
+  }
+  .notifications h4, .charts h4, .sandbox-preview h4 { margin-top:0; color:#ffda79; }
+  ul { padding-left:1rem; margin:0; }
+  li { margin-bottom:0.5rem; }
+  iframe { width:100%; height:250px; border:none; border-radius:8px; }
   @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🌐 Interactive SaaS Roadmap</h1>
-  <p>Investor Demo: Visualizing Multi-Client SaaS Phases & Modules</p>
+  <h1>🌐 Interactive SaaS Investor Dashboard</h1>
+  <p>Live Demo: Phases, Sandbox, Notifications & Analytics</p>
 </header>
 
-<section class="container" id="phase-container">
-  <!-- Phase cards generated via JS -->
-</section>
+<section class="container" id="phase-container"></section>
 
 <!-- Modal for Phase Details -->
 <div class="modal" id="phase-modal">
   <div class="modal-content">
     <h3 id="modal-title"></h3>
     <p id="modal-description"></p>
+
+    <div class="dashboard">
+      <div class="notifications">
+        <h4>🔔 Live Notifications</h4>
+        <ul id="notif-list"></ul>
+      </div>
+      <div class="sandbox-preview">
+        <h4>🧪 Sandbox Preview</h4>
+        <iframe src="about:blank" id="sandbox-frame"></iframe>
+      </div>
+      <div class="charts">
+        <h4>📊 Analytics Chart</h4>
+        <canvas id="analytics-chart"></canvas>
+      </div>
+    </div>
+
     <button class="close-btn" id="modal-close">Close</button>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const phases = [
-  { id:1, title:"Phase 1: Multi-Client Portal Base", description:"Dashboard with project selection, role-based access, particle animation visuals." },
-  { id:2, title:"Phase 2: Interactive Cards & Overlays", description:"Hover cards with overlays displaying project details and demo links." },
-  { id:3, title:"Phase 3: Role-Based Analytics & Charts", description:"Interactive charts showing flagged/deleted messages and anomalies." },
-  { id:4, title:"Phase 4: AI-Assisted Recommendations", description:"Backend AI module suggesting actions based on analytics, integrated with notification center." },
-  { id:5, title:"Phase 5: Automated Reports", description:"PDF report generation including analytics, notifications, and recommendations; optional scheduled reports." },
-  { id:6, title:"Phase 6: Multi-Client Sandbox + Notion", description:"Live Notion-powered sandbox environment for each project with role-based access." },
-  { id:7, title:"Phase 7: Real-Time Notifications + Socket.IO", description:"Sandbox actions trigger live notifications and AI recommendations via WebSockets." },
-  { id:8, title:"Phase 8: Unified Multi-Client Dashboard", description:"Central dashboard showing analytics, notifications, and recommendations for all clients." },
-  { id:9, title:"Phase 9: Advanced Sandbox Analytics", description:"Track user interactions in sandbox, linked to notifications and recommendations." },
-  { id:10, title:"Phase 10: Predictive Anomaly Alerts", description:"AI/ML predicts spikes in flagged/deleted messages, triggering proactive alerts." },
-  { id:11, title:"Phase 11: Advanced Reports & KPIs", description:"Automated weekly/monthly reports with unified analytics, sandbox metrics, and AI insights." }
+  { id:1, title:"Phase 1: Multi-Client Portal Base", description:"Dashboard, project selection, role-based access, particle animation visuals." },
+  { id:2, title:"Phase 2: Interactive Cards & Overlays", description:"Hover cards with overlays showing project details and demos." },
+  { id:3, title:"Phase 3: Role-Based Analytics & Charts", description:"Interactive charts for flagged/deleted messages and anomalies." },
+  { id:4, title:"Phase 4: AI-Assisted Recommendations", description:"AI suggests actions based on analytics, linked to notifications." },
+  { id:5, title:"Phase 5: Automated Reports", description:"Generate PDF reports with analytics and AI recommendations." },
+  { id:6, title:"Phase 6: Multi-Client Sandbox + Notion", description:"Sandbox environment per project integrated with Notion." },
+  { id:7, title:"Phase 7: Real-Time Notifications + Socket.IO", description:"Live notifications for sandbox actions and AI recommendations." },
+  { id:8, title:"Phase 8: Unified Multi-Client Dashboard", description:"Central dashboard showing all analytics, notifications, and recommendations." },
+  { id:9, title:"Phase 9: Advanced Sandbox Analytics", description:"Tracks user interactions, linked to notifications and AI recommendations." },
+  { id:10, title:"Phase 10: Predictive Anomaly Alerts", description:"AI predicts spikes in flagged/deleted messages and triggers proactive alerts." },
+  { id:11, title:"Phase 11: Advanced Reports & KPIs", description:"Weekly/monthly reports combining analytics, sandbox metrics, and AI insights." }
 ];
 
 const container = document.getElementById('phase-container');
@@ -99,6 +134,9 @@ const modal = document.getElementById('phase-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalDescription = document.getElementById('modal-description');
 const modalClose = document.getElementById('modal-close');
+const notifList = document.getElementById('notif-list');
+const sandboxFrame = document.getElementById('sandbox-frame');
+let analyticsChart;
 
 phases.forEach(phase=>{
   const card = document.createElement('div');
@@ -108,12 +146,57 @@ phases.forEach(phase=>{
     modal.style.display='flex';
     modalTitle.textContent=phase.title;
     modalDescription.textContent=phase.description;
+
+    // Load sandbox demo placeholder
+    sandboxFrame.src = "https://example.com/demo"; // Replace with real sandbox URLs
+
+    // Initialize analytics chart with dummy data
+    const ctx = document.getElementById('analytics-chart').getContext('2d');
+    const labels = Array.from({length:10}, (_,i)=>`Day ${i+1}`);
+    const flagged = Array.from({length:10}, ()=>Math.floor(Math.random()*10));
+    const deleted = Array.from({length:10}, ()=>Math.floor(Math.random()*5));
+    if(analyticsChart) analyticsChart.destroy();
+    analyticsChart = new Chart(ctx,{
+      type:'line',
+      data:{
+        labels:labels,
+        datasets:[
+          { label:'Flagged', data:flagged, borderColor:'cyan', fill:false },
+          { label:'Deleted', data:deleted, borderColor:'orange', fill:false }
+        ]
+      },
+      options:{ responsive:true, plugins:{ legend:{ labels:{ color:'#fff' } } }, scales:{ y:{ ticks:{ color:'#fff' } }, x:{ ticks:{ color:'#fff' } } } }
+    });
+
+    // Clear notifications
+    notifList.innerHTML='';
   };
   container.appendChild(card);
 });
 
 modalClose.onclick = ()=>{ modal.style.display='none'; };
 window.onclick = (e)=>{ if(e.target==modal) modal.style.display='none'; };
+
+// Simulate real-time notifications
+function simulateNotification(){
+  const types = ['info','alert','recommendation'];
+  const messages = [
+    'User John submitted sandbox data.',
+    'Message flagged in Project NISA.',
+    'AI recommends reviewing flagged messages.',
+    'User Anna viewed demo sandbox.',
+    'Message deleted in Project CHEF.'
+  ];
+  const type = types[Math.floor(Math.random()*types.length)];
+  const message = messages[Math.floor(Math.random()*messages.length)];
+  const li = document.createElement('li');
+  li.textContent = `[${type.toUpperCase()}] ${message}`;
+  li.style.color = type==='alert'? '#ff5e57' : (type==='recommendation'? '#00f5d4':'#fff');
+  notifList.prepend(li);
+}
+
+// Generate a new notification every 3 seconds
+setInterval(simulateNotification,3000);
 </script>
 
 </body>
