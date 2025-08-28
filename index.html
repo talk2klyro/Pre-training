@@ -1,68 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Madarasatun Nisa SaaS Flow (Mermaid.js)</title>
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Client</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: #0d0d0d;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #ffda79;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transform-style: preserve-3d;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.05) rotateX(5deg);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .card h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      color: #00f5d4;
+    }
+
+    .card p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
-<h1>Madarasatun Nisa SaaS Flow</h1>
+  <!-- Particle background -->
+  <canvas id="particles"></canvas>
 
-<div class="mermaid">
-graph TD
-    %% Frontend Pages
-    A[Dashboard] --> B[Add Students]
-    B --> C[Attendance]
-    C --> D[Support]
+  <header class="hero">
+    <h1>🌍 Multi-Client Portal</h1>
+    <p>Select a project to explore</p>
+  </header>
 
-    %% Backend APIs
-    B --> E[/api/students/]
-    C --> F[/api/attendance/]
-    C --> G[/api/export/]
-    D --> H[/api/create-checkout-session/]
+  <section class="container">
+    <div class="grid">
+      <div class="card" id="card-nisa" onclick="window.location.href='madarasatun-nisa/index.html'">
+        <h2>📚 MADARASATUN-NISA</h2>
+        <p>Online Islamic school with student management & attendance tracking.</p>
+      </div>
+      <div class="card" id="card-chef" onclick="window.location.href='chef-community/index.html'">
+        <h2>🍴 CHEF-COMMUNITY</h2>
+        <p>Cooking classes, community meals, and chef-led events.</p>
+      </div>
+    </div>
+  </section>
 
-    %% Notion / Database
-    E --> I[Notion / Database]
-    F --> I
-    G --> I
-    H --> I
+  <footer class="footer">
+    <p>&copy; 2025 Multi-Client Platform | Powered by You 🚀</p>
+  </footer>
 
-    %% Donations Flow
-    D --> J[Donation Tiers & Reward System]
-    J --> I
+  <script>
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let hoverTarget = null;
 
-    %% Multi-client Config
-    K[config.js] --> A
-    K --> B
-    K --> C
-    K --> D
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
-    %% Styling & Helpers
-    L[style.css & main.js] --> A
-    L --> B
-    L --> C
-    L --> D
-</div>
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
 
-<script>
-  // Optional: add clickable links for nodes
-  mermaid.mermaidAPI.render('theGraph', document.querySelector('.mermaid').innerHTML, (svgCode) => {
-      document.querySelector('.mermaid').innerHTML = svgCode;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
-      // Add click handlers
-      document.querySelectorAll('text').forEach(node => {
-          const txt = node.textContent.trim();
-          if(txt === 'Dashboard') node.parentNode.addEventListener('click', ()=> window.open('index.html', '_blank'));
-          if(txt === 'Add Students') node.parentNode.addEventListener('click', ()=> window.open('add-student.html', '_blank'));
-          if(txt === 'Attendance') node.parentNode.addEventListener('click', ()=> window.open('attendance.html', '_blank'));
-          if(txt === 'Support') node.parentNode.addEventListener('click', ()=> window.open('support.html', '_blank'));
+        if (hoverTarget) {
+          const dx = hoverTarget.x - this.x;
+          const dy = hoverTarget.y - this.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 150) {
+            this.x += dx * 0.02;
+            this.y += dy * 0.02;
+          }
+        }
+      }
+      draw() {
+        ctx.fillStyle = "rgba(255,255,255,0.8)";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          const dx = particles[a].x - particles[b].x;
+          const dy = particles[a].y - particles[b].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            ctx.strokeStyle = `rgba(255,255,255,${1 - dist / 120})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
       });
-  });
-</script>
+      connectParticles();
+      requestAnimationFrame(animateParticles);
+    }
 
-<p>Click nodes to navigate to real pages. Backend/API nodes are for reference.</p>
+    function trackHover(card) {
+      card.addEventListener("mouseenter", () => {
+        const rect = card.getBoundingClientRect();
+        hoverTarget = {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        };
+      });
+      card.addEventListener("mousemove", (e) => {
+        hoverTarget = { x: e.clientX, y: e.clientY };
+      });
+      card.addEventListener("mouseleave", () => {
+        hoverTarget = null;
+      });
+    }
+
+    trackHover(document.getElementById("card-nisa"));
+    trackHover(document.getElementById("card-chef"));
+
+    initParticles();
+    animateParticles();
+  </script>
 </body>
-</html>
+  </html>
