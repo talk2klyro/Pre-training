@@ -3,187 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Portal + Business Dashboard</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Multi-Client SaaS Invitation</title>
 <style>
-  body { margin:0; font-family:Arial,sans-serif; background:#0d0d0d; color:#fff; }
-  header { background: rgba(255,255,255,0.05); padding:2rem; text-align:center; backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.1);}
+  body { margin:0; font-family:Arial, sans-serif; background:#0d0d0d; color:#fff; }
+  header { background:rgba(255,255,255,0.05); padding:2rem; text-align:center; backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.1);}
   header h1 { font-size:2.5rem; color:#ffda79; margin:0; }
-  header p { opacity:0.8; }
-  .container { display:flex; flex-wrap:wrap; padding:2rem; gap:2rem; max-width:1200px; margin:auto; }
-  .phase-card { flex:1 1 250px; background: rgba(255,255,255,0.08); border-radius:15px; padding:1.5rem; cursor:pointer; transition: all 0.3s ease; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); overflow:hidden; text-overflow:ellipsis;}
-  .phase-card:hover { transform:scale(1.05); border:1px solid rgba(255,255,255,0.3); }
-  .phase-card h2 { color:#00f5d4; margin-bottom:0.5rem; }
-  .phase-card p { font-size:0.9rem; opacity:0.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  header p { opacity:0.8; margin-top:0.5rem; }
+  .container { max-width:1200px; margin:auto; padding:2rem; }
+  .intro { text-align:center; margin-bottom:2rem; }
+  .intro h2 { color:#00f5d4; margin-bottom:0.5rem; }
+  .intro p { font-size:1rem; opacity:0.9; line-height:1.5; }
+  .modules { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-bottom:2rem; }
+  .module-card { background:rgba(255,255,255,0.08); border-radius:15px; padding:1.5rem; cursor:pointer; transition:all 0.3s ease; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1);}
+  .module-card:hover { transform:scale(1.05); border:1px solid rgba(255,255,255,0.3);}
+  .module-card h3 { color:#00f5d4; margin-bottom:0.5rem; }
+  .module-card p { font-size:0.9rem; opacity:0.9; }
+  .roadmap { margin-bottom:2rem; }
+  .invite { text-align:center; }
+  .invite button { background:#00f5d4; border:none; padding:1rem 2rem; border-radius:12px; cursor:pointer; font-weight:bold; font-size:1rem; transition:transform 0.3s, box-shadow 0.3s;}
+  .invite button:hover { transform:scale(1.05); box-shadow:0 0 20px #00f5d4;}
   .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:1000px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
+  .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
   .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
   .modal-content p { margin-bottom:1rem; line-height:1.5; }
   .close-btn { background:#ff5e57; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
-  .dashboard { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-top:1rem; }
-  .notifications, .sandbox-preview, .charts, .business-table { background: rgba(255,255,255,0.08); padding:1rem; border-radius:12px; max-height:400px; overflow-y:auto; }
-  .notifications h4, .charts h4, .sandbox-preview h4, .business-table h4 { margin-top:0; color:#ffda79; }
-  table { width:100%; border-collapse: collapse; }
-  th, td { padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.2); text-align:left; }
-  th { color:#00f5d4; }
-  td { color:#fff; }
-  .notif-info { color:#fff; }
-  .notif-alert { color:#ff5e57; }
-  .notif-recommendation { color:#00f5d4; }
   @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
-  iframe { width:100%; height:200px; border:none; border-radius:8px; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🌐 Portal + Business Dashboard</h1>
-  <p>Interactive view of businesses, ad placements, sandbox, analytics & notifications</p>
+  <h1>🌐 Multi-Client SaaS Invitation</h1>
+  <p>Explore, collaborate, and grow with our platform</p>
 </header>
 
-<section class="container" id="phase-container"></section>
+<div class="container">
 
-<!-- Modal for Phase Details -->
-<div class="modal" id="phase-modal">
+  <div class="intro">
+    <h2>Welcome to the Future of Multi-Client SaaS</h2>
+    <p>We invite you to join our platform as a founding client. Access live sandboxes, AI recommendations, predictive analytics, and more. Be part of shaping the platform and experience the next generation of interactive SaaS tools.</p>
+  </div>
+
+  <h2 style="color:#ffda79;">Core Modules</h2>
+  <div class="modules" id="modules-container"></div>
+
+  <div class="roadmap" id="roadmap"></div>
+
+  <div class="invite">
+    <button id="join-btn">🚀 Accept Invitation & Join Now</button>
+  </div>
+
+</div>
+
+<div class="modal" id="module-modal">
   <div class="modal-content">
     <h3 id="modal-title"></h3>
     <p id="modal-description"></p>
-
-    <div class="dashboard">
-      <div class="notifications">
-        <h4>🔔 Live Notifications</h4>
-        <ul id="notif-list"></ul>
-      </div>
-      <div class="sandbox-preview">
-        <h4>🧪 Sandbox Preview</h4>
-        <iframe sandbox="allow-scripts allow-same-origin" src="about:blank" id="sandbox-frame"></iframe>
-      </div>
-      <div class="charts">
-        <h4>📊 Analytics Chart</h4>
-        <canvas id="analytics-chart"></canvas>
-      </div>
-      <div class="business-table">
-        <h4>🏢 Businesses Overview</h4>
-        <table id="business-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Tier</th>
-              <th>Ads Placed</th>
-              <th>Pricing ($)</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
     <button class="close-btn" id="modal-close">Close</button>
   </div>
 </div>
 
 <script>
-const phases = [
-  { id:1, title:"Portal Base", description:"Dashboard for managing businesses, categories, and pricing tiers." },
-  { id:2, title:"Add & Position Businesses", description:"Onboard businesses and assign them to categories and tiers." },
-  { id:3, title:"Advertising Slots", description:"Businesses can place ads with pricing reflecting visibility and reach." },
-  { id:4, title:"Rules & Governance", description:"Set rules for participation, ad limits, and quality standards." },
-  { id:5, title:"Revenue & Pricing Analytics", description:"Track revenue from subscriptions, listings, and ad slots." },
-  { id:6, title:"Sandbox Simulation", description:"Test placements, pricing tiers, and featured positions without affecting live portal." },
-  { id:7, title:"Notifications & Updates", description:"Live alerts for new businesses, ad activity, or sandbox events." },
-  { id:8, title:"AI Recommendations", description:"Optional: Suggest pricing, featured positions, or ads based on analytics." }
+const modulesData = [
+  { name:"Multi-Client Portal", desc:"Dashboard, project selection, role-based access, particle visuals." },
+  { name:"Interactive Cards & Overlays", desc:"Hover cards with project details and demo links." },
+  { name:"Role-Based Analytics", desc:"Charts showing flagged/deleted messages per role." },
+  { name:"AI Recommendations", desc:"AI suggests actions based on analytics." },
+  { name:"Sandbox Environment", desc:"Live interactive sandbox per project." },
+  { name:"Notifications Center", desc:"Real-time notifications for sandbox actions and AI insights." },
+  { name:"Automated Reports", desc:"Export PDF/CSV reports with analytics and recommendations." },
+  { name:"Predictive Analytics", desc:"Forecast spikes or anomalies before they occur." },
+  { name:"Template & Workflow Marketplace", desc:"Share or sell sandbox templates and workflows." },
+  { name:"Custom KPI Builder", desc:"Clients create custom dashboards and metrics." },
+  { name:"Gamification & Engagement", desc:"Badges, leaderboards, interactive learning." },
+  { name:"Third-Party Integrations", desc:"Slack, Discord, Google Workspace, Notion API, etc." },
+  { name:"API Access for Clients", desc:"Clients can push/pull their own data programmatically." },
+  { name:"VR/AR Sandbox Previews", desc:"Immersive demos for education and interactive workflows." },
+  { name:"Web3 / Blockchain Tracking", desc:"Track sandbox activity or achievements on blockchain." },
+  { name:"Edge AI Recommendations", desc:"Run AI analytics locally on client devices." }
 ];
 
-const businesses = [
-  {name:"Alpha Co.", tier:"Premium", ads:3, price:500},
-  {name:"Beta LLC", tier:"Standard", ads:1, price:200},
-  {name:"Gamma Inc.", tier:"Starter", ads:0, price:50},
-  {name:"Delta Ltd.", tier:"Premium", ads:2, price:450},
-  {name:"Epsilon Corp.", tier:"Standard", ads:1, price:180},
-];
-
-const container = document.getElementById('phase-container');
-const modal = document.getElementById('phase-modal');
+const modulesContainer = document.getElementById('modules-container');
+const modal = document.getElementById('module-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalDescription = document.getElementById('modal-description');
 const modalClose = document.getElementById('modal-close');
-const notifList = document.getElementById('notif-list');
-const sandboxFrame = document.getElementById('sandbox-frame');
-const businessTableBody = document.querySelector("#business-table tbody");
-let analyticsChart;
 
-// Populate Phase Cards
-phases.forEach(phase=>{
+modulesData.forEach(mod=>{
   const card = document.createElement('div');
-  card.className='phase-card';
-  card.innerHTML=`<h2>${phase.title}</h2><p>${phase.description}</p>`;
-  card.onclick = ()=>{
+  card.className='module-card';
+  card.innerHTML=`<h3>${mod.name}</h3><p>${mod.desc.substring(0,80)}...</p>`;
+  card.onclick=()=>{
     modal.style.display='flex';
-    modalTitle.textContent=phase.title;
-    modalDescription.textContent=phase.description;
-
-    // Sandbox demo placeholder
-    sandboxFrame.src = "https://example.com/demo";
-
-    // Analytics chart (initialize once)
-    const ctx = document.getElementById('analytics-chart').getContext('2d');
-    const labels = Array.from({length:10}, (_,i)=>`Day ${i+1}`);
-    const revenue = Array.from({length:10}, ()=>Math.floor(Math.random()*1000));
-    const ads = Array.from({length:10}, ()=>Math.floor(Math.random()*50));
-    if(!analyticsChart){
-      analyticsChart = new Chart(ctx,{
-        type:'line',
-        data:{
-          labels:labels,
-          datasets:[
-            { label:'Revenue ($)', data:revenue, borderColor:'cyan', fill:false },
-            { label:'Ads Placed', data:ads, borderColor:'orange', fill:false }
-          ]
-        },
-        options:{ responsive:true, plugins:{ legend:{ labels:{ color:'#fff' } } }, scales:{ y:{ ticks:{ color:'#fff' } }, x:{ ticks:{ color:'#fff' } } } }
-      });
-    } else {
-      analyticsChart.data.datasets[0].data = revenue;
-      analyticsChart.data.datasets[1].data = ads;
-      analyticsChart.update();
-    }
-
-    // Populate business table
-    businessTableBody.innerHTML = '';
-    businesses.forEach(b=>{
-      const row = document.createElement('tr');
-      row.innerHTML = `<td>${b.name}</td><td>${b.tier}</td><td>${b.ads}</td><td>${b.price}</td>`;
-      businessTableBody.appendChild(row);
-    });
-
-    notifList.innerHTML='';
+    modalTitle.textContent=mod.name;
+    modalDescription.textContent=mod.desc;
   };
-  container.appendChild(card);
+  modulesContainer.appendChild(card);
 });
 
-// Close modal
 modalClose.onclick = ()=>{ modal.style.display='none'; };
 window.onclick = (e)=>{ if(e.target==modal) modal.style.display='none'; };
 
-// Live notifications (max 10)
-function simulateNotification(){
-  const types = ['info','alert','recommendation'];
-  const messages = [
-    'New business added to the portal.',
-    'Ad slot purchased in Tier 1.',
-    'Sandbox simulation completed for Project Alpha.',
-    'Revenue milestone reached!',
-    'AI suggests adjusting ad pricing.'
-  ];
-  const type = types[Math.floor(Math.random()*types.length)];
-  const message = messages[Math.floor(Math.random()*messages.length)];
-  const li = document.createElement('li');
-  li.textContent = `[${type.toUpperCase()}] ${message}`;
-  li.className = type==='alert'? 'notif-alert' : (type==='recommendation'? 'notif-recommendation':'notif-info');
-  notifList.prepend(li);
-  while(notifList.children.length > 10){ notifList.removeChild(notifList.lastChild); }
-}
-setInterval(simulateNotification,3000);
+document.getElementById('join-btn').onclick = ()=>{
+  alert("🎉 Welcome! You are now part of the Multi-Client SaaS platform. Next, you'll get access credentials and sandbox preview.");
+};
 </script>
 
 </body>
