@@ -3,237 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Client</title>
+  <title>Demo + Sandbox - MADARASATUN-NISA</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      overflow: hidden;
       font-family: Arial, sans-serif;
-      color: #fff;
       background: #0d0d0d;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      color: #fff;
+      padding: 2rem;
     }
 
-    canvas#particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .hero {
+    h1, h2 {
       text-align: center;
-      padding: 3rem 1rem;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+    h1 {
+      color: #00f5d4;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
       color: #ffda79;
     }
 
-    .hero p {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
-
-    .container {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .section {
+      max-width: 800px;
+      margin: 2rem auto;
       padding: 2rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255,255,255,0.08);
       border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transform-style: preserve-3d;
-      position: relative;
-      z-index: 2;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
     }
 
-    .card:hover {
-      transform: translateY(-10px) scale(1.05) rotateX(5deg);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .card h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.5rem;
-      color: #00f5d4;
-    }
-
-    .card p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    .footer {
-      text-align: center;
+    .step {
+      margin-bottom: 1rem;
       padding: 1rem;
-      background: rgba(255,255,255,0.05);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.9rem;
-      color: #ccc;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+
+    .student {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 10px;
+      background: #00f5d4;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #00c2a8;
+    }
+
+    .back-btn {
+      background: #ff5e57;
+      color: #fff;
+      margin-top: 2rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .back-btn:hover {
+      background: #cc4943;
     }
   </style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
+  <h1>📚 MADARASATUN-NISA</h1>
+  <p style="text-align:center;">Welcome to the interactive product experience. First, explore the <b>demo</b>, then play in the <b>sandbox</b>!</p>
 
-  <header class="hero">
-    <h1>🌍 Multi-Client Portal</h1>
-    <p>Select a project to explore</p>
-  </header>
+  <!-- Demo Section -->
+  <div class="section">
+    <h2>🚀 Step 1: Immersive Demo</h2>
+    <p>Here’s what the platform can do for you:</p>
+    <div class="step">✅ Manage student profiles & attendance records.</div>
+    <div class="step">✅ Track performance with visual progress dashboards.</div>
+    <div class="step">✅ Assign classes and view schedules easily.</div>
+    <div class="step">✅ Accessible anywhere — mobile and desktop friendly.</div>
+  </div>
 
-  <section class="container">
-    <div class="grid">
-      <div class="card" id="card-nisa" onclick="window.location.href='madarasatun-nisa/index.html'">
-        <h2>📚 MADARASATUN-NISA</h2>
-        <p>Online Islamic school with student management & attendance tracking.</p>
-      </div>
-      <div class="card" id="card-chef" onclick="window.location.href='chef-community/index.html'">
-        <h2>🍴 CHEF-COMMUNITY</h2>
-        <p>Cooking classes, community meals, and chef-led events.</p>
-      </div>
-    </div>
-  </section>
+  <!-- Sandbox Section -->
+  <div class="section">
+    <h2>🎮 Step 2: Try the Sandbox</h2>
+    <p>Mark attendance for these demo students (fake data, safe to play with):</p>
 
-  <footer class="footer">
-    <p>&copy; 2025 Multi-Client Platform | Powered by You 🚀</p>
-  </footer>
+    <div id="student-list"></div>
+    <button class="btn" onclick="resetSandbox()">🔄 Reset Sandbox</button>
+  </div>
+
+  <button class="back-btn" onclick="window.history.back()">⬅ Back to Portal</button>
 
   <script>
-    const canvas = document.getElementById("particles");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    let hoverTarget = null;
-    let currentColor = "rgba(255,255,255,0.8)"; // default white
+    const students = [
+      { name: "Aisha", present: false },
+      { name: "Fatimah", present: false },
+      { name: "Umar", present: false },
+      { name: "Yusuf", present: false }
+    ];
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 1.5;
-        this.speedY = (Math.random() - 0.5) * 1.5;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-        if (hoverTarget) {
-          const dx = hoverTarget.x - this.x;
-          const dy = hoverTarget.y - this.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 150) {
-            this.x += dx * 0.02;
-            this.y += dy * 0.02;
-          }
-        }
-      }
-      draw() {
-        ctx.fillStyle = currentColor;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 100; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function connectParticles() {
-      for (let a = 0; a < particles.length; a++) {
-        for (let b = a + 1; b < particles.length; b++) {
-          const dx = particles[a].x - particles[b].x;
-          const dy = particles[a].y - particles[b].y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 120) {
-            ctx.strokeStyle = currentColor.replace("0.8", (1 - dist / 120).toFixed(2));
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(particles[b].x, particles[b].y);
-            ctx.stroke();
-          }
-        }
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      connectParticles();
-      requestAnimationFrame(animateParticles);
-    }
-
-    // Hover tracking + color switching
-    function trackHover(card, color) {
-      card.addEventListener("mouseenter", () => {
-        const rect = card.getBoundingClientRect();
-        hoverTarget = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
-        };
-        currentColor = color;
-      });
-      card.addEventListener("mousemove", (e) => {
-        hoverTarget = { x: e.clientX, y: e.clientY };
-      });
-      card.addEventListener("mouseleave", () => {
-        hoverTarget = null;
-        currentColor = "rgba(255,255,255,0.8)";
+    function renderStudents() {
+      const container = document.getElementById("student-list");
+      container.innerHTML = "";
+      students.forEach((s, index) => {
+        const div = document.createElement("div");
+        div.className = "student";
+        div.innerHTML = `
+          <span>${s.name}</span>
+          <button onclick="toggleAttendance(${index})">
+            ${s.present ? "✅ Present" : "❌ Absent"}
+          </button>
+        `;
+        container.appendChild(div);
       });
     }
 
-    trackHover(document.getElementById("card-nisa"), "rgba(0,245,212,0.8)"); // cyan
-    trackHover(document.getElementById("card-chef"), "rgba(255,165,0,0.8)"); // orange
+    function toggleAttendance(index) {
+      students[index].present = !students[index].present;
+      renderStudents();
+    }
 
-    initParticles();
-    animateParticles();
+    function resetSandbox() {
+      students.forEach(s => s.present = false);
+      renderStudents();
+    }
+
+    // Initial render
+    renderStudents();
   </script>
 </body>
-</html>
+  </html>
