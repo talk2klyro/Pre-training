@@ -3,75 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive SaaS Investor Dashboard</title>
+<title>Interactive Portal + Business Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0d0d0d;
-    color: #fff;
-  }
-  header {
-    background: rgba(255,255,255,0.05);
-    padding: 2rem;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
+  body { margin:0; font-family:Arial,sans-serif; background:#0d0d0d; color:#fff; }
+  header { background: rgba(255,255,255,0.05); padding:2rem; text-align:center; backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.1);}
   header h1 { font-size:2.5rem; color:#ffda79; margin:0; }
   header p { opacity:0.8; }
   .container { display:flex; flex-wrap:wrap; padding:2rem; gap:2rem; max-width:1200px; margin:auto; }
-  .phase-card {
-    flex:1 1 250px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 15px;
-    padding: 1.5rem;
-    cursor:pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
+  .phase-card { flex:1 1 250px; background: rgba(255,255,255,0.08); border-radius:15px; padding:1.5rem; cursor:pointer; transition: all 0.3s ease; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1);}
   .phase-card:hover { transform:scale(1.05); border:1px solid rgba(255,255,255,0.3); }
   .phase-card h2 { color:#00f5d4; margin-bottom:0.5rem; }
   .phase-card p { font-size:0.9rem; opacity:0.9; }
-  .modal {
-    display:none;
-    position:fixed;
-    top:0; left:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.85);
-    justify-content:center; align-items:center;
-    z-index:1000;
-  }
-  .modal-content {
-    background: rgba(255,255,255,0.1);
-    padding: 2rem;
-    border-radius: 15px;
-    max-width: 900px;
-    text-align:center;
-    animation:fadeIn 0.3s ease;
-    overflow-y:auto;
-    max-height:90vh;
-  }
+  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
   .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
   .modal-content p { margin-bottom:1rem; line-height:1.5; }
-  .close-btn {
-    background:#ff5e57; border:none; padding:0.7rem 1.5rem;
-    border-radius:8px; cursor:pointer; color:#fff; font-weight:bold;
-    margin-top:1rem;
-  }
-  .dashboard {
-    display:flex; justify-content:space-between; margin-top:1rem;
-    gap:1rem; flex-wrap:wrap;
-  }
-  .notifications, .sandbox-preview, .charts {
-    background: rgba(255,255,255,0.08);
-    padding:1rem;
-    border-radius:12px;
-    flex:1 1 300px;
-    max-height:400px;
-    overflow-y:auto;
-  }
+  .close-btn { background:#ff5e57; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
+  .dashboard { display:flex; justify-content:space-between; margin-top:1rem; gap:1rem; flex-wrap:wrap; }
+  .notifications, .sandbox-preview, .charts { background: rgba(255,255,255,0.08); padding:1rem; border-radius:12px; flex:1 1 300px; max-height:400px; overflow-y:auto; }
   .notifications h4, .charts h4, .sandbox-preview h4 { margin-top:0; color:#ffda79; }
   ul { padding-left:1rem; margin:0; }
   li { margin-bottom:0.5rem; }
@@ -82,8 +32,8 @@
 <body>
 
 <header>
-  <h1>🌐 Interactive SaaS Investor Dashboard</h1>
-  <p>Live Demo: Phases, Sandbox, Notifications & Analytics</p>
+  <h1>🌐 Portal + Business Dashboard</h1>
+  <p>Interactive view of businesses, ad placements, sandbox, analytics & notifications</p>
 </header>
 
 <section class="container" id="phase-container"></section>
@@ -113,20 +63,16 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const phases = [
-  { id:1, title:"Phase 1: Multi-Client Portal Base", description:"Dashboard, project selection, role-based access, particle animation visuals." },
-  { id:2, title:"Phase 2: Interactive Cards & Overlays", description:"Hover cards with overlays showing project details and demos." },
-  { id:3, title:"Phase 3: Role-Based Analytics & Charts", description:"Interactive charts for flagged/deleted messages and anomalies." },
-  { id:4, title:"Phase 4: AI-Assisted Recommendations", description:"AI suggests actions based on analytics, linked to notifications." },
-  { id:5, title:"Phase 5: Automated Reports", description:"Generate PDF reports with analytics and AI recommendations." },
-  { id:6, title:"Phase 6: Multi-Client Sandbox + Notion", description:"Sandbox environment per project integrated with Notion." },
-  { id:7, title:"Phase 7: Real-Time Notifications + Socket.IO", description:"Live notifications for sandbox actions and AI recommendations." },
-  { id:8, title:"Phase 8: Unified Multi-Client Dashboard", description:"Central dashboard showing all analytics, notifications, and recommendations." },
-  { id:9, title:"Phase 9: Advanced Sandbox Analytics", description:"Tracks user interactions, linked to notifications and AI recommendations." },
-  { id:10, title:"Phase 10: Predictive Anomaly Alerts", description:"AI predicts spikes in flagged/deleted messages and triggers proactive alerts." },
-  { id:11, title:"Phase 11: Advanced Reports & KPIs", description:"Weekly/monthly reports combining analytics, sandbox metrics, and AI insights." }
+  { id:1, title:"Portal Base", description:"Dashboard for managing businesses, categories, and pricing tiers." },
+  { id:2, title:"Add & Position Businesses", description:"Onboard businesses and assign them to categories and tiers." },
+  { id:3, title:"Advertising Slots", description:"Businesses can place ads with pricing reflecting visibility and reach." },
+  { id:4, title:"Rules & Governance", description:"Set rules for participation, ad limits, and quality standards." },
+  { id:5, title:"Revenue & Pricing Analytics", description:"Track revenue from subscriptions, listings, and ad slots." },
+  { id:6, title:"Sandbox Simulation", description:"Test placements, pricing tiers, and featured positions without affecting live portal." },
+  { id:7, title:"Notifications & Updates", description:"Live alerts for new businesses, ad activity, or sandbox events." },
+  { id:8, title:"AI Recommendations", description:"Optional: Suggest pricing, featured positions, or ads based on analytics." }
 ];
 
 const container = document.getElementById('phase-container');
@@ -148,21 +94,21 @@ phases.forEach(phase=>{
     modalDescription.textContent=phase.description;
 
     // Load sandbox demo placeholder
-    sandboxFrame.src = "https://example.com/demo"; // Replace with real sandbox URLs
+    sandboxFrame.src = "https://example.com/demo"; // Replace with actual sandbox
 
     // Initialize analytics chart with dummy data
     const ctx = document.getElementById('analytics-chart').getContext('2d');
     const labels = Array.from({length:10}, (_,i)=>`Day ${i+1}`);
-    const flagged = Array.from({length:10}, ()=>Math.floor(Math.random()*10));
-    const deleted = Array.from({length:10}, ()=>Math.floor(Math.random()*5));
+    const revenue = Array.from({length:10}, ()=>Math.floor(Math.random()*1000));
+    const ads = Array.from({length:10}, ()=>Math.floor(Math.random()*50));
     if(analyticsChart) analyticsChart.destroy();
     analyticsChart = new Chart(ctx,{
       type:'line',
       data:{
         labels:labels,
         datasets:[
-          { label:'Flagged', data:flagged, borderColor:'cyan', fill:false },
-          { label:'Deleted', data:deleted, borderColor:'orange', fill:false }
+          { label:'Revenue ($)', data:revenue, borderColor:'cyan', fill:false },
+          { label:'Ads Placed', data:ads, borderColor:'orange', fill:false }
         ]
       },
       options:{ responsive:true, plugins:{ legend:{ labels:{ color:'#fff' } } }, scales:{ y:{ ticks:{ color:'#fff' } }, x:{ ticks:{ color:'#fff' } } } }
@@ -177,15 +123,15 @@ phases.forEach(phase=>{
 modalClose.onclick = ()=>{ modal.style.display='none'; };
 window.onclick = (e)=>{ if(e.target==modal) modal.style.display='none'; };
 
-// Simulate real-time notifications
+// Simulate live notifications
 function simulateNotification(){
   const types = ['info','alert','recommendation'];
   const messages = [
-    'User John submitted sandbox data.',
-    'Message flagged in Project NISA.',
-    'AI recommends reviewing flagged messages.',
-    'User Anna viewed demo sandbox.',
-    'Message deleted in Project CHEF.'
+    'New business added to the portal.',
+    'Ad slot purchased in Tier 1.',
+    'Sandbox simulation completed for Project Alpha.',
+    'Revenue milestone reached!',
+    'AI suggests adjusting ad pricing.'
   ];
   const type = types[Math.floor(Math.random()*types.length)];
   const message = messages[Math.floor(Math.random()*messages.length)];
@@ -200,4 +146,4 @@ setInterval(simulateNotification,3000);
 </script>
 
 </body>
-</html>
+  </html>
