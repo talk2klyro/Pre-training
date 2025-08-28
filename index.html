@@ -11,22 +11,27 @@
   header h1 { font-size:2.5rem; color:#ffda79; margin:0; }
   header p { opacity:0.8; }
   .container { display:flex; flex-wrap:wrap; padding:2rem; gap:2rem; max-width:1200px; margin:auto; }
-  .phase-card { flex:1 1 250px; background: rgba(255,255,255,0.08); border-radius:15px; padding:1.5rem; cursor:pointer; transition: all 0.3s ease; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1);}
+  .phase-card { flex:1 1 250px; background: rgba(255,255,255,0.08); border-radius:15px; padding:1.5rem; cursor:pointer; transition: all 0.3s ease; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); overflow:hidden; text-overflow:ellipsis;}
   .phase-card:hover { transform:scale(1.05); border:1px solid rgba(255,255,255,0.3); }
   .phase-card h2 { color:#00f5d4; margin-bottom:0.5rem; }
-  .phase-card p { font-size:0.9rem; opacity:0.9; }
+  .phase-card p { font-size:0.9rem; opacity:0.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
+  .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:1000px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
   .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
   .modal-content p { margin-bottom:1rem; line-height:1.5; }
   .close-btn { background:#ff5e57; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
-  .dashboard { display:flex; justify-content:space-between; margin-top:1rem; gap:1rem; flex-wrap:wrap; }
-  .notifications, .sandbox-preview, .charts { background: rgba(255,255,255,0.08); padding:1rem; border-radius:12px; flex:1 1 300px; max-height:400px; overflow-y:auto; }
-  .notifications h4, .charts h4, .sandbox-preview h4 { margin-top:0; color:#ffda79; }
-  ul { padding-left:1rem; margin:0; }
-  li { margin-bottom:0.5rem; }
-  iframe { width:100%; height:250px; border:none; border-radius:8px; }
+  .dashboard { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-top:1rem; }
+  .notifications, .sandbox-preview, .charts, .business-table { background: rgba(255,255,255,0.08); padding:1rem; border-radius:12px; max-height:400px; overflow-y:auto; }
+  .notifications h4, .charts h4, .sandbox-preview h4, .business-table h4 { margin-top:0; color:#ffda79; }
+  table { width:100%; border-collapse: collapse; }
+  th, td { padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.2); text-align:left; }
+  th { color:#00f5d4; }
+  td { color:#fff; }
+  .notif-info { color:#fff; }
+  .notif-alert { color:#ff5e57; }
+  .notif-recommendation { color:#00f5d4; }
   @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
+  iframe { width:100%; height:200px; border:none; border-radius:8px; }
 </style>
 </head>
 <body>
@@ -51,11 +56,25 @@
       </div>
       <div class="sandbox-preview">
         <h4>🧪 Sandbox Preview</h4>
-        <iframe src="about:blank" id="sandbox-frame"></iframe>
+        <iframe sandbox="allow-scripts allow-same-origin" src="about:blank" id="sandbox-frame"></iframe>
       </div>
       <div class="charts">
         <h4>📊 Analytics Chart</h4>
         <canvas id="analytics-chart"></canvas>
+      </div>
+      <div class="business-table">
+        <h4>🏢 Businesses Overview</h4>
+        <table id="business-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Tier</th>
+              <th>Ads Placed</th>
+              <th>Pricing ($)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
 
@@ -75,6 +94,14 @@ const phases = [
   { id:8, title:"AI Recommendations", description:"Optional: Suggest pricing, featured positions, or ads based on analytics." }
 ];
 
+const businesses = [
+  {name:"Alpha Co.", tier:"Premium", ads:3, price:500},
+  {name:"Beta LLC", tier:"Standard", ads:1, price:200},
+  {name:"Gamma Inc.", tier:"Starter", ads:0, price:50},
+  {name:"Delta Ltd.", tier:"Premium", ads:2, price:450},
+  {name:"Epsilon Corp.", tier:"Standard", ads:1, price:180},
+];
+
 const container = document.getElementById('phase-container');
 const modal = document.getElementById('phase-modal');
 const modalTitle = document.getElementById('modal-title');
@@ -82,48 +109,63 @@ const modalDescription = document.getElementById('modal-description');
 const modalClose = document.getElementById('modal-close');
 const notifList = document.getElementById('notif-list');
 const sandboxFrame = document.getElementById('sandbox-frame');
+const businessTableBody = document.querySelector("#business-table tbody");
 let analyticsChart;
 
+// Populate Phase Cards
 phases.forEach(phase=>{
   const card = document.createElement('div');
   card.className='phase-card';
-  card.innerHTML=`<h2>${phase.title}</h2><p>${phase.description.substring(0,80)}...</p>`;
+  card.innerHTML=`<h2>${phase.title}</h2><p>${phase.description}</p>`;
   card.onclick = ()=>{
     modal.style.display='flex';
     modalTitle.textContent=phase.title;
     modalDescription.textContent=phase.description;
 
-    // Load sandbox demo placeholder
-    sandboxFrame.src = "https://example.com/demo"; // Replace with actual sandbox
+    // Sandbox demo placeholder
+    sandboxFrame.src = "https://example.com/demo";
 
-    // Initialize analytics chart with dummy data
+    // Analytics chart (initialize once)
     const ctx = document.getElementById('analytics-chart').getContext('2d');
     const labels = Array.from({length:10}, (_,i)=>`Day ${i+1}`);
     const revenue = Array.from({length:10}, ()=>Math.floor(Math.random()*1000));
     const ads = Array.from({length:10}, ()=>Math.floor(Math.random()*50));
-    if(analyticsChart) analyticsChart.destroy();
-    analyticsChart = new Chart(ctx,{
-      type:'line',
-      data:{
-        labels:labels,
-        datasets:[
-          { label:'Revenue ($)', data:revenue, borderColor:'cyan', fill:false },
-          { label:'Ads Placed', data:ads, borderColor:'orange', fill:false }
-        ]
-      },
-      options:{ responsive:true, plugins:{ legend:{ labels:{ color:'#fff' } } }, scales:{ y:{ ticks:{ color:'#fff' } }, x:{ ticks:{ color:'#fff' } } } }
+    if(!analyticsChart){
+      analyticsChart = new Chart(ctx,{
+        type:'line',
+        data:{
+          labels:labels,
+          datasets:[
+            { label:'Revenue ($)', data:revenue, borderColor:'cyan', fill:false },
+            { label:'Ads Placed', data:ads, borderColor:'orange', fill:false }
+          ]
+        },
+        options:{ responsive:true, plugins:{ legend:{ labels:{ color:'#fff' } } }, scales:{ y:{ ticks:{ color:'#fff' } }, x:{ ticks:{ color:'#fff' } } } }
+      });
+    } else {
+      analyticsChart.data.datasets[0].data = revenue;
+      analyticsChart.data.datasets[1].data = ads;
+      analyticsChart.update();
+    }
+
+    // Populate business table
+    businessTableBody.innerHTML = '';
+    businesses.forEach(b=>{
+      const row = document.createElement('tr');
+      row.innerHTML = `<td>${b.name}</td><td>${b.tier}</td><td>${b.ads}</td><td>${b.price}</td>`;
+      businessTableBody.appendChild(row);
     });
 
-    // Clear notifications
     notifList.innerHTML='';
   };
   container.appendChild(card);
 });
 
+// Close modal
 modalClose.onclick = ()=>{ modal.style.display='none'; };
 window.onclick = (e)=>{ if(e.target==modal) modal.style.display='none'; };
 
-// Simulate live notifications
+// Live notifications (max 10)
 function simulateNotification(){
   const types = ['info','alert','recommendation'];
   const messages = [
@@ -137,11 +179,10 @@ function simulateNotification(){
   const message = messages[Math.floor(Math.random()*messages.length)];
   const li = document.createElement('li');
   li.textContent = `[${type.toUpperCase()}] ${message}`;
-  li.style.color = type==='alert'? '#ff5e57' : (type==='recommendation'? '#00f5d4':'#fff');
+  li.className = type==='alert'? 'notif-alert' : (type==='recommendation'? 'notif-recommendation':'notif-info');
   notifList.prepend(li);
+  while(notifList.children.length > 10){ notifList.removeChild(notifList.lastChild); }
 }
-
-// Generate a new notification every 3 seconds
 setInterval(simulateNotification,3000);
 </script>
 
