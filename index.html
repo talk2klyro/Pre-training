@@ -1,148 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo + Sandbox - MADARASATUN-NISA</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0d0d0d;
-      color: #fff;
-      padding: 2rem;
+<script>
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlay-title');
+  const overlayDescription = document.getElementById('overlay-description');
+  const experienceBtn = document.getElementById('experience-btn');
+  const closeBtn = document.getElementById('close-btn');
+
+  // Updated project data
+  const projects = {
+    nisa: {
+      title: "📚 MADARASATUN-NISA",
+      description: "Explore the Islamic school platform with an immersive demo and hands-on sandbox in one place.",
+      experience: "madarasatun-nisa/demo-sandbox-nisa.html"  // merged page
+    },
+    chef: {
+      title: "🍴 CHEF-COMMUNITY",
+      description: "Join the culinary hub with interactive demos and sandbox cooking features together.",
+      experience: "chef-community/demo-sandbox-chef.html"   // merged page
     }
+  };
 
-    h1, h2 {
-      text-align: center;
-    }
+  // Handle card clicks
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const clientKey = card.getAttribute('data-client');
+      const project = projects[clientKey];
 
-    h1 {
-      color: #00f5d4;
-      margin-bottom: 1rem;
-    }
+      overlayTitle.textContent = project.title;
+      overlayDescription.textContent = project.description;
+      experienceBtn.onclick = () => window.location.href = project.experience;
 
-    h2 {
-      margin-top: 2rem;
-      color: #ffda79;
-    }
+      overlay.style.display = 'flex';
+    });
+  });
 
-    .section {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: rgba(255,255,255,0.08);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-    }
-
-    .step {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-    }
-
-    .student {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.8rem;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      margin-bottom: 0.5rem;
-    }
-
-    .btn {
-      margin-top: 1rem;
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 10px;
-      background: #00f5d4;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #00c2a8;
-    }
-
-    .back-btn {
-      background: #ff5e57;
-      color: #fff;
-      margin-top: 2rem;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .back-btn:hover {
-      background: #cc4943;
-    }
-  </style>
-</head>
-<body>
-  <h1>📚 MADARASATUN-NISA</h1>
-  <p style="text-align:center;">Welcome to the interactive product experience. First, explore the <b>demo</b>, then play in the <b>sandbox</b>!</p>
-
-  <!-- Demo Section -->
-  <div class="section">
-    <h2>🚀 Step 1: Immersive Demo</h2>
-    <p>Here’s what the platform can do for you:</p>
-    <div class="step">✅ Manage student profiles & attendance records.</div>
-    <div class="step">✅ Track performance with visual progress dashboards.</div>
-    <div class="step">✅ Assign classes and view schedules easily.</div>
-    <div class="step">✅ Accessible anywhere — mobile and desktop friendly.</div>
-  </div>
-
-  <!-- Sandbox Section -->
-  <div class="section">
-    <h2>🎮 Step 2: Try the Sandbox</h2>
-    <p>Mark attendance for these demo students (fake data, safe to play with):</p>
-
-    <div id="student-list"></div>
-    <button class="btn" onclick="resetSandbox()">🔄 Reset Sandbox</button>
-  </div>
-
-  <button class="back-btn" onclick="window.history.back()">⬅ Back to Portal</button>
-
-  <script>
-    const students = [
-      { name: "Aisha", present: false },
-      { name: "Fatimah", present: false },
-      { name: "Umar", present: false },
-      { name: "Yusuf", present: false }
-    ];
-
-    function renderStudents() {
-      const container = document.getElementById("student-list");
-      container.innerHTML = "";
-      students.forEach((s, index) => {
-        const div = document.createElement("div");
-        div.className = "student";
-        div.innerHTML = `
-          <span>${s.name}</span>
-          <button onclick="toggleAttendance(${index})">
-            ${s.present ? "✅ Present" : "❌ Absent"}
-          </button>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function toggleAttendance(index) {
-      students[index].present = !students[index].present;
-      renderStudents();
-    }
-
-    function resetSandbox() {
-      students.forEach(s => s.present = false);
-      renderStudents();
-    }
-
-    // Initial render
-    renderStudents();
-  </script>
-</body>
-  </html>
+  // Close overlay
+  closeBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+                          </script>
