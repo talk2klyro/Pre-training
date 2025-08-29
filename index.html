@@ -3,9 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pharmacy Management Platform — Dashboard Flow</title>
+  <title>FlowDeck — Project Journey</title>
 
-  <!-- Google Fonts: Inter -->
+  <!-- Inter Font (optional, can be removed for system fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f6f7f8;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --heading: #111827;
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FlowDeck — Project Journey</title>
+
+  <!-- Inter Font (optional, can be removed for system fonts) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -17,20 +33,14 @@
       --muted: #6b7280;
       --border: #e5e7eb;
       --shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
-      --gap: 24px;
-      --pastel-yellow: #fff9db;
-      --pastel-green: #e6f9ed;
-      --pastel-orange: #fff2e0;
-      --pastel-red: #ffe6e6;
-      --pastel-blue: #eaf2ff;
-      --pastel-purple: #f5e6ff;
+      --gap: 28px;
       --border-radius: 12px;
       --transition: all 0.2s ease;
       --arrow-color: #9ca3af;
       --down-arrow-color: #cbd5e1;
+      --accent-hue: 210; /* Blue by default (used in dynamic colors) */
     }
 
-    /* Dark Theme */
     [data-theme="dark"] {
       --bg: #111827;
       --card-bg: #1f2937;
@@ -43,20 +53,27 @@
       --down-arrow-color: #4b5563;
     }
 
-    /* Reset & Base */
+    /* Dynamic Pastel Colors via HSL */
+    .color-0 { background: hsl(var(--accent-hue), 70%, 92%); color: hsl(var(--accent-hue), 50%, 30%); }
+    .color-1 { --accent-hue: 120; background: hsl(var(--accent-hue), 70%, 92%); color: hsl(var(--accent-hue), 50%, 30%); }
+    .color-2 { --accent-hue: 25; background: hsl(var(--accent-hue), 80%, 92%); color: hsl(var(--accent-hue), 60%, 30%); }
+    .color-3 { --accent-hue: 0; background: hsl(var(--accent-hue), 70%, 92%); color: hsl(var(--accent-hue), 60%, 30%); }
+    .color-4 { --accent-hue: 280; background: hsl(var(--accent-hue), 65%, 92%); color: hsl(var(--accent-hue), 55%, 30%); }
+    .color-5 { --accent-hue: 180; background: hsl(var(--accent-hue), 60%, 92%); color: hsl(var(--accent-hue), 50%, 30%); }
+
+    /* Reset */
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
+    html, body { height: 100%; margin: 0; padding: 0; }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       line-height: 1.5;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.3s;
     }
 
-    /* Layout */
     .container {
-      max-width: 1200px;
+      max-width: 1280px;
       width: 100%;
       margin: 0 auto;
       padding: 24px;
@@ -66,7 +83,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
       text-align: center;
       position: relative;
     }
@@ -84,7 +101,6 @@
       align-items: center;
       padding: 0 4px;
       cursor: pointer;
-      transition: var(--transition);
     }
 
     .theme-toggle span {
@@ -113,44 +129,25 @@
       }
     }
 
-    h1 {
-      margin: 0;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--heading);
-    }
+    h1 { margin: 0; font-size: 1.35rem; font-weight: 700; color: var(--heading); }
+    .sub { color: var(--muted); font-size: 0.875rem; }
 
-    .sub {
-      color: var(--muted);
-      font-size: 0.8125rem;
-    }
-
-    /* Flow Row */
+    /* Flow */
     .flow-row {
       display: flex;
       align-items: flex-start;
       gap: var(--gap);
       overflow-x: auto;
-      padding: 12px 0 16px 16px;
+      padding: 16px 0 20px 16px;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
-      scrollbar-color: var(--border) var(--bg);
     }
 
-    .flow-row::-webkit-scrollbar {
-      height: 6px;
-    }
-    .flow-row::-webkit-scrollbar-track {
-      background: var(--bg);
-      border-radius: 3px;
-    }
-    .flow-row::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 3px;
-    }
+    .flow-row::-webkit-scrollbar { height: 6px; }
+    .flow-row::-webkit-scrollbar-track { background: var(--bg); }
+    .flow-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-    /* Column */
     .col {
       display: flex;
       flex-direction: column;
@@ -160,7 +157,6 @@
       scroll-snap-align: start;
     }
 
-    /* Main Card */
     .card {
       width: 100%;
       max-width: 240px;
@@ -169,24 +165,21 @@
       background: var(--card-bg);
       padding: 16px;
       text-align: center;
-      transition: var(--transition);
+      transition: transform 0.2s ease;
       cursor: pointer;
       border: 1px solid var(--border);
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.12);
     }
 
     .card h2 {
       margin: 0;
       font-size: 15px;
-      color: #d1d5db;
       font-weight: 600;
     }
 
-    /* Small Module Cards */
     .small-card {
       width: 100%;
       max-width: 190px;
@@ -194,13 +187,12 @@
       border: 1px solid var(--border);
       border-radius: var(--border-radius);
       padding: 8px 10px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
       font-size: 13px;
       color: var(--muted);
       text-align: center;
     }
 
-    /* Arrows */
     .arrow-right {
       width: 44px;
       height: 44px;
@@ -219,21 +211,8 @@
       margin-top: 6px;
     }
 
-    svg.arrow {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
+    svg { display: block; }
 
-    /* Color Variants */
-    .yellow { background: var(--pastel-yellow); color: #854d0e; }
-    .green  { background: var(--pastel-green); color: #047857; }
-    .orange { background: var(--pastel-orange); color: #9a3412; }
-    .red    { background: var(--pastel-red); color: #991b1b; }
-    .blue   { background: var(--pastel-blue); color: #1d4ed8; }
-    .purple { background: var(--pastel-purple); color: #7e22ce; }
-
-    /* Stack */
     .stack {
       display: flex;
       flex-direction: column;
@@ -241,7 +220,6 @@
       gap: 8px;
     }
 
-    /* Animations */
     .fade-up {
       opacity: 0;
       transform: translateY(12px);
@@ -249,29 +227,14 @@
     }
 
     .fade-up.delay-1 { animation-delay: 0.1s; }
-    .fade-up.delay-2 { animation-delay: 0.2s; }
-    .fade-up.delay-3 { animation-delay: 0.3s; }
-    .fade-up.delay-4 { animation-delay: 0.4s; }
+    .fade-up.delay-2 { animation-delay: 0.15s; }
+    .fade-up.delay-3 { animation-delay: 0.2s; }
+    .fade-up.delay-4 { animation-delay: 0.25s; }
 
     @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Swipe Hint Animation (Mobile Only) */
-    @media (max-width: 880px) {
-      .hint {
-        animation: pulse 1.5s infinite;
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 0.6; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.08); }
-      }
-    }
-
-    /* Responsive */
     @media (max-width: 640px) {
       .container { padding: 16px; }
       .card, .small-card { max-width: 100%; }
@@ -279,10 +242,13 @@
       h1 { font-size: 1.15rem; }
     }
 
-    /* Focus & Accessibility */
-    .card:focus, .arrow-right:focus {
-      outline: 2px solid #005fcc;
-      border-radius: 14px;
+    /* Swipe Hint */
+    @media (max-width: 880px) {
+      .hint { animation: pulse 1.8s infinite; }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; transform: scale(1.06); }
+      }
     }
   </style>
 </head>
@@ -291,140 +257,110 @@
   <div class="container">
     <header>
       <div>
-        <h1>Pharmacy Management Platform</h1>
-        <div class="sub">Product journey: Central Hub → Inventory → Insights → Innovation</div>
+        <h1 id="title">Project Flow</h1>
+        <div class="sub" id="subtitle">A visual journey from start to innovation</div>
       </div>
       <button class="theme-toggle" aria-label="Toggle dark mode">
         <span></span>
       </button>
     </header>
 
-    <div
-      class="flow-row"
-      role="region"
-      aria-label="Product Module Flow"
-      tabindex="0"
-    >
-      <!-- JS will populate -->
-    </div>
+    <div class="flow-row" role="region" aria-label="Project Flow Diagram" tabindex="0"></div>
   </div>
 
   <script>
-    // Theme Toggle
+    // ———————————————————————
+    // 🛠️ CONFIG: Change this for any project!
+    // ———————————————————————
+
+    const FLOW_CONFIG = {
+      themeColor: 210, // Blue (0=red, 210=blue, 120=green, etc.)
+      title: "Pharmacy Management Platform",
+      subtitle: "From Dashboard to Innovation",
+      stages: [
+        { title: "Central Hub", modules: ["Overview", "Alerts", "Access Control"] },
+        { title: "Inventory", modules: ["Tracking", "Low Stock", "Suppliers"] },
+        { title: "Analytics", modules: ["Revenue", "Top Sellers", "Trends"] },
+        { title: "Innovation", modules: ["AI Tools", "Testing", "Workflows"] }
+      ]
+    };
+
+    // Apply theme hue
+    document.documentElement.style.setProperty('--accent-hue', FLOW_CONFIG.themeColor);
+
+    // Update title
+    document.getElementById('title').textContent = FLOW_CONFIG.title;
+    document.getElementById('subtitle').textContent = FLOW_CONFIG.subtitle;
+
+    // ———————————————————————
+    // 🌙 Theme Toggle
+    // ———————————————————————
+
     const html = document.documentElement;
     const toggle = document.querySelector('.theme-toggle');
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      html.setAttribute('data-theme', savedTheme);
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-    }
+    const saved = localStorage.getItem('flowdeck-theme');
+    if (saved) html.setAttribute('data-theme', saved);
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) html.setAttribute('data-theme', 'dark');
 
     toggle.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme');
-      const updated = current === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-theme', updated);
-      localStorage.setItem('theme', updated);
+      const theme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('flowdeck-theme', theme);
     });
 
-    // Flow Data
-    const sections = [
-      {
-        title: "Central Dashboard",
-        color: "yellow",
-        module1: "Real-time Overview",
-        module2: "Prescription Alerts",
-        module3: "Staff & Access Control"
-      },
-      {
-        title: "Inventory Management",
-        color: "green",
-        module1: "Medicine Tracking",
-        module2: "Low Stock Warnings",
-        module3: "Supplier Coordination"
-      },
-      {
-        title: "Sales & Analytics",
-        color: "orange",
-        module1: "Daily Revenue Trends",
-        module2: "Top-Selling Medicines",
-        module3: "Customer Purchase Patterns"
-      },
-      {
-        title: "Innovation Lab",
-        color: "red",
-        module1: "Feature Testing",
-        module2: "AI Forecasting",
-        module3: "Custom Workflow Builder"
-      }
-    ];
+    // ———————————————————————
+    // 🧱 Build the Flow
+    // ———————————————————————
 
     const flow = document.querySelector('.flow-row');
 
-    sections.forEach((section, idx) => {
+    FLOW_CONFIG.stages.forEach((stage, idx) => {
       const col = document.createElement('div');
       col.className = `col fade-up delay-${idx % 4}`;
 
-      // Clickable main card
-      const mainCard = document.createElement('div');
-      mainCard.className = `card ${section.color}`;
-      mainCard.tabIndex = 0;
-      mainCard.setAttribute('role', 'button');
-      mainCard.setAttribute('aria-label', `View ${section.title}`);
-      mainCard.innerHTML = `<h2>${section.title}</h2>`;
-      
-      mainCard.addEventListener('click', () => {
-        alert(`${section.title} clicked! In a real app, this would open a detailed view.`);
+      const card = document.createElement('div');
+      card.className = `card color-${idx % 6}`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', 0);
+      card.innerHTML = `<h2>${stage.title}</h2>`;
+      card.addEventListener('click', () => {
+        alert(`Stage: ${stage.title}`);
       });
 
-      col.appendChild(mainCard);
+      col.appendChild(card);
 
       const stack = document.createElement('div');
       stack.className = 'stack';
 
-      const createDownArrow = () => {
-        const arrow = document.createElement('div');
-        arrow.className = 'arrow-down';
-        arrow.innerHTML = `
-          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>`;
-        return arrow;
+      const addArrow = () => {
+        const a = document.createElement('div');
+        a.className = 'arrow-down';
+        a.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+        stack.appendChild(a);
       };
 
-      [section.module1, section.module2, section.module3].forEach(mod => {
+      stage.modules.forEach(mod => {
+        addArrow();
         const modCard = document.createElement('div');
         modCard.className = 'small-card';
         modCard.textContent = mod;
-        stack.appendChild(createDownArrow());
         stack.appendChild(modCard);
       });
 
       col.appendChild(stack);
       flow.appendChild(col);
 
-      // Add right arrow
-      if (idx < sections.length - 1) {
-        const arrowWrap = document.createElement('div');
-        arrowWrap.className = 'arrow-right fade-up hint'; // hint only on first arrow
-        arrowWrap.setAttribute('role', 'img');
-        arrowWrap.setAttribute('aria-label', 'Next step');
-        arrowWrap.innerHTML = `
-          <svg class="arrow" viewBox="0 0 32 24" aria-hidden="true">
-            <path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>`;
-        flow.appendChild(arrowWrap);
+      if (idx < FLOW_CONFIG.stages.length - 1) {
+        const arrow = document.createElement('div');
+        arrow.className = 'arrow-right fade-up';
+        if (idx === 0) arrow.classList.add('hint'); // Only first arrow hints
+        arrow.innerHTML = `<svg viewBox="0 0 32 24"><path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+        flow.appendChild(arrow);
 
-        // Remove hint after 5 seconds
-        setTimeout(() => {
-          arrowWrap.classList.remove('hint');
-        }, 5000);
+        setTimeout(() => arrow.classList.remove('hint'), 5000);
       }
     });
   </script>
-
 </body>
-  </html>
+</html>
