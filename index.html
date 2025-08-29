@@ -1,155 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-Client SaaS 3D Architecture</title>
+import React from "react"; import { Card, CardContent } from "@/components/ui/card"; import { ArrowRight, ArrowDown } from "lucide-react"; import { motion } from "framer-motion";
 
-<!-- Three.js & ForceGraph 3D -->
-<script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
-<script src="https://unpkg.com/three-forcegraph"></script>
+export default function DashboardFlow() { const sections = [ { title: "Landing Dashboard", color: "bg-yellow-100", js: "main.js", api: "helpers.js", data: "medicines.json", }, { title: "Inventory Dashboard", color: "bg-green-100", js: "inventory.js", api: "medicines.js", data: "suppliers.json", }, { title: "Sales Analytics", color: "bg-orange-100", js: "analytics.js", api: "sales.js", data: "sales.json", }, { title: "Sandbox", color: "bg-red-100", js: "sandbox.js", api: "(simulation)", data: "-", }, ];
 
-<style>
-  body { margin:0; font-family:Arial, sans-serif; background:#f7f7f7; color:#333; }
-  header { background:#ffffff; padding:2rem; text-align:center; border-bottom:1px solid #ddd; }
-  header h1 { font-size:2.5rem; color:#ffb74d; margin:0; }
-  header p { opacity:0.8; margin-top:0.5rem; }
-  #3d-graph { width:100%; height:80vh; display:block; margin-top:2rem; }
-  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background: #fefefe; padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; color:#333; }
-  .modal-content h3 { color:#ffb74d; margin-bottom:1rem; }
-  .modal-content p { margin-bottom:1rem; line-height:1.5; }
-  .close-btn { background:#e57373; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
-  iframe { width:100%; height:200px; border:1px solid #ddd; border-radius:10px; margin-top:1rem; }
-  #notifications { background:#fff3e0; color:#333; padding:0.8rem; border-radius:8px; margin-top:1rem; max-height:120px; overflow-y:auto; border:1px solid #ffe0b2; }
-  #notif-list li { margin-bottom:2px; padding:2px 5px; border-radius:4px; }
-  @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
-</style>
-</head>
-<body>
+return ( <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6 space-y-10"> <h1 className="text-2xl font-bold text-gray-800 mb-6"> Pharmacy Dashboard Flow </h1>
 
-<header>
-  <h1>🌐 Multi-Client SaaS 3D Architecture</h1>
-  <p>Interactive architecture view of core & future modules</p>
-</header>
+<div className="flex items-center space-x-6">
+    {sections.map((s, idx) => (
+      <React.Fragment key={s.title}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: idx * 0.2 }}
+        >
+          <Card className={`${s.color} rounded-2xl shadow-md w-52`}>
+            <CardContent className="p-4 text-center">
+              <h2 className="font-semibold text-gray-700">{s.title}</h2>
+            </CardContent>
+          </Card>
 
-<div id="3d-graph"></div>
+          <div className="flex flex-col items-center mt-2">
+            <ArrowDown className="text-gray-400" />
+            <Card className="bg-white border w-44 rounded-xl shadow-sm mt-2">
+              <CardContent className="p-2 text-sm text-gray-600">
+                {s.js}
+              </CardContent>
+            </Card>
+            <ArrowDown className="text-gray-400" />
+            <Card className="bg-white border w-44 rounded-xl shadow-sm mt-2">
+              <CardContent className="p-2 text-sm text-gray-600">
+                {s.api}
+              </CardContent>
+            </Card>
+            {s.data !== "-" && (
+              <>
+                <ArrowDown className="text-gray-400" />
+                <Card className="bg-white border w-44 rounded-xl shadow-sm mt-2">
+                  <CardContent className="p-2 text-sm text-gray-600">
+                    {s.data}
+                  </CardContent>
+                </Card>
+              </>
+            )}
+          </div>
+        </motion.div>
 
-<div class="modal" id="module-modal">
-  <div class="modal-content">
-    <h3 id="modal-title"></h3>
-    <p id="modal-description"></p>
-    <!-- Use dummy iframe content for self-contained version -->
-    <iframe id="sandbox-frame" srcdoc="<p style='font-family:Arial,sans-serif;color:#333;'>Sandbox Preview</p>"></iframe>
-    <div id="notifications">
-      <strong>Notifications:</strong>
-      <ul id="notif-list"></ul>
-    </div>
-    <button class="close-btn" id="modal-close">Close</button>
+        {idx < sections.length - 1 && (
+          <ArrowRight className="text-gray-500" size={32} />
+        )}
+      </React.Fragment>
+    ))}
   </div>
 </div>
 
-<script>
-// Nodes
-const nodesData = [
-  { id:1, label:'Multi-Client Portal', type:'core', desc:'Dashboard, project selection, role-based access, particle visuals.' },
-  { id:2, label:'Interactive Cards & Overlays', type:'core', desc:'Hover cards with project details and demo links.' },
-  { id:3, label:'Role-Based Analytics', type:'core', desc:'Charts showing flagged/deleted messages per role.' },
-  { id:4, label:'AI Recommendations', type:'core', desc:'AI suggests actions based on analytics.' },
-  { id:5, label:'Sandbox Environment', type:'core', desc:'Live interactive sandbox per project.' },
-  { id:6, label:'Notifications Center', type:'core', desc:'Real-time notifications for sandbox actions and AI insights.' },
-  { id:7, label:'Automated Reports', type:'core', desc:'Export PDF/CSV reports with analytics and recommendations.' },
-  { id:8, label:'Predictive Analytics', type:'future', desc:'Forecast spikes or anomalies before they occur.' },
-  { id:9, label:'Template & Workflow Marketplace', type:'future', desc:'Share or sell sandbox templates and workflows.' },
-  { id:10, label:'Custom KPI Builder', type:'future', desc:'Clients create custom dashboards and metrics.' },
-  { id:11, label:'Gamification & Engagement', type:'future', desc:'Badges, leaderboards, interactive learning.' },
-  { id:12, label:'Third-Party Integrations', type:'future', desc:'Slack, Discord, Google Workspace, Notion API, etc.' },
-  { id:13, label:'API Access for Clients', type:'future', desc:'Clients can push/pull their own data programmatically.' },
-  { id:14, label:'VR/AR Sandbox Previews', type:'future', desc:'Immersive demos for education and interactive workflows.' },
-  { id:15, label:'Web3 / Blockchain Tracking', type:'future', desc:'Track sandbox activity or achievements on blockchain.' },
-  { id:16, label:'Edge AI Recommendations', type:'future', desc:'Run AI analytics locally on client devices.' }
-];
-
-// Edges
-const edgesData = [
-  { source:1, target:2 }, { source:1, target:3 }, { source:3, target:4 }, { source:5, target:6 }, { source:4, target:6 },
-  { source:7, target:8 }, { source:8, target:10 }, { source:10, target:11 }, { source:11, target:14 }, { source:12, target:13 }, { source:14, target:15 }, { source:15, target:16 }
-];
-
-// Colors
-const typeColors = { core:"#c8e6c9", future:"#ffccbc" };
-
-// Notifications
-const notifMessages = {
-  1:["User joined project","Portal updated"],2:["Card hover event tracked","New overlay added"],
-  3:["Analytics refreshed","New chart available"],4:["AI recommendation generated","Insight ready"],
-  5:["Sandbox loaded","User interaction detected"],6:["New notification received","Alert cleared"],
-  7:["Report exported","PDF ready"],8:["Prediction ready","Alert threshold reached"],
-  9:["Template uploaded","Workflow shared"],10:["KPI metric updated","Custom dashboard saved"],
-  11:["Badge earned","Leaderboard updated"],12:["Integration synced","Webhook triggered"],
-  13:["API call successful","Data pulled"],14:["VR scene loaded","User joined AR session"],
-  15:["Blockchain transaction confirmed","NFT achievement minted"],16:["Edge AI model updated","Prediction completed locally"]
-};
-
-// Build 3D Force Graph
-const Graph = ForceGraph3D()(document.getElementById('3d-graph'))
-.graphData({ nodes: nodesData, links: edgesData })
-.nodeLabel('label')
-.nodeColor(n => typeColors[n.type])
-.linkColor('#bdbdbd')
-.linkWidth(2)
-.nodeThreeObject(node => {
-  const color = typeColors[node.type];
-  const geometry = new THREE.SphereGeometry(node.type==="core"?8:6, 32, 32);
-  const material = new THREE.MeshBasicMaterial({ color: color });
-  const sphere = new THREE.Mesh(geometry, material);
-
-  // Glow for core
-  if(node.type==="core"){
-    const glowMaterial = new THREE.MeshBasicMaterial({ color: color, transparent:true, opacity:0.3 });
-    const glowSphere = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), glowMaterial);
-    sphere.add(glowSphere);
-  }
-
-  // Floating animation
-  sphere.tick = t => {
-    sphere.position.y = Math.sin(t + node.id) * 3;
-    sphere.position.x = Math.cos(t + node.id) * 3;
-  };
-
-  return sphere;
-})
-.enableNodeDrag(true)
-.enableNavigationControls(true)
-.onEngineTick(() => {
-  const t = performance.now()/500;
-  Graph.graphData().nodes.forEach(n=>{
-    if(n.__threeObj && n.__threeObj.tick) n.__threeObj.tick(t);
-  });
-})
-.onNodeClick(node => {
-  const modal = document.getElementById('module-modal');
-  modal.style.display='flex';
-  document.getElementById('modal-title').textContent=node.label;
-  document.getElementById('modal-description').textContent=node.desc;
-  // Use self-contained iframe content
-  document.getElementById('sandbox-frame').srcdoc = `<p style="font-family:Arial,sans-serif;color:#333;">Sandbox Preview for ${node.label}</p>`;
-  const notifList = document.getElementById('notif-list');
-  notifList.innerHTML = "";
-  if(notifMessages[node.id]){
-    notifMessages[node.id].forEach(msg=>{
-      const li = document.createElement('li');
-      li.textContent = msg;
-      li.style.background = typeColors[node.type];
-      notifList.appendChild(li);
-    });
-  }
-});
-
-// Modal close
-document.getElementById('modal-close').onclick = ()=>document.getElementById('module-modal').style.display='none';
-window.onclick = e=>{ if(e.target==document.getElementById('module-modal')) document.getElementById('module-modal').style.display='none'; };
-</script>
-
-</body>
-</html>
+); }
