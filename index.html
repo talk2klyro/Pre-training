@@ -7,23 +7,23 @@
 <script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
 <link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
 <style>
-  body { margin:0; font-family:Arial, sans-serif; background:#0d0d0d; color:#fff; }
-  header { background:rgba(255,255,255,0.05); padding:2rem; text-align:center; backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.1);}
-  header h1 { font-size:2.5rem; color:#ffda79; margin:0; }
+  body { margin:0; font-family:Arial, sans-serif; background:#f9f9f9; color:#333; }
+  header { background:#ffffff; padding:2rem; text-align:center; border-bottom:1px solid #ddd; }
+  header h1 { font-size:2.5rem; color:#ffb74d; margin:0; }
   header p { opacity:0.8; margin-top:0.5rem; }
   .container { max-width:1200px; margin:auto; padding:2rem; }
   .intro { text-align:center; margin-bottom:2rem; }
-  .intro h2 { color:#00f5d4; margin-bottom:0.5rem; }
+  .intro h2 { color:#81c784; margin-bottom:0.5rem; }
   .intro p { font-size:1rem; opacity:0.9; line-height:1.5; }
   .invite { text-align:center; margin-top:2rem; }
-  .invite button { background:#00f5d4; border:none; padding:1rem 2rem; border-radius:12px; cursor:pointer; font-weight:bold; font-size:1rem; transition:transform 0.3s, box-shadow 0.3s;}
-  .invite button:hover { transform:scale(1.05); box-shadow:0 0 20px #00f5d4;}
-  #network { width:100%; height:500px; border:1px solid rgba(255,255,255,0.1); margin-top:2rem; border-radius:15px; }
-  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
-  .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
+  .invite button { background:#ffb74d; border:none; padding:1rem 2rem; border-radius:12px; cursor:pointer; font-weight:bold; font-size:1rem; transition:transform 0.3s, box-shadow 0.3s;}
+  .invite button:hover { transform:scale(1.05); box-shadow:0 0 20px #ffb74d;}
+  #network { width:100%; height:500px; border:1px solid #ddd; margin-top:2rem; border-radius:15px; background:#fff; }
+  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); justify-content:center; align-items:center; z-index:1000; }
+  .modal-content { background: #fff; padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; color:#333; }
+  .modal-content h3 { color:#ffb74d; margin-bottom:1rem; }
   .modal-content p { margin-bottom:1rem; line-height:1.5; }
-  .close-btn { background:#ff5e57; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
+  .close-btn { background:#e57373; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
   @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
 </style>
 </head>
@@ -41,7 +41,7 @@
     <p>We invite you to join our platform as a founding client. Access live sandboxes, AI recommendations, predictive analytics, and more. Be part of shaping the platform and experience the next generation of interactive SaaS tools.</p>
   </div>
 
-  <h2 style="color:#ffda79;">Interactive Roadmap</h2>
+  <h2 style="color:#ffb74d;">Interactive Roadmap</h2>
   <div id="network"></div>
 
   <div class="invite">
@@ -59,7 +59,7 @@
 </div>
 
 <script>
-// Module nodes
+// Modules
 const nodesData = [
   { id:1, label:'Multi-Client Portal', group:'core', desc:'Dashboard, project selection, role-based access, particle visuals.' },
   { id:2, label:'Interactive Cards & Overlays', group:'core', desc:'Hover cards with project details and demo links.' },
@@ -80,24 +80,32 @@ const nodesData = [
   { id:16, label:'Edge AI Recommendations', group:'future', desc:'Run AI analytics locally on client devices.' }
 ];
 
-// Dependencies
 const edgesData = [
   { from:1, to:2 }, { from:1, to:3 }, { from:3, to:4 }, { from:5, to:6 }, { from:4, to:6 },
   { from:7, to:8 }, { from:8, to:10 }, { from:10, to:11 }, { from:11, to:14 }, { from:12, to:13 }, { from:14, to:15 }, { from:15, to:16 }
 ];
 
-// Network setup
 const container = document.getElementById('network');
-const nodes = new vis.DataSet(nodesData.map(n=>({id:n.id, label:n.label, title:n.desc, group:n.group})));
+const nodes = new vis.DataSet(nodesData.map(n=>({
+  id:n.id,
+  label:n.label,
+  title:n.desc,
+  group:n.group
+})));
 const edges = new vis.DataSet(edgesData);
 
 const data = { nodes, edges };
 const options = {
-  nodes: { shape:'box', margin:10, font:{ color:'#000' } },
-  edges:{ color:'#fff', arrows:{ to:false } },
-  groups: {
-    core:{ color:{ background:'#00f5d4', border:'#fff' } },
-    future:{ color:{ background:'#ffda79', border:'#fff' } }
+  nodes: {
+    shape:'box',
+    margin:10,
+    font:{ color:'#333' },
+    color:{ background:'#ffe082', border:'#fff' }
+  },
+  edges:{ color:'#bdbdbd', arrows:{ to:false } },
+  groups:{
+    core:{ color:{ background:'#aed581', border:'#81c784' } },
+    future:{ color:{ background:'#ffcc80', border:'#ffb74d' } }
   },
   layout:{ hierarchical:{ direction:'UD', sortMethod:'hubsize' } },
   physics:{ enabled:true },
@@ -131,4 +139,4 @@ document.getElementById('join-btn').onclick = ()=>{
 </script>
 
 </body>
-</html>
+      </html>
