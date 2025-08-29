@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,8 +12,11 @@
     :root {
       --bg: #f6f7f8;
       --card-bg: #ffffff;
-      --shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+      --text: #1f2937;
+      --heading: #111827;
       --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
       --gap: 24px;
       --pastel-yellow: #fff9db;
       --pastel-green: #e6f9ed;
@@ -22,7 +25,22 @@
       --pastel-blue: #eaf2ff;
       --pastel-purple: #f5e6ff;
       --border-radius: 12px;
-      --transition: transform 0.18s ease, box-shadow 0.18s ease;
+      --transition: all 0.2s ease;
+      --arrow-color: #9ca3af;
+      --down-arrow-color: #cbd5e1;
+    }
+
+    /* Dark Theme */
+    [data-theme="dark"] {
+      --bg: #111827;
+      --card-bg: #1f2937;
+      --text: #e5e7eb;
+      --heading: #f9fafb;
+      --muted: #9ca3af;
+      --border: #374151;
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      --arrow-color: #6b7280;
+      --down-arrow-color: #4b5563;
     }
 
     /* Reset & Base */
@@ -30,9 +48,10 @@
     html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
     body {
       background: var(--bg);
-      color: #1f2937;
+      color: var(--text);
       font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       line-height: 1.5;
+      transition: background 0.3s, color 0.3s;
     }
 
     /* Layout */
@@ -49,6 +68,36 @@
       gap: 8px;
       margin-bottom: 24px;
       text-align: center;
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      width: 54px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .theme-toggle span {
+      width: 22px;
+      height: 22px;
+      background: #fbbf24;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    [data-theme="dark"] .theme-toggle span {
+      transform: translateX(24px);
+      background: #60a5fa;
     }
 
     @media (min-width: 640px) {
@@ -58,21 +107,25 @@
         align-items: center;
         text-align: left;
       }
+      .theme-toggle {
+        position: static;
+        margin-left: auto;
+      }
     }
 
     h1 {
       margin: 0;
       font-size: 1.25rem;
       font-weight: 700;
-      color: #111827;
+      color: var(--heading);
     }
 
     .sub {
       color: var(--muted);
-      font-size: 0.8125rem; /* 13px */
+      font-size: 0.8125rem;
     }
 
-    /* Flow Row - Horizontal Scroll with Snap */
+    /* Flow Row */
     .flow-row {
       display: flex;
       align-items: flex-start;
@@ -82,7 +135,7 @@
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
-      scrollbar-color: #ccc var(--bg);
+      scrollbar-color: var(--border) var(--bg);
     }
 
     .flow-row::-webkit-scrollbar {
@@ -93,7 +146,7 @@
       border-radius: 3px;
     }
     .flow-row::-webkit-scrollbar-thumb {
-      background: #d1d5db;
+      background: var(--border);
       border-radius: 3px;
     }
 
@@ -117,17 +170,19 @@
       padding: 16px;
       text-align: center;
       transition: var(--transition);
+      cursor: pointer;
+      border: 1px solid var(--border);
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.1);
+      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.12);
     }
 
     .card h2 {
       margin: 0;
       font-size: 15px;
-      color: #374151;
+      color: #d1d5db;
       font-weight: 600;
     }
 
@@ -135,10 +190,11 @@
     .small-card {
       width: 100%;
       max-width: 190px;
-      background: #fff;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: var(--border-radius);
       padding: 8px 10px;
-      box-shadow: 0 3px 8px rgba(15, 15, 15, 0.04);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
       font-size: 13px;
       color: var(--muted);
       text-align: center;
@@ -151,15 +207,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #9ca3af;
+      color: var(--arrow-color);
       flex-shrink: 0;
-      margin-top: 36px; /* align with card center */
+      margin-top: 36px;
     }
 
     .arrow-down {
       width: 22px;
       height: 22px;
-      color: #cbd5e1;
+      color: var(--down-arrow-color);
       margin-top: 6px;
     }
 
@@ -170,12 +226,12 @@
     }
 
     /* Color Variants */
-    .yellow { background: var(--pastel-yellow); }
-    .green  { background: var(--pastel-green); }
-    .orange { background: var(--pastel-orange); }
-    .red    { background: var(--pastel-red); }
-    .blue   { background: var(--pastel-blue); }
-    .purple { background: var(--pastel-purple); }
+    .yellow { background: var(--pastel-yellow); color: #854d0e; }
+    .green  { background: var(--pastel-green); color: #047857; }
+    .orange { background: var(--pastel-orange); color: #9a3412; }
+    .red    { background: var(--pastel-red); color: #991b1b; }
+    .blue   { background: var(--pastel-blue); color: #1d4ed8; }
+    .purple { background: var(--pastel-purple); color: #7e22ce; }
 
     /* Stack */
     .stack {
@@ -204,272 +260,29 @@
       }
     }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      .container { padding: 16px; }
-
-      .card,
-      .small-card {
-        width: 100%;
-        max-width: 100%;
+    /* Swipe Hint Animation (Mobile Only) */
+    @media (max-width: 880px) {
+      .hint {
+        animation: pulse 1.5s infinite;
       }
-
-      .arrow-right {
-        margin-top: 32px;
-      }
-
-      header {
-        gap: 4px;
-      }
-
-      h1 {
-        font-size: 1.15rem;
-      }
-    }
-
-    /* Accessibility: Focus for keyboard users */
-    .arrow-right:focus svg,
-    .card:focus {
-      outline: 2px solid #005fcc;
-      border-radius: 50%;
-    }
-  </style>
-</head>
-<body>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pharmacy Management Platform — Dashboard Flow</title>
-
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --bg: #f6f7f8;
-      --card-bg: #ffffff;
-      --shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
-      --muted: #6b7280;
-      --gap: 24px;
-      --pastel-yellow: #fff9db;
-      --pastel-green: #e6f9ed;
-      --pastel-orange: #fff2e0;
-      --pastel-red: #ffe6e6;
-      --pastel-blue: #eaf2ff;
-      --pastel-purple: #f5e6ff;
-      --border-radius: 12px;
-      --transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    /* Reset & Base */
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: #1f2937;
-      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.5;
-    }
-
-    /* Layout */
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    header {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    @media (min-width: 640px) {
-      header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        text-align: left;
-      }
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .sub {
-      color: var(--muted);
-      font-size: 0.8125rem; /* 13px */
-    }
-
-    /* Flow Row - Horizontal Scroll with Snap */
-    .flow-row {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--gap);
-      overflow-x: auto;
-      padding: 12px 0 16px 16px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: #ccc var(--bg);
-    }
-
-    .flow-row::-webkit-scrollbar {
-      height: 6px;
-    }
-    .flow-row::-webkit-scrollbar-track {
-      background: var(--bg);
-      border-radius: 3px;
-    }
-    .flow-row::-webkit-scrollbar-thumb {
-      background: #d1d5db;
-      border-radius: 3px;
-    }
-
-    /* Column */
-    .col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      min-width: 220px;
-      scroll-snap-align: start;
-    }
-
-    /* Main Card */
-    .card {
-      width: 100%;
-      max-width: 240px;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      background: var(--card-bg);
-      padding: 16px;
-      text-align: center;
-      transition: var(--transition);
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.1);
-    }
-
-    .card h2 {
-      margin: 0;
-      font-size: 15px;
-      color: #374151;
-      font-weight: 600;
-    }
-
-    /* Small Module Cards */
-    .small-card {
-      width: 100%;
-      max-width: 190px;
-      background: #fff;
-      border-radius: var(--border-radius);
-      padding: 8px 10px;
-      box-shadow: 0 3px 8px rgba(15, 15, 15, 0.04);
-      font-size: 13px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    /* Arrows */
-    .arrow-right {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #9ca3af;
-      flex-shrink: 0;
-      margin-top: 36px; /* align with card center */
-    }
-
-    .arrow-down {
-      width: 22px;
-      height: 22px;
-      color: #cbd5e1;
-      margin-top: 6px;
-    }
-
-    svg.arrow {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Color Variants */
-    .yellow { background: var(--pastel-yellow); }
-    .green  { background: var(--pastel-green); }
-    .orange { background: var(--pastel-orange); }
-    .red    { background: var(--pastel-red); }
-    .blue   { background: var(--pastel-blue); }
-    .purple { background: var(--pastel-purple); }
-
-    /* Stack */
-    .stack {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Animations */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(12px);
-      animation: fadeUp 0.4s forwards;
-    }
-
-    .fade-up.delay-1 { animation-delay: 0.1s; }
-    .fade-up.delay-2 { animation-delay: 0.2s; }
-    .fade-up.delay-3 { animation-delay: 0.3s; }
-    .fade-up.delay-4 { animation-delay: 0.4s; }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      @keyframes pulse {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.08); }
       }
     }
 
     /* Responsive */
     @media (max-width: 640px) {
       .container { padding: 16px; }
-
-      .card,
-      .small-card {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .arrow-right {
-        margin-top: 32px;
-      }
-
-      header {
-        gap: 4px;
-      }
-
-      h1 {
-        font-size: 1.15rem;
-      }
+      .card, .small-card { max-width: 100%; }
+      .arrow-right { margin-top: 32px; }
+      h1 { font-size: 1.15rem; }
     }
 
-    /* Accessibility: Focus for keyboard users */
-    .arrow-right:focus svg,
-    .card:focus {
+    /* Focus & Accessibility */
+    .card:focus, .arrow-right:focus {
       outline: 2px solid #005fcc;
-      border-radius: 50%;
+      border-radius: 14px;
     }
   </style>
 </head>
@@ -481,21 +294,43 @@
         <h1>Pharmacy Management Platform</h1>
         <div class="sub">Product journey: Central Hub → Inventory → Insights → Innovation</div>
       </div>
-      <div class="muted">Clean UI · intuitive flow · scalable architecture</div>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <span></span>
+      </button>
     </header>
 
-    <!-- Flow Visualization -->
     <div
       class="flow-row"
       role="region"
       aria-label="Product Module Flow"
       tabindex="0"
     >
-      <!-- Content generated by JS -->
+      <!-- JS will populate -->
     </div>
   </div>
 
   <script>
+    // Theme Toggle
+    const html = document.documentElement;
+    const toggle = document.querySelector('.theme-toggle');
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      html.setAttribute('data-theme', savedTheme);
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const updated = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', updated);
+      localStorage.setItem('theme', updated);
+    });
+
+    // Flow Data
     const sections = [
       {
         title: "Central Dashboard",
@@ -530,23 +365,26 @@
     const flow = document.querySelector('.flow-row');
 
     sections.forEach((section, idx) => {
-      // Column
       const col = document.createElement('div');
       col.className = `col fade-up delay-${idx % 4}`;
 
-      // Main Card
+      // Clickable main card
       const mainCard = document.createElement('div');
       mainCard.className = `card ${section.color}`;
-      const title = document.createElement('h2');
-      title.textContent = section.title;
-      mainCard.appendChild(title);
+      mainCard.tabIndex = 0;
+      mainCard.setAttribute('role', 'button');
+      mainCard.setAttribute('aria-label', `View ${section.title}`);
+      mainCard.innerHTML = `<h2>${section.title}</h2>`;
+      
+      mainCard.addEventListener('click', () => {
+        alert(`${section.title} clicked! In a real app, this would open a detailed view.`);
+      });
+
       col.appendChild(mainCard);
 
-      // Stack (modules + down arrows)
       const stack = document.createElement('div');
       stack.className = 'stack';
 
-      // Reusable down arrow
       const createDownArrow = () => {
         const arrow = document.createElement('div');
         arrow.className = 'arrow-down';
@@ -557,7 +395,6 @@
         return arrow;
       };
 
-      // Add modules with arrows
       [section.module1, section.module2, section.module3].forEach(mod => {
         const modCard = document.createElement('div');
         modCard.className = 'small-card';
@@ -569,10 +406,10 @@
       col.appendChild(stack);
       flow.appendChild(col);
 
-      // Right arrow between columns
+      // Add right arrow
       if (idx < sections.length - 1) {
         const arrowWrap = document.createElement('div');
-        arrowWrap.className = 'arrow-right fade-up';
+        arrowWrap.className = 'arrow-right fade-up hint'; // hint only on first arrow
         arrowWrap.setAttribute('role', 'img');
         arrowWrap.setAttribute('aria-label', 'Next step');
         arrowWrap.innerHTML = `
@@ -580,9 +417,14 @@
             <path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>`;
         flow.appendChild(arrowWrap);
+
+        // Remove hint after 5 seconds
+        setTimeout(() => {
+          arrowWrap.classList.remove('hint');
+        }, 5000);
       }
     });
   </script>
 
 </body>
-</html>
+  </html>
