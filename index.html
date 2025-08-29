@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-Client SaaS Invitation</title>
+<title>Multi-Client SaaS Invitation & Roadmap</title>
+<script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+<link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
 <style>
   body { margin:0; font-family:Arial, sans-serif; background:#0d0d0d; color:#fff; }
   header { background:rgba(255,255,255,0.05); padding:2rem; text-align:center; backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.1);}
@@ -13,15 +15,10 @@
   .intro { text-align:center; margin-bottom:2rem; }
   .intro h2 { color:#00f5d4; margin-bottom:0.5rem; }
   .intro p { font-size:1rem; opacity:0.9; line-height:1.5; }
-  .modules { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-bottom:2rem; }
-  .module-card { background:rgba(255,255,255,0.08); border-radius:15px; padding:1.5rem; cursor:pointer; transition:all 0.3s ease; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1);}
-  .module-card:hover { transform:scale(1.05); border:1px solid rgba(255,255,255,0.3);}
-  .module-card h3 { color:#00f5d4; margin-bottom:0.5rem; }
-  .module-card p { font-size:0.9rem; opacity:0.9; }
-  .roadmap { margin-bottom:2rem; }
-  .invite { text-align:center; }
+  .invite { text-align:center; margin-top:2rem; }
   .invite button { background:#00f5d4; border:none; padding:1rem 2rem; border-radius:12px; cursor:pointer; font-weight:bold; font-size:1rem; transition:transform 0.3s, box-shadow 0.3s;}
   .invite button:hover { transform:scale(1.05); box-shadow:0 0 20px #00f5d4;}
+  #network { width:100%; height:500px; border:1px solid rgba(255,255,255,0.1); margin-top:2rem; border-radius:15px; }
   .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:1000; }
   .modal-content { background: rgba(255,255,255,0.1); padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; }
   .modal-content h3 { color:#ffda79; margin-bottom:1rem; }
@@ -44,10 +41,8 @@
     <p>We invite you to join our platform as a founding client. Access live sandboxes, AI recommendations, predictive analytics, and more. Be part of shaping the platform and experience the next generation of interactive SaaS tools.</p>
   </div>
 
-  <h2 style="color:#ffda79;">Core Modules</h2>
-  <div class="modules" id="modules-container"></div>
-
-  <div class="roadmap" id="roadmap"></div>
+  <h2 style="color:#ffda79;">Interactive Roadmap</h2>
+  <div id="network"></div>
 
   <div class="invite">
     <button id="join-btn">🚀 Accept Invitation & Join Now</button>
@@ -64,45 +59,71 @@
 </div>
 
 <script>
-const modulesData = [
-  { name:"Multi-Client Portal", desc:"Dashboard, project selection, role-based access, particle visuals." },
-  { name:"Interactive Cards & Overlays", desc:"Hover cards with project details and demo links." },
-  { name:"Role-Based Analytics", desc:"Charts showing flagged/deleted messages per role." },
-  { name:"AI Recommendations", desc:"AI suggests actions based on analytics." },
-  { name:"Sandbox Environment", desc:"Live interactive sandbox per project." },
-  { name:"Notifications Center", desc:"Real-time notifications for sandbox actions and AI insights." },
-  { name:"Automated Reports", desc:"Export PDF/CSV reports with analytics and recommendations." },
-  { name:"Predictive Analytics", desc:"Forecast spikes or anomalies before they occur." },
-  { name:"Template & Workflow Marketplace", desc:"Share or sell sandbox templates and workflows." },
-  { name:"Custom KPI Builder", desc:"Clients create custom dashboards and metrics." },
-  { name:"Gamification & Engagement", desc:"Badges, leaderboards, interactive learning." },
-  { name:"Third-Party Integrations", desc:"Slack, Discord, Google Workspace, Notion API, etc." },
-  { name:"API Access for Clients", desc:"Clients can push/pull their own data programmatically." },
-  { name:"VR/AR Sandbox Previews", desc:"Immersive demos for education and interactive workflows." },
-  { name:"Web3 / Blockchain Tracking", desc:"Track sandbox activity or achievements on blockchain." },
-  { name:"Edge AI Recommendations", desc:"Run AI analytics locally on client devices." }
+// Module nodes
+const nodesData = [
+  { id:1, label:'Multi-Client Portal', group:'core', desc:'Dashboard, project selection, role-based access, particle visuals.' },
+  { id:2, label:'Interactive Cards & Overlays', group:'core', desc:'Hover cards with project details and demo links.' },
+  { id:3, label:'Role-Based Analytics', group:'core', desc:'Charts showing flagged/deleted messages per role.' },
+  { id:4, label:'AI Recommendations', group:'core', desc:'AI suggests actions based on analytics.' },
+  { id:5, label:'Sandbox Environment', group:'core', desc:'Live interactive sandbox per project.' },
+  { id:6, label:'Notifications Center', group:'core', desc:'Real-time notifications for sandbox actions and AI insights.' },
+  { id:7, label:'Automated Reports', group:'core', desc:'Export PDF/CSV reports with analytics and recommendations.' },
+  
+  { id:8, label:'Predictive Analytics', group:'future', desc:'Forecast spikes or anomalies before they occur.' },
+  { id:9, label:'Template & Workflow Marketplace', group:'future', desc:'Share or sell sandbox templates and workflows.' },
+  { id:10, label:'Custom KPI Builder', group:'future', desc:'Clients create custom dashboards and metrics.' },
+  { id:11, label:'Gamification & Engagement', group:'future', desc:'Badges, leaderboards, interactive learning.' },
+  { id:12, label:'Third-Party Integrations', group:'future', desc:'Slack, Discord, Google Workspace, Notion API, etc.' },
+  { id:13, label:'API Access for Clients', group:'future', desc:'Clients can push/pull their own data programmatically.' },
+  { id:14, label:'VR/AR Sandbox Previews', group:'future', desc:'Immersive demos for education and interactive workflows.' },
+  { id:15, label:'Web3 / Blockchain Tracking', group:'future', desc:'Track sandbox activity or achievements on blockchain.' },
+  { id:16, label:'Edge AI Recommendations', group:'future', desc:'Run AI analytics locally on client devices.' }
 ];
 
-const modulesContainer = document.getElementById('modules-container');
+// Dependencies
+const edgesData = [
+  { from:1, to:2 }, { from:1, to:3 }, { from:3, to:4 }, { from:5, to:6 }, { from:4, to:6 },
+  { from:7, to:8 }, { from:8, to:10 }, { from:10, to:11 }, { from:11, to:14 }, { from:12, to:13 }, { from:14, to:15 }, { from:15, to:16 }
+];
+
+// Network setup
+const container = document.getElementById('network');
+const nodes = new vis.DataSet(nodesData.map(n=>({id:n.id, label:n.label, title:n.desc, group:n.group})));
+const edges = new vis.DataSet(edgesData);
+
+const data = { nodes, edges };
+const options = {
+  nodes: { shape:'box', margin:10, font:{ color:'#000' } },
+  edges:{ color:'#fff', arrows:{ to:false } },
+  groups: {
+    core:{ color:{ background:'#00f5d4', border:'#fff' } },
+    future:{ color:{ background:'#ffda79', border:'#fff' } }
+  },
+  layout:{ hierarchical:{ direction:'UD', sortMethod:'hubsize' } },
+  physics:{ enabled:true },
+  interaction:{ hover:true }
+};
+
+const network = new vis.Network(container, data, options);
+
+// Modal handling
 const modal = document.getElementById('module-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalDescription = document.getElementById('modal-description');
 const modalClose = document.getElementById('modal-close');
 
-modulesData.forEach(mod=>{
-  const card = document.createElement('div');
-  card.className='module-card';
-  card.innerHTML=`<h3>${mod.name}</h3><p>${mod.desc.substring(0,80)}...</p>`;
-  card.onclick=()=>{
+network.on("click", params=>{
+  if(params.nodes.length){
+    const nodeId = params.nodes[0];
+    const node = nodesData.find(n=>n.id===nodeId);
     modal.style.display='flex';
-    modalTitle.textContent=mod.name;
-    modalDescription.textContent=mod.desc;
-  };
-  modulesContainer.appendChild(card);
+    modalTitle.textContent=node.label;
+    modalDescription.textContent=node.desc;
+  }
 });
 
-modalClose.onclick = ()=>{ modal.style.display='none'; };
-window.onclick = (e)=>{ if(e.target==modal) modal.style.display='none'; };
+modalClose.onclick=()=>{ modal.style.display='none'; };
+window.onclick=(e)=>{ if(e.target==modal) modal.style.display='none'; };
 
 document.getElementById('join-btn').onclick = ()=>{
   alert("🎉 Welcome! You are now part of the Multi-Client SaaS platform. Next, you'll get access credentials and sandbox preview.");
@@ -110,4 +131,4 @@ document.getElementById('join-btn').onclick = ()=>{
 </script>
 
 </body>
-  </html>
+</html>
