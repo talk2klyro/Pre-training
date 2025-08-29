@@ -1,127 +1,588 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-AI Task Manager</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  input, select, button { padding: 5px; margin: 5px; }
-  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-  th { background-color: #f4f4f4; }
-  .btn { cursor: pointer; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pharmacy Management Platform — Dashboard Flow</title>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f6f7f8;
+      --card-bg: #ffffff;
+      --shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+      --muted: #6b7280;
+      --gap: 24px;
+      --pastel-yellow: #fff9db;
+      --pastel-green: #e6f9ed;
+      --pastel-orange: #fff2e0;
+      --pastel-red: #ffe6e6;
+      --pastel-blue: #eaf2ff;
+      --pastel-purple: #f5e6ff;
+      --border-radius: 12px;
+      --transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    /* Reset & Base */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: #1f2937;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.8125rem; /* 13px */
+    }
+
+    /* Flow Row - Horizontal Scroll with Snap */
+    .flow-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--gap);
+      overflow-x: auto;
+      padding: 12px 0 16px 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #ccc var(--bg);
+    }
+
+    .flow-row::-webkit-scrollbar {
+      height: 6px;
+    }
+    .flow-row::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-radius: 3px;
+    }
+    .flow-row::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    /* Column */
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+      scroll-snap-align: start;
+    }
+
+    /* Main Card */
+    .card {
+      width: 100%;
+      max-width: 240px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      background: var(--card-bg);
+      padding: 16px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.1);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 15px;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    /* Small Module Cards */
+    .small-card {
+      width: 100%;
+      max-width: 190px;
+      background: #fff;
+      border-radius: var(--border-radius);
+      padding: 8px 10px;
+      box-shadow: 0 3px 8px rgba(15, 15, 15, 0.04);
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Arrows */
+    .arrow-right {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      flex-shrink: 0;
+      margin-top: 36px; /* align with card center */
+    }
+
+    .arrow-down {
+      width: 22px;
+      height: 22px;
+      color: #cbd5e1;
+      margin-top: 6px;
+    }
+
+    svg.arrow {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Color Variants */
+    .yellow { background: var(--pastel-yellow); }
+    .green  { background: var(--pastel-green); }
+    .orange { background: var(--pastel-orange); }
+    .red    { background: var(--pastel-red); }
+    .blue   { background: var(--pastel-blue); }
+    .purple { background: var(--pastel-purple); }
+
+    /* Stack */
+    .stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.4s forwards;
+    }
+
+    .fade-up.delay-1 { animation-delay: 0.1s; }
+    .fade-up.delay-2 { animation-delay: 0.2s; }
+    .fade-up.delay-3 { animation-delay: 0.3s; }
+    .fade-up.delay-4 { animation-delay: 0.4s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container { padding: 16px; }
+
+      .card,
+      .small-card {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .arrow-right {
+        margin-top: 32px;
+      }
+
+      header {
+        gap: 4px;
+      }
+
+      h1 {
+        font-size: 1.15rem;
+      }
+    }
+
+    /* Accessibility: Focus for keyboard users */
+    .arrow-right:focus svg,
+    .card:focus {
+      outline: 2px solid #005fcc;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pharmacy Management Platform — Dashboard Flow</title>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f6f7f8;
+      --card-bg: #ffffff;
+      --shadow: 0 6px 18px rgba(20, 20, 20, 0.06);
+      --muted: #6b7280;
+      --gap: 24px;
+      --pastel-yellow: #fff9db;
+      --pastel-green: #e6f9ed;
+      --pastel-orange: #fff2e0;
+      --pastel-red: #ffe6e6;
+      --pastel-blue: #eaf2ff;
+      --pastel-purple: #f5e6ff;
+      --border-radius: 12px;
+      --transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    /* Reset & Base */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: #1f2937;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.8125rem; /* 13px */
+    }
+
+    /* Flow Row - Horizontal Scroll with Snap */
+    .flow-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--gap);
+      overflow-x: auto;
+      padding: 12px 0 16px 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #ccc var(--bg);
+    }
+
+    .flow-row::-webkit-scrollbar {
+      height: 6px;
+    }
+    .flow-row::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-radius: 3px;
+    }
+    .flow-row::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    /* Column */
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+      scroll-snap-align: start;
+    }
+
+    /* Main Card */
+    .card {
+      width: 100%;
+      max-width: 240px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      background: var(--card-bg);
+      padding: 16px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.1);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 15px;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    /* Small Module Cards */
+    .small-card {
+      width: 100%;
+      max-width: 190px;
+      background: #fff;
+      border-radius: var(--border-radius);
+      padding: 8px 10px;
+      box-shadow: 0 3px 8px rgba(15, 15, 15, 0.04);
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Arrows */
+    .arrow-right {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      flex-shrink: 0;
+      margin-top: 36px; /* align with card center */
+    }
+
+    .arrow-down {
+      width: 22px;
+      height: 22px;
+      color: #cbd5e1;
+      margin-top: 6px;
+    }
+
+    svg.arrow {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Color Variants */
+    .yellow { background: var(--pastel-yellow); }
+    .green  { background: var(--pastel-green); }
+    .orange { background: var(--pastel-orange); }
+    .red    { background: var(--pastel-red); }
+    .blue   { background: var(--pastel-blue); }
+    .purple { background: var(--pastel-purple); }
+
+    /* Stack */
+    .stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.4s forwards;
+    }
+
+    .fade-up.delay-1 { animation-delay: 0.1s; }
+    .fade-up.delay-2 { animation-delay: 0.2s; }
+    .fade-up.delay-3 { animation-delay: 0.3s; }
+    .fade-up.delay-4 { animation-delay: 0.4s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .container { padding: 16px; }
+
+      .card,
+      .small-card {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .arrow-right {
+        margin-top: 32px;
+      }
+
+      header {
+        gap: 4px;
+      }
+
+      h1 {
+        font-size: 1.15rem;
+      }
+    }
+
+    /* Accessibility: Focus for keyboard users */
+    .arrow-right:focus svg,
+    .card:focus {
+      outline: 2px solid #005fcc;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Multi-AI Task Manager</h2>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Pharmacy Management Platform</h1>
+        <div class="sub">Product journey: Central Hub → Inventory → Insights → Innovation</div>
+      </div>
+      <div class="muted">Clean UI · intuitive flow · scalable architecture</div>
+    </header>
 
-<form id="taskForm">
-  <input type="text" id="taskName" placeholder="Task Name" required>
-  <select id="assignedAI">
-    <option value="ChatGPT">ChatGPT</option>
-    <option value="Qwen">Qwen</option>
-    <option value="Grok">Grok</option>
-    <option value="Claude/Gemini">Claude/Gemini</option>
-  </select>
-  <input type="text" id="folder" placeholder="Folder/Scope" required>
-  <select id="status">
-    <option value="Pending">Pending</option>
-    <option value="In Progress">In Progress</option>
-    <option value="Completed">Completed</option>
-  </select>
-  <select id="priority">
-    <option value="High">High</option>
-    <option value="Medium">Medium</option>
-    <option value="Low">Low</option>
-  </select>
-  <button type="submit">Add Task</button>
-</form>
+    <!-- Flow Visualization -->
+    <div
+      class="flow-row"
+      role="region"
+      aria-label="Product Module Flow"
+      tabindex="0"
+    >
+      <!-- Content generated by JS -->
+    </div>
+  </div>
 
-<table id="tasksTable">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Task Name</th>
-      <th>Assigned AI</th>
-      <th>Folder</th>
-      <th>Status</th>
-      <th>Priority</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <script>
+    const sections = [
+      {
+        title: "Central Dashboard",
+        color: "yellow",
+        module1: "Real-time Overview",
+        module2: "Prescription Alerts",
+        module3: "Staff & Access Control"
+      },
+      {
+        title: "Inventory Management",
+        color: "green",
+        module1: "Medicine Tracking",
+        module2: "Low Stock Warnings",
+        module3: "Supplier Coordination"
+      },
+      {
+        title: "Sales & Analytics",
+        color: "orange",
+        module1: "Daily Revenue Trends",
+        module2: "Top-Selling Medicines",
+        module3: "Customer Purchase Patterns"
+      },
+      {
+        title: "Innovation Lab",
+        color: "red",
+        module1: "Feature Testing",
+        module2: "AI Forecasting",
+        module3: "Custom Workflow Builder"
+      }
+    ];
 
-<script>
-const taskForm = document.getElementById('taskForm');
-const tasksTableBody = document.querySelector('#tasksTable tbody');
+    const flow = document.querySelector('.flow-row');
 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    sections.forEach((section, idx) => {
+      // Column
+      const col = document.createElement('div');
+      col.className = `col fade-up delay-${idx % 4}`;
 
-function renderTasks() {
-  tasksTableBody.innerHTML = '';
-  tasks.forEach((task, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${task.id}</td>
-      <td>${task.taskName}</td>
-      <td>${task.assignedAI}</td>
-      <td>${task.folder}</td>
-      <td>${task.status}</td>
-      <td>${task.priority}</td>
-      <td>
-        <button class="btn" onclick="editTask(${index})">Edit</button>
-        <button class="btn" onclick="deleteTask(${index})">Delete</button>
-      </td>
-    `;
-    tasksTableBody.appendChild(row);
-  });
-}
+      // Main Card
+      const mainCard = document.createElement('div');
+      mainCard.className = `card ${section.color}`;
+      const title = document.createElement('h2');
+      title.textContent = section.title;
+      mainCard.appendChild(title);
+      col.appendChild(mainCard);
 
-function saveTasks() {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}
+      // Stack (modules + down arrows)
+      const stack = document.createElement('div');
+      stack.className = 'stack';
 
-taskForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const newTask = {
-    id: tasks.length + 1,
-    taskName: document.getElementById('taskName').value,
-    assignedAI: document.getElementById('assignedAI').value,
-    folder: document.getElementById('folder').value,
-    status: document.getElementById('status').value,
-    priority: document.getElementById('priority').value
-  };
-  tasks.push(newTask);
-  saveTasks();
-  renderTasks();
-  taskForm.reset();
-});
+      // Reusable down arrow
+      const createDownArrow = () => {
+        const arrow = document.createElement('div');
+        arrow.className = 'arrow-down';
+        arrow.innerHTML = `
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>`;
+        return arrow;
+      };
 
-function editTask(index) {
-  const task = tasks[index];
-  document.getElementById('taskName').value = task.taskName;
-  document.getElementById('assignedAI').value = task.assignedAI;
-  document.getElementById('folder').value = task.folder;
-  document.getElementById('status').value = task.status;
-  document.getElementById('priority').value = task.priority;
+      // Add modules with arrows
+      [section.module1, section.module2, section.module3].forEach(mod => {
+        const modCard = document.createElement('div');
+        modCard.className = 'small-card';
+        modCard.textContent = mod;
+        stack.appendChild(createDownArrow());
+        stack.appendChild(modCard);
+      });
 
-  tasks.splice(index, 1); // Remove old entry
-  saveTasks();
-  renderTasks();
-}
+      col.appendChild(stack);
+      flow.appendChild(col);
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  saveTasks();
-  renderTasks();
-}
-
-// Initial render
-renderTasks();
-</script>
+      // Right arrow between columns
+      if (idx < sections.length - 1) {
+        const arrowWrap = document.createElement('div');
+        arrowWrap.className = 'arrow-right fade-up';
+        arrowWrap.setAttribute('role', 'img');
+        arrowWrap.setAttribute('aria-label', 'Next step');
+        arrowWrap.innerHTML = `
+          <svg class="arrow" viewBox="0 0 32 24" aria-hidden="true">
+            <path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>`;
+        flow.appendChild(arrowWrap);
+      }
+    });
+  </script>
 
 </body>
-        </html>
+</html>
