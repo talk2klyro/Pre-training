@@ -4,137 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multi-Client SaaS 3D Graph</title>
-<script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
-<link href="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Three.js & ForceGraph 3D -->
+<script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
+<script src="https://unpkg.com/three-forcegraph"></script>
+
 <style>
-  body { margin:0; font-family:Arial, sans-serif; background:#f9f9f9; color:#333; }
+  body { margin:0; font-family:Arial, sans-serif; background:#f7f7f7; color:#333; }
   header { background:#ffffff; padding:2rem; text-align:center; border-bottom:1px solid #ddd; }
   header h1 { font-size:2.5rem; color:#ffb74d; margin:0; }
   header p { opacity:0.8; margin-top:0.5rem; }
-  .container { max-width:1200px; margin:auto; padding:2rem; }
-  .intro { text-align:center; margin-bottom:2rem; }
-  .intro h2 { color:#81c784; margin-bottom:0.5rem; }
-  .intro p { font-size:1rem; opacity:0.9; line-height:1.5; }
-  .invite { text-align:center; margin-top:2rem; }
-  .invite button { background:#ffb74d; border:none; padding:1rem 2rem; border-radius:12px; cursor:pointer; font-weight:bold; font-size:1rem; transition:transform 0.3s, box-shadow 0.3s;}
-  .invite button:hover { transform:scale(1.05); box-shadow:0 0 20px #ffb74d;}
-  #network { width:100%; height:600px; border:1px solid #ddd; margin-top:2rem; border-radius:15px; background:#fff; }
+
+  #3d-graph { width:100%; height:80vh; display:block; margin-top:2rem; }
+
+  /* Modal */
   .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); justify-content:center; align-items:center; z-index:1000; }
-  .modal-content { background: #fff; padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; color:#333; }
+  .modal-content { background: #fefefe; padding:2rem; border-radius:15px; max-width:900px; text-align:center; animation:fadeIn 0.3s ease; overflow-y:auto; max-height:90vh; color:#333; }
   .modal-content h3 { color:#ffb74d; margin-bottom:1rem; }
   .modal-content p { margin-bottom:1rem; line-height:1.5; }
   .close-btn { background:#e57373; border:none; padding:0.7rem 1.5rem; border-radius:8px; cursor:pointer; color:#fff; font-weight:bold; margin-top:1rem; }
+  iframe { width:100%; height:300px; border:1px solid #ddd; border-radius:10px; margin-top:1rem; }
+  #notifications { background:#fff3e0; color:#333; padding:0.8rem; border-radius:8px; margin-top:1rem; max-height:120px; overflow-y:auto; border:1px solid #ffe0b2; }
+  #notif-list li { margin-bottom:2px; padding:2px 5px; border-radius:4px; }
   @keyframes fadeIn { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🌐 Multi-Client SaaS Invitation</h1>
+  <h1>🌐 Multi-Client SaaS 3D Roadmap</h1>
   <p>Explore, collaborate, and grow with our platform</p>
 </header>
 
-<div class="container">
-
-  <div class="intro">
-    <h2>Welcome to the Future of Multi-Client SaaS</h2>
-    <p>We invite you to join our platform as a founding client. Access live sandboxes, AI recommendations, predictive analytics, and more. Be part of shaping the platform and experience the next generation of interactive SaaS tools.</p>
-  </div>
-
-  <h2 style="color:#ffb74d;">Interactive 3D Roadmap</h2>
-  <div id="network"></div>
-
-  <div class="invite">
-    <button id="join-btn">🚀 Accept Invitation & Join Now</button>
-  </div>
-
-</div>
+<div id="3d-graph"></div>
 
 <div class="modal" id="module-modal">
   <div class="modal-content">
     <h3 id="modal-title"></h3>
     <p id="modal-description"></p>
+    <iframe id="sandbox-frame" src=""></iframe>
+    <div id="notifications">
+      <strong>Notifications:</strong>
+      <ul id="notif-list"></ul>
+    </div>
     <button class="close-btn" id="modal-close">Close</button>
   </div>
 </div>
 
 <script>
-// Nodes and Edges
+// Nodes
 const nodesData = [
-  { id:1, label:'Multi-Client Portal', group:'core', desc:'Dashboard, project selection, role-based access, particle visuals.' },
-  { id:2, label:'Interactive Cards & Overlays', group:'core', desc:'Hover cards with project details and demo links.' },
-  { id:3, label:'Role-Based Analytics', group:'core', desc:'Charts showing flagged/deleted messages per role.' },
-  { id:4, label:'AI Recommendations', group:'core', desc:'AI suggests actions based on analytics.' },
-  { id:5, label:'Sandbox Environment', group:'core', desc:'Live interactive sandbox per project.' },
-  { id:6, label:'Notifications Center', group:'core', desc:'Real-time notifications for sandbox actions and AI insights.' },
-  { id:7, label:'Automated Reports', group:'core', desc:'Export PDF/CSV reports with analytics and recommendations.' },
-  { id:8, label:'Predictive Analytics', group:'future', desc:'Forecast spikes or anomalies before they occur.' },
-  { id:9, label:'Template & Workflow Marketplace', group:'future', desc:'Share or sell sandbox templates and workflows.' },
-  { id:10, label:'Custom KPI Builder', group:'future', desc:'Clients create custom dashboards and metrics.' },
-  { id:11, label:'Gamification & Engagement', group:'future', desc:'Badges, leaderboards, interactive learning.' },
-  { id:12, label:'Third-Party Integrations', group:'future', desc:'Slack, Discord, Google Workspace, Notion API, etc.' },
-  { id:13, label:'API Access for Clients', group:'future', desc:'Clients can push/pull their own data programmatically.' },
-  { id:14, label:'VR/AR Sandbox Previews', group:'future', desc:'Immersive demos for education and interactive workflows.' },
-  { id:15, label:'Web3 / Blockchain Tracking', group:'future', desc:'Track sandbox activity or achievements on blockchain.' },
-  { id:16, label:'Edge AI Recommendations', group:'future', desc:'Run AI analytics locally on client devices.' }
+  { id:1, label:'Multi-Client Portal', desc:'Dashboard, project selection, role-based access, particle visuals.' },
+  { id:2, label:'Interactive Cards & Overlays', desc:'Hover cards with project details and demo links.' },
+  { id:3, label:'Role-Based Analytics', desc:'Charts showing flagged/deleted messages per role.' },
+  { id:4, label:'AI Recommendations', desc:'AI suggests actions based on analytics.' },
+  { id:5, label:'Sandbox Environment', desc:'Live interactive sandbox per project.' },
+  { id:6, label:'Notifications Center', desc:'Real-time notifications for sandbox actions and AI insights.' },
+  { id:7, label:'Automated Reports', desc:'Export PDF/CSV reports with analytics and recommendations.' },
+  { id:8, label:'Predictive Analytics', desc:'Forecast spikes or anomalies before they occur.' },
+  { id:9, label:'Template & Workflow Marketplace', desc:'Share or sell sandbox templates and workflows.' },
+  { id:10, label:'Custom KPI Builder', desc:'Clients create custom dashboards and metrics.' },
+  { id:11, label:'Gamification & Engagement', desc:'Badges, leaderboards, interactive learning.' },
+  { id:12, label:'Third-Party Integrations', desc:'Slack, Discord, Google Workspace, Notion API, etc.' },
+  { id:13, label:'API Access for Clients', desc:'Clients can push/pull their own data programmatically.' },
+  { id:14, label:'VR/AR Sandbox Previews', desc:'Immersive demos for education and interactive workflows.' },
+  { id:15, label:'Web3 / Blockchain Tracking', desc:'Track sandbox activity or achievements on blockchain.' },
+  { id:16, label:'Edge AI Recommendations', desc:'Run AI analytics locally on client devices.' }
 ];
 
 const edgesData = [
-  { from:1, to:2 }, { from:1, to:3 }, { from:3, to:4 }, { from:5, to:6 }, { from:4, to:6 },
-  { from:7, to:8 }, { from:8, to:10 }, { from:10, to:11 }, { from:11, to:14 }, { from:12, to:13 }, { from:14, to:15 }, { from:15, to:16 }
+  { source:1, target:2 }, { source:1, target:3 }, { source:3, target:4 }, { source:5, target:6 }, { source:4, target:6 },
+  { source:7, target:8 }, { source:8, target:10 }, { source:10, target:11 }, { source:11, target:14 }, { source:12, target:13 }, { source:14, target:15 }, { source:15, target:16 }
 ];
 
-// Network
-const container = document.getElementById('network');
-const nodes = new vis.DataSet(nodesData.map(n=>({id:n.id,label:n.label,title:n.desc,group:n.group})));
-const edges = new vis.DataSet(edgesData);
-
-const data = { nodes, edges };
-const options = {
-  nodes: {
-    shape:'dot',
-    size:25,
-    font:{ size:16, color:'#fff' },
-    borderWidth:2
-  },
-  edges:{ width:2, color:{color:'#bdbdbd'} },
-  groups:{
-    core:{ color:{ background:'#81c784', border:'#388e3c' } },
-    future:{ color:{ background:'#ffb74d', border:'#f57c00' } }
-  },
-  physics:{
-    enabled:true,
-    solver:'forceAtlas2Based',
-    forceAtlas2Based:{ gravitationalConstant:-50, centralGravity:0.01, springLength:100, springConstant:0.08 },
-    stabilization:{ iterations:250 }
-  },
-  interaction:{ hover:true, tooltipDelay:100, hideEdgesOnDrag:false }
+// Pastel colors per module
+const moduleColors = {
+  1: "#fff9c4", 2: "#ffe0b2", 3: "#c8e6c9", 4: "#ffccbc", 5: "#dcedc8", 
+  6: "#fff3e0", 7: "#f8bbd0", 8: "#fff9c4", 9: "#c8e6c9", 10: "#ffecb3",
+  11:"#f0f4c3", 12:"#ffe0b2", 13:"#c5cae9", 14:"#b2dfdb", 15:"#ffccbc", 16:"#dcedc8"
 };
 
-const network = new vis.Network(container, data, options);
+// Sandbox URLs
+const sandboxURLs = {
+  1:"sandbox/multiclient.html", 2:"sandbox/cards.html", 3:"sandbox/analytics.html", 4:"sandbox/ai.html",
+  5:"sandbox/sandbox.html", 6:"sandbox/notifications.html", 7:"sandbox/reports.html", 8:"sandbox/predictive.html",
+  9:"sandbox/templates.html", 10:"sandbox/kpi.html", 11:"sandbox/gamification.html", 12:"sandbox/integrations.html",
+  13:"sandbox/api.html", 14:"sandbox/vr.html", 15:"sandbox/blockchain.html", 16:"sandbox/edgeai.html"
+};
 
-// Modal
-const modal = document.getElementById('module-modal');
-const modalTitle = document.getElementById('modal-title');
-const modalDescription = document.getElementById('modal-description');
-const modalClose = document.getElementById('modal-close');
+// Notifications
+const notifMessages = {
+  1:["User joined project","Portal updated"],2:["Card hover event tracked","New overlay added"],
+  3:["Analytics refreshed","New chart available"],4:["AI recommendation generated","Insight ready"],
+  5:["Sandbox loaded","User interaction detected"],6:["New notification received","Alert cleared"],
+  7:["Report exported","PDF ready"],8:["Prediction ready","Alert threshold reached"],
+  9:["Template uploaded","Workflow shared"],10:["KPI metric updated","Custom dashboard saved"],
+  11:["Badge earned","Leaderboard updated"],12:["Integration synced","Webhook triggered"],
+  13:["API call successful","Data pulled"],14:["VR scene loaded","User joined AR session"],
+  15:["Blockchain transaction confirmed","NFT achievement minted"],16:["Edge AI model updated","Prediction completed locally"]
+};
 
-network.on("click", params=>{
-  if(params.nodes.length){
-    const nodeId = params.nodes[0];
-    const node = nodesData.find(n=>n.id===nodeId);
+// Build 3D Graph
+const Graph = ForceGraph3D()
+  (document.getElementById('3d-graph'))
+  .graphData({ nodes:nodesData.map(n=>({...n, color: moduleColors[n.id]}), edges:edgesData })
+  .nodeAutoColorBy('id')
+  .nodeLabel('label')
+  .nodeColor(n => moduleColors[n.id])
+  .linkColor('#bdbdbd')
+  .linkWidth(2)
+  .nodeThreeObject(node => {
+    const obj = new THREE.Mesh(
+      new THREE.SphereGeometry(6),
+      new THREE.MeshBasicMaterial({ color: moduleColors[node.id] })
+    );
+    return obj;
+  })
+  .enableNodeDrag(true)
+  .enableNavigationControls(true)
+  .onNodeClick(node => {
+    // Open modal
+    const modal = document.getElementById('module-modal');
     modal.style.display='flex';
-    modalTitle.textContent=node.label;
-    modalDescription.textContent=node.desc;
-  }
-});
+    document.getElementById('modal-title').textContent=node.label;
+    document.getElementById('modal-description').textContent=node.desc;
+    document.getElementById('sandbox-frame').src = sandboxURLs[node.id] || "";
+    
+    const notifList = document.getElementById('notif-list');
+    notifList.innerHTML = "";
+    if(notifMessages[node.id]){
+      notifMessages[node.id].forEach(msg=>{
+        const li = document.createElement('li');
+        li.textContent = msg;
+        li.style.background = moduleColors[node.id];
+        notifList.appendChild(li);
+      });
+    }
+  });
 
-modalClose.onclick=()=>{ modal.style.display='none'; };
-window.onclick=(e)=>{ if(e.target==modal) modal.style.display='none'; };
-
-document.getElementById('join-btn').onclick = ()=>{
-  alert("🎉 Welcome! You are now part of the Multi-Client SaaS platform. Next, you'll get access credentials and sandbox preview.");
-};
+// Modal Close
+document.getElementById('modal-close').onclick = ()=>document.getElementById('module-modal').style.display='none';
+window.onclick = e=>{ if(e.target==document.getElementById('module-modal')) document.getElementById('module-modal').style.display='none'; };
 </script>
-
+</body>
 </html>
