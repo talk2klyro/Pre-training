@@ -1,217 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Multi-Client SaaS Onboarding Dashboard</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 30px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #2980b9;
-      margin-top: 0;
-    }
-    .section {
-      margin-bottom: 40px;
-    }
-    .card {
-      background: #ecf0f1;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    .card h3 {
-      margin: 0 0 10px;
-      color: #34495e;
-    }
-    .card p {
-      margin: 0;
-      font-size: 14px;
-      color: #2c3e50;
-    }
-    .industry-select {
-      margin-top: 10px;
-      padding: 8px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .step-nav {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      background: #2980b9;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: #bdc3c7;
-      cursor: not-allowed;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KLYRO SaaS Onboarding</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background: #2c3e50;
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  h2 {
+    color: #2980b9;
+    margin-top: 0;
+  }
+  .step { display: none; }
+  .step.active { display: block; }
+  .card {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .card h3 { margin: 0; color: #34495e; }
+  .card p { margin: 5px 0 0; font-size: 14px; color: #2c3e50; }
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    border: none;
+    background: #2980b9;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+  }
+  .industry-select {
+    margin-top: 10px;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  .dashboard-preview {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+  }
+  .success {
+    text-align: center;
+    padding: 40px;
+  }
+  .success h2 { color: #27ae60; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Multi-Client SaaS Onboarding Dashboard</h1>
-  </header>
-  <div class="container">
-    <div class="section">
-      <h2>Step <span id="stepNum">1</span>: <span id="stepTitle">Signup & Setup</span></h2>
-      <div id="stepContent">
-        <div class="card">
-          <h3>Organization Setup</h3>
-          <p>Create your workspace, choose a plan, and upload your logo.</p>
-        </div>
-        <div class="card">
-          <h3>Industry Preset</h3>
-          <select class="industry-select" id="industrySelect">
-            <option value="default">Select Industry</option>
-            <option value="healthcare">Healthcare</option>
-            <option value="education">Education</option>
-            <option value="finance">Finance</option>
-            <option value="marketing">Marketing</option>
-            <option value="construction">Construction</option>
-          </select>
-        </div>
-      </div>
-      <div class="step-nav">
-        <button id="prevBtn" disabled>← Back</button>
-        <button id="nextBtn">Next →</button>
-      </div>
+<header>
+  <h1>Welcome to KLYRO Cloud</h1>
+  <p>Your all-in-one SaaS workspace</p>
+</header>
+<div class="container">
+  <!-- Step 1 -->
+  <div id="step1" class="step active">
+    <h2>Step 1: Organization Setup</h2>
+    <div class="card">
+      <h3>Organization Name</h3>
+      <input type="text" id="orgName" placeholder="Enter your organization name" style="width:100%;padding:8px;margin-top:5px;">
+    </div>
+    <div class="card">
+      <h3>Industry</h3>
+      <select class="industry-select" id="industrySelect">
+        <option value="">Select Industry</option>
+        <option value="healthcare">Healthcare</option>
+        <option value="education">Education</option>
+        <option value="finance">Finance</option>
+        <option value="marketing">Marketing</option>
+        <option value="construction">Construction</option>
+      </select>
+    </div>
+    <div class="dashboard-preview" id="preview1">
+      <strong>Preview:</strong> Your workspace will be tailored to your industry.
     </div>
   </div>
 
-  <script>
-    const steps = [
-      {
-        title: "Signup & Setup",
-        content: `
-          <div class="card">
-            <h3>Organization Setup</h3>
-            <p>Create your workspace, choose a plan, and upload your logo.</p>
-          </div>
-          <div class="card">
-            <h3>Industry Preset</h3>
-            <select class="industry-select" id="industrySelect">
-              <option value="default">Select Industry</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="education">Education</option>
-              <option value="finance">Finance</option>
-              <option value="marketing">Marketing</option>
-              <option value="construction">Construction</option>
-            </select>
-          </div>
-        `
-      },
-      {
-        title: "User & Role Configuration",
-        content: `
-          <div class="card">
-            <h3>Team Setup</h3>
-            <p>Invite users, assign roles, and configure permissions.</p>
-          </div>
-          <div class="card">
-            <h3>Security Options</h3>
-            <p>Enable SSO, MFA, and IP restrictions for secure access.</p>
-          </div>
-        `
-      },
-      {
-        title: "Module Selection",
-        content: `
-          <div class="card">
-            <h3>Choose Modules</h3>
-            <p>Select tools like Project Management, CRM, Billing, and more.</p>
-          </div>
-          <div class="card">
-            <h3>Integrations</h3>
-            <p>Connect with Google Drive, Slack, Stripe, and other platforms.</p>
-          </div>
-        `
-      },
-      {
-        title: "First Project Launch",
-        content: `
-          <div class="card">
-            <h3>Start a Project</h3>
-            <p>Create your first project, assign tasks, and invite collaborators.</p>
-          </div>
-          <div class="card">
-            <h3>Client Portal</h3>
-            <p>Preview how external clients will interact with your workspace.</p>
-          </div>
-        `
-      },
-      {
-        title: "Training & Success",
-        content: `
-          <div class="card">
-            <h3>Support & Tutorials</h3>
-            <p>Access help center, walkthroughs, and live chat support.</p>
-          </div>
-          <div class="card">
-            <h3>Milestones</h3>
-            <p>Track onboarding progress and celebrate achievements.</p>
-          </div>
-        `
-      }
-    ];
+  <!-- Step 2 -->
+  <div id="step2" class="step">
+    <h2>Step 2: Team & Roles</h2>
+    <div class="card">
+      <h3>Invite Team Members</h3>
+      <p>Mock: Alice (Admin), Bob (Manager), Clara (Contributor)</p>
+    </div>
+    <div class="card">
+      <h3>Security</h3>
+      <p>SSO Enabled, MFA Active</p>
+    </div>
+  </div>
 
-    let currentStep = 0;
-    const stepNum = document.getElementById('stepNum');
-    const stepTitle = document.getElementById('stepTitle');
-    const stepContent = document.getElementById('stepContent');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+  <!-- Step 3 -->
+  <div id="step3" class="step">
+    <h2>Step 3: Modules & Integrations</h2>
+    <div class="card">
+      <h3>Selected Modules</h3>
+      <p id="modulesList">Project Management, CRM, Billing, Reporting</p>
+    </div>
+    <div class="card">
+      <h3>Integrations</h3>
+      <p>Google Drive, Slack, Stripe</p>
+    </div>
+  </div>
 
-    function updateStep() {
-      stepNum.textContent = currentStep + 1;
-      stepTitle.textContent = steps[currentStep].title;
-      stepContent.innerHTML = steps[currentStep].content;
-      prevBtn.disabled = currentStep === 0;
-      nextBtn.textContent = currentStep === steps.length - 1 ? 'Finish ✔' : 'Next →';
+  <!-- Step 4 -->
+  <div id="step4" class="step">
+    <h2>Step 4: First Project Launch</h2>
+    <div class="card">
+      <h3>Project Name</h3>
+      <p>Mock: “Client Portal Redesign”</p>
+    </div>
+    <div class="card">
+      <h3>Tasks</h3>
+      <p>Design UI, Build API, Test Portal</p>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div id="step5" class="step">
+    <div class="success">
+      <h2>🎉 Setup Complete!</h2>
+      <p id="successMsg">Your workspace is ready!</p>
+      <p>Next: Invite more users, explore automation, or launch your dashboard.</p>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="buttons">
+    <button id="prevBtn" disabled>← Back</button>
+    <button id="nextBtn">Next →</button>
+  </div>
+</div>
+
+<script>
+  const steps = document.querySelectorAll('.step');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const industrySelect = document.getElementById('industrySelect');
+  const preview1 = document.getElementById('preview1');
+  const successMsg = document.getElementById('successMsg');
+  let currentStep = 0;
+
+  const industryModules = {
+    healthcare: "Patient CRM, Compliance, Scheduling",
+    education: "Course Management, Student Portals, Grading Tools",
+    finance: "Secure Document Sharing, Billing, Audit Logs",
+    marketing: "Campaign Boards, Asset Library, Client Portals",
+    construction: "Task Dependencies, Site Logs, Vendor Management"
+  };
+
+  industrySelect.addEventListener('change', () => {
+    const industry = industrySelect.value;
+    if (industry && industryModules[industry]) {
+      preview1.innerHTML = `<strong>Preview:</strong> Modules for ${industry.charAt(0).toUpperCase() + industry.slice(1)} — ${industryModules[industry]}`;
+      document.getElementById('modulesList').textContent = industryModules[industry];
+    } else {
+      preview1.innerHTML = `<strong>Preview:</strong> Your workspace will be tailored to your industry.`;
     }
+  });
 
-    prevBtn.addEventListener('click', () => {
-      if (currentStep > 0) {
-        currentStep--;
-        updateStep();
-      }
+  function updateSteps() {
+    steps.forEach((step, index) => {
+      step.classList.toggle('active', index === currentStep);
     });
+    prevBtn.disabled = currentStep === 0;
+    nextBtn.textContent = currentStep === steps.length - 1 ? 'Finish ✔' : 'Next →';
+  }
 
-    nextBtn.addEventListener('click', () => {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        updateStep();
-      } else {
-        alert('🎉 Onboarding complete! Welcome aboard.');
-      }
-    });
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 0) {
+      currentStep--;
+      updateSteps();
+    }
+  });
 
-    updateStep();
-  </script>
+  nextBtn.addEventListener('click', () => {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      updateSteps();
+    } else {
+      const orgName = document.getElementById('orgName').value || "Your Organization";
+      successMsg.textContent = `Your workspace is ready, ${orgName}!`;
+      alert('🚀 You’re now live on KLYRO Cloud!');
+    }
+  });
+
+  updateSteps();
+</script>
 </body>
-  </html>
+</html>
