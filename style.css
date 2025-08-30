@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Central Hub — Unify all your SaaS platforms in one clean, searchable dashboard.">
+
+  <title>Central Hub — All Platforms</title>
+
+  <!-- Preload critical font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+  <!-- Structured Data (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Central Hub",
+    "description": "A unified dashboard for all your SaaS tools and platforms.",
+    "url": "https://example.com",
+    "applicationCategory": "Business Application"
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent: #6ee7b7;
+      --accent-hover: #50d7a7;
+      --glass: rgba(255, 255, 255, 0.04);
+      --border-light: rgba(255, 255, 255, 0.06);
+      --shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --gap: 16px;
+      --radius: 12px;
+      --transition: all 0.2s ease;
+      --font: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* Dark mode override */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f1f5f9;
+        --card: #ffffff;
+        --muted: #64748b;
+        --accent: #0d9488;
+        --glass: rgba(0, 0, 0, 0.02);
+        --border-light: rgba(0, 0, 0, 0.1);
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+    }
+
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --muted: #64748b;
+      --accent: #0d9488;
+      --glass: rgba(0, 0, 0, 0.02);
+      --border-light: rgba(0, 0, 0, 0.1);
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    *, *::before, *::after {
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    html, body {
+      height: 100%;
+      background: linear-gradient(180deg, #071020 0%, #071427 100%);
+      color: #e6eef6;
+      font-family: var(--font);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    body[data-theme="light"] {
+      background: #f1f5f9;
+    }
+
+    img, svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: var(--shadow-sm);
+      font-size: 1.25rem;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    p.lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: var(--glass);
+      border: 1px solid var(--border-light);
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .btn.accent {
+      background: var(--accent);
+      color: #052;
+      border: none;
+    }
+
+    .btn.accent:hover {
+      background: var(--accent-hover);
+      color: white;
+    }
+
+    .btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding: 18px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .search input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: rgba(255,255,255,0.04);
+      color: inherit;
+      font-family: var(--font);
+    }
+
+    .search input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(110, 231, 183, 0.2);
+    }
+
+    .search input::placeholder {
+      color: var(--muted);
+    }
+
+    .user-info {
+      text-align: right;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    .user-info strong {
+      color: var(--accent);
+    }
+
+    /* Showcase Grid */
+    .showcase {
+      margin-top: 20px;
+    }
+
+    h2 {
+      margin: 24px 0 16px;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    /* Masonry with modern support */
+    @supports (grid-template-rows: masonry) {
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-rows: masonry;
+        gap: var(--gap);
+      }
+      .card {
+        break-inside: avoid;
+      }
+    }
+
+    /* Fallback: column layout */
+    .cards {
+      column-gap: var(--gap);
+      column-fill: balance;
+      column-count: auto;
+    }
+
+    .card {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 var(--gap);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(2, 6, 23, 0.7);
+    }
+
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .actions .btn {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    /* Container Queries (Modern) */
+    .card {
+      container-type: inline-size;
+      container-name: card;
+    }
+
+    @container card (min-width: 260px) {
+      .card {
+        padding: 18px;
+      }
+      .card h3 {
+        font-size: 18px;
+      }
+    }
+
+    /* Ads Section */
+    .ads {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: var(--gap);
+      margin-top: 24px;
+    }
+
+    .ad-slot {
+      background: linear-gradient(180deg, #081427 0%, #061826 100%);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border-light);
+    }
+
+    .ad-banner {
+      height: 120px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #1a3 0%, #2b4 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .ad-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    /* Popup Ad */
+    .ad-popup {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      border-radius: var(--radius);
+      padding: 14px;
+      background: linear-gradient(180deg, #062131, #0b1f2a);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      max-width: 300px;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ad-popup button {
+      margin-left: 10px;
+    }
+
+    /* Skeleton Loader */
+    .skeleton {
+      background: var(--glass);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      height: 120px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Responsive */
+    @media (min-width: 600px) {
+      .cards { column-width: 260px; }
+    }
+
+    @media (min-width: 900px) {
+      .cards { column-width: 300px; }
+    }
+
+    @media (max-width: 599px) {
+      .ads {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search {
+        min-width: auto;
+      }
+      .toolbar {
+        margin-left: 0;
+        margin-top: 12px;
+      }
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 0.8125rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer a {
+      color: var(--accent);
+    }
+
+    /* Dark Mode Toggle */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+    }
+
+    .theme-toggle input {
+      margin: 0;
+    }
+
+    /* Accessibility: Focus styles */
+    button:focus, input:focus, a:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* No results */
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">CH</div>
+        <div>
+          <h1>Central Hub</h1>
+          <p class="lead">A modern hub that unifies your platforms and SaaS tools — clean, discoverable, and monetizable.</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn" id="toggleDarkMode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <span id="themeText">Dark</span>
+        </button>
+        <button class="btn" id="toggleAds">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          Hide Ads
+        </button>
+        <button class="btn accent" id="openPopup">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
+            <line x1="3" y1="22" x2="21" y2="22"></line>
+          </svg>
+          Promo
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div style="min-width:64px">
+        <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:grid;place-items:center;font-weight:700;color:#fff">S</div>
+      </div>
+      <div class="search">
+        <input id="search" type="text" placeholder="Search platforms, tools, or docs..." aria-label="Search platforms">
+        <button class="btn" id="searchBtn">Search</button>
+      </div>
+      <div class="user-info">
+        <div>Signed in as <strong>you@company.com</strong></div>
+        <div style="font-size:12px">Manage your links & ads</div>
+      </div>
+    </section>
+
+    <main class="showcase">
+      <h2>Products & Platforms</h2>
+      <div class="cards" id="cards">
+        <!-- Cards will be dynamically loaded -->
+      </div>
+
+      <div class="ads" id="adsArea">
+        <div class="ad-slot">
+          <div class="ad-banner">Featured Promotion</div>
+          <div class="ad-cards" id="adCards">
+            <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">Partner Card — 30% off</div>
+            <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">Upgrade CTA — Try Pro</div>
+          </div>
+        </div>
+        <aside class="ad-slot">
+          <h4 style="margin:0 0 8px 0">Ad Settings</h4>
+          <p style="margin:0 0 12px;color:var(--muted)">Control which ad formats show on the hub.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatCard" checked /> Card</label>
+            <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatBanner" checked /> Banner</label>
+            <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatPopup" checked /> Popup</label>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer>
+      <div>&copy; 2025 Central Hub</div>
+      <div>Made with ♥ — <a href="#">Settings</a> | <a href="#">Privacy</a></div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    /**
+     * @file Central Hub — Professional Upgrade
+     * @author Your Name
+     * @description Fully upgraded, accessible, performant dashboard with dark mode, search, ads, and dynamic rendering.
+     */
+
+    // Data
+    const platformData = [
+      { name: "Analytics Pro", desc: "Enterprise analytics for modern SaaS — dashboards, alerts, and insights.", tags: ["SaaS", "API"], actions: ["Open", "Docs"] },
+      { name: "MailerLite", desc: "Transactional & marketing email — built for deliverability and scale.", tags: ["Email", "SMTP"], actions: ["Open", "Settings"] },
+      { name: "DocsHub", desc: "Centralized documentation portal with versioning and search.", tags: ["Docs"], actions: ["Open", "Edit"] },
+      { name: "Payments", desc: "Fast PCI-compliant payments with multi-currency support.", tags: ["Billing", "PCI"], actions: ["Open", "Reports"] },
+      { name: "Auth", desc: "Universal authentication & SSO, built for teams and customers.", tags: ["SSO"], actions: ["Open", "Users"] },
+      { name: "AI Assist", desc: "Embed LLM-powered assistants across your customer touchpoints.", tags: ["AI", "LLM"], actions: ["Open"] },
+      { name: "Scheduler", desc: "Booking & calendar integrations for teams.", tags: ["Calendar"], actions: ["Open"] },
+      { name: "Marketplace", desc: "Partner integrations & plugins for your stack.", tags: ["Plugins"], actions: ["Open"] },
+      { name: "Storage+", desc: "Secure cloud storage with encryption and sharing.", tags: ["Storage", "Cloud"], actions: ["Open", "Manage"] },
+      { name: "Monitor", desc: "Uptime & performance monitoring with alerts.", tags: ["Monitoring"], actions: ["View", "Alerts"] }
+    ];
+
+    // DOM Elements
+    const cardsContainer = document.getElementById('cards');
+    const searchInput = document.getElementById('search');
+    const searchBtn = document.getElementById('searchBtn');
+    const adsArea = document.getElementById('adsArea');
+    const toggleAdsBtn = document.getElementById('toggleAds');
+    const openPopupBtn = document.getElementById('openPopup');
+    const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+    const themeText = document.getElementById('themeText');
+    const formatCard = document.getElementById('formatCard');
+    const formatBanner = document.getElementById('formatBanner');
+    const formatPopup = document.getElementById('formatPopup');
+
+    const popupId = 'adPopup';
+
+    // State
+    let isDarkMode = true;
+    let filteredCards = [...platformData];
+
+    // Load saved preferences
+    function loadPreferences() {
+      const savedTheme = localStorage.getItem('centralHub:theme');
+      const savedAds = localStorage.getItem('centralHub:ads');
+
+      if (savedTheme === 'light') {
+        setTheme('light');
+      }
+
+      if (savedAds === 'hidden') {
+        adsArea.style.display = 'none';
+        toggleAdsBtn.textContent = 'Show Ads';
+      }
+    }
+
+    // Set theme
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      isDarkMode = theme === 'dark';
+      localStorage.setItem('centralHub:theme', theme);
+      themeText.textContent = isDarkMode ? 'Dark' : 'Light';
+    }
+
+    // Toggle dark mode
+    toggleDarkModeBtn.addEventListener('click', () => {
+      const newTheme = isDarkMode ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+
+    // Toggle ads
+    toggleAdsBtn.addEventListener('click', () => {
+      const isHidden = adsArea.style.display === 'none';
+      adsArea.style.display = isHidden ? 'grid' : 'none';
+      toggleAdsBtn.textContent = isHidden ? 'Hide Ads' : 'Show Ads';
+      localStorage.setItem('centralHub:ads', isHidden ? 'visible' : 'hidden');
+    });
+
+    // Open popup
+    function openPopup() {
+      if (document.getElementById(popupId)) return;
+      const p = document.createElement('div');
+      p.id = popupId;
+      p.className = 'ad-popup';
+      p.innerHTML = `
+        <strong>Limited Time:</strong> Try Pro for 14 days 
+        <button class="btn" onclick="closePopup()">Close</button>
+      `;
+      document.body.appendChild(p);
+
+      // Track impression
+      console.log('Ad impression: popup shown');
+    }
+
+    function closePopup() {
+      const el = document.getElementById(popupId);
+      if (el) el.remove();
+      console.log('Ad closed');
+    }
+
+    // Ad format toggles
+    [formatCard, formatBanner, formatPopup].forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const id = checkbox.id;
+        const visible = checkbox.checked;
+
+        if (id === 'formatPopup') {
+          if (!visible) closePopup();
+          else openPopup();
+        }
+
+        if (id === 'formatCard') {
+          document.querySelectorAll('.ad-cards')[0].style.display = visible ? 'flex' : 'none';
+        }
+
+        if (id === 'formatBanner') {
+          document.querySelectorAll('.ad-banner')[0].style.display = visible ? 'flex' : 'none';
+        }
+      });
+    });
+
+    // Debounced search
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Render cards
+    function renderCards(data) {
+      if (data.length === 0) {
+        cardsContainer.innerHTML = '<div class="no-results">No platforms found. Try a different search.</div>';
+        return;
+      }
+
+      cardsContainer.innerHTML = ''; // Clear
+      data.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <div class="meta">
+            ${item.tags.map(tag => `<span class="badge">${tag}</span>`).join('')}
+          </div>
+          <div class="actions">
+            ${item.actions.map(action => `<a class="btn" href="#" data-action="${action.toLowerCase()}" role="button">${action}</a>`).join('')}
+          </div>
+        `;
+        cardsContainer.appendChild(card);
+      });
+    }
+
+    // Search handler
+    const handleSearch = debounce(() => {
+      const q = searchInput.value.toLowerCase().trim();
+      if (q === '') {
+        filteredCards = [...platformData];
+      } else {
+        filteredCards = platformData.filter(item =>
+          item.name.toLowerCase().includes(q) ||
+          item.desc.toLowerCase().includes(q) ||
+          item.tags.some(tag => tag.toLowerCase().includes(q))
+        );
+      }
+      renderCards(filteredCards);
+    }, 300);
+
+    searchInput.addEventListener('input', handleSearch);
+    searchBtn.addEventListener('click', handleSearch);
+
+    // Keyboard shortcuts
+    window.addEventListener('keydown', e => {
+      if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+      if (e.key === 'Escape') {
+        closePopup();
+      }
+    });
+
+    // Initial render
+    function init() {
+      // Show loading skeletons
+      cardsContainer.innerHTML = Array(6).fill('<div class="skeleton"></div>').join('');
+
+      // Simulate async load
+      setTimeout(() => {
+        renderCards(platformData);
+        loadPreferences();
+
+        // Show popup after delay if enabled
+        if (formatPopup.checked) {
+          setTimeout(openPopup, 4000);
+        }
+      }, 600);
+    }
+
+    init();
+
+    // Service Worker Registration (for offline)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(err => {
+        console.warn('SW registration failed', err);
+      });
+    }
+
+    // Optional: Create SW dynamically
+    const swScript = `
+      self.addEventListener('fetch', event => {
+        if (event.request.mode === 'navigate') {
+          event.respondWith(
+            fetch(event.request).catch(() => {
+              return new Response('<h1>Offline</h1><p>You are not connected to the internet.</p>', {
+                headers: { 'Content-Type': 'text/html' }
+              });
+            })
+          );
+        }
+      });
+    `;
+
+    const blob = new Blob([swScript], { type: 'application/javascript' });
+    const swURL = URL.createObjectURL(blob);
+    // Note: in production, serve sw.js as a real file
+  </script>
+
+  <!-- Injected Service Worker (for demo) -->
+  <script>
+    // In production, this would be a real file: sw.js
+    const swBlob = new Blob([`
+      self.addEventListener('install', e => {
+        self.skipWaiting();
+      });
+      self.addEventListener('fetch', e => {
+        if (e.request.destination === 'script' || e.request.destination === 'style') {
+          e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+        }
+      });
+    `], { type: 'text/javascript' });
+    const swUrl = URL.createObjectURL(swBlob);
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(swUrl).catch(() => {});
+    }
+  </script>
+</body>
+</html>
