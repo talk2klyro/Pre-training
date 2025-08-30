@@ -1,233 +1,357 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Central Hub — All Platforms</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>KLYRO Hub | Professional Dashboard</title>
+  <meta name="description" content="KLYRO Hub - Centralized platform for tools, analytics, and insights." />
+
+  <!-- Google Fonts: Inter + Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js v4 (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+
   <style>
-    /* Reset & base */
-    :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#6ee7b7; --glass: rgba(255,255,255,0.04);
-      --gap:16px; --radius:12px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071020 0%, #071427 100%);color:#e6eef6}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1200px;margin:32px auto;padding:24px}header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:grid;place-items:center;font-weight:700;color:#052;box-shadow:0 6px 18px rgba(5,10,20,0.6)}
-h1{font-size:20px;margin:0}
-p.lead{margin:0;color:var(--muted)}
-
-/* toolbar */
-.toolbar{margin-left:auto;display:flex;gap:8px}
-.btn{background:var(--glass);border:1px solid rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
-
-/* grid showcase */
-/* Use CSS Grid by default */
-.showcase{margin-top:20px}
-
-/* If browser supports native masonry (experimental) — prefer grid masonry */
-@supports (grid-template-rows: masonry) {
-  .cards{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-template-rows: masonry;
-    gap:var(--gap);
-  }
-  .card{break-inside:avoid;}
-}
-
-/* Fallback: column-based masonry (works widely) */
-.cards{
-  column-gap:var(--gap);
-  column-fill:balance;
-  column-count: auto;
-  /* estimate fallback column width using media queries below */
-}
-.card{display:inline-block;width:100%;margin:0 0 var(--gap);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(2,6,23,0.6)}
-
-.card h3{margin:0 0 8px 0;font-size:16px}
-.card p{margin:0 0 12px;color:var(--muted);font-size:13px}
-.card .meta{display:flex;gap:8px;align-items:center}
-.badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;font-weight:600;font-size:12px}
-.actions{display:flex;gap:8px;margin-top:10px}
-.actions .btn{padding:8px 10px;font-size:13px}
-
-/* advertising area */
-.ads{display:grid;grid-template-columns:1fr 300px;gap:var(--gap);margin-top:24px}
-.ad-slot{background:linear-gradient(180deg,#081427 0%, #061826 100%);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03)}
-.ad-banner{height:120px;border-radius:10px;background:linear-gradient(90deg,#123 0%, #234 100%);display:flex;align-items:center;justify-content:center;font-weight:700}
-.ad-cards{display:flex;flex-direction:column;gap:12px;margin-top:12px}
-
-/* simple popup ad */
-.ad-popup{position:fixed;right:20px;bottom:20px;z-index:60;border-radius:12px;padding:14px;background:linear-gradient(180deg,#062131, #0b1f2a);box-shadow:0 12px 40px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.04)}
-.ad-popup button{margin-left:10px}
-
-/* hero search */
-.hero{display:flex;gap:18px;align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px}
-.search{flex:1;display:flex;gap:8px}
-.search input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-
-/* responsive grid columns fallback sizes */
-@media(min-width:600px){.cards{column-width:260px}}
-@media(min-width:900px){.cards{column-width:300px}}
-@media(max-width:599px){.ads{grid-template-columns:1fr;}}
-
-/* container queries (modern) to change card layout based on card width */
-.card{container-type: inline-size; container-name: card;}
-@container card (min-width:260px){
-  .card{padding:18px}
-  .card h3{font-size:18px}
-}
-
-footer{margin-top:28px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between}
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">CH</div>
-        <div>
-          <h1>Central Hub</h1>
-          <p class="lead">A modern hub that unifies your platforms and SaaS tools — clean, discoverable, and monetizable.</p>
-        </div>
-      </div>
-      <div class="toolbar">
-        <button class="btn" id="toggleAds">Toggle Ads</button>
-        <button class="btn" id="openPopup">Open Promo</button>
-      </div>
-    </header><section class="hero">
-  <div style="min-width:64px">
-    <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:grid;place-items:center;font-weight:700;color:#052">S</div>
-  </div>
-  <div class="search">
-    <input id="search" placeholder="Search platforms, tools, or docs..." />
-    <button class="btn" onclick="doSearch()">Search</button>
-  </div>
-  <div style="width:180px;text-align:right;color:var(--muted)">
-    <div>Signed in as <strong style="color:var(--accent)">you@company.com</strong></div>
-    <div style="font-size:12px">Manage your links & ads</div>
-  </div>
-</section>
-
-<main class="showcase">
-  <h2 style="margin-top:18px">Products & Platforms</h2>
-  <div class="cards" id="cards">
-    <!-- sample cards, in practice these would be generated server-side or in JS -->
-    <article class="card">
-      <h3>Analytics Pro</h3>
-      <p>Enterprise analytics for modern SaaS — dashboards, alerts, and insights.</p>
-      <div class="meta"><span class="badge">SaaS</span><span class="badge">API</span></div>
-      <div class="actions"><a class="btn" href="#">Open</a><a class="btn" href="#">Docs</a></div>
-    </article>
-
-    <article class="card">
-      <h3>MailerLite</h3>
-      <p>Transactional & marketing email — built for deliverability and scale.</p>
-      <div class="meta"><span class="badge">Email</span><span class="badge">SMTP</span></div>
-      <div class="actions"><a class="btn" href="#">Open</a><a class="btn" href="#">Settings</a></div>
-    </article>
-
-    <article class="card">
-      <h3>DocsHub</h3>
-      <p>Centralized documentation portal with versioning and search.</p>
-      <div class="meta"><span class="badge">Docs</span></div>
-      <div class="actions"><a class="btn" href="#">Open</a><a class="btn" href="#">Edit</a></div>
-    </article>
-
-    <article class="card">
-      <h3>Payments</h3>
-      <p>Fast PCI-compliant payments with multi-currency support.</p>
-      <div class="meta"><span class="badge">Billing</span><span class="badge">PCI</span></div>
-      <div class="actions"><a class="btn" href="#">Open</a><a class="btn" href="#">Reports</a></div>
-    </article>
-
-    <article class="card">
-      <h3>Auth</h3>
-      <p>Universal authentication & SSO, built for teams and customers.</p>
-      <div class="meta"><span class="badge">SSO</span></div>
-      <div class="actions"><a class="btn" href="#">Open</a><a class="btn" href="#">Users</a></div>
-    </article>
-
-    <!-- add more cards to demonstrate masonry behavior -->
-    <article class="card"><h3>AI Assist</h3><p>Embed LLM-powered assistants across your customer touchpoints.</p><div class="actions"><a class="btn" href="#">Open</a></div></article>
-    <article class="card"><h3>Scheduler</h3><p>Booking & calendar integrations for teams.</p><div class="actions"><a class="btn" href="#">Open</a></div></article>
-    <article class="card"><h3>Marketplace</h3><p>Partner integrations & plugins for your stack.</p><div class="actions"><a class="btn" href="#">Open</a></div></article>
-  </div>
-
-  <div class="ads" id="adsArea">
-    <div class="ad-slot">
-      <div class="ad-banner">Featured Promotion</div>
-      <div class="ad-cards">
-        <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">Partner Card — 30% off</div>
-        <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">Upgrade CTA — Try Pro</div>
-      </div>
-    </div>
-    <aside class="ad-slot">
-      <h4 style="margin:0 0 8px 0">Ad Settings</h4>
-      <p style="margin:0 0 12px;color:var(--muted)">Control which ad formats show on the hub. Cards, banners, or a popup.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatCard" checked /> Card</label>
-        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatBanner" checked /> Banner</label>
-        <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatPopup" checked /> Popup</label>
-      </div>
-    </aside>
-  </div>
-</main>
-
-<footer>
-  <div>&copy; 2025 Central Hub</div>
-  <div>Made with ♥ — <a href="#">Settings</a></div>
-</footer>
-
-  </div>  <!-- simple JS for search, ad toggles and popup -->  <script>
-    const cards = document.getElementById('cards');
-    const adsArea = document.getElementById('adsArea');
-    const popupId = 'adPopup';
-
-    function doSearch(){
-      const q = document.getElementById('search').value.toLowerCase().trim();
-      Array.from(cards.querySelectorAll('.card')).forEach(card=>{
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(q) ? 'inline-block' : 'none';
-      });
+    :root {
+      --primary: #a9442a;
+      --primary-dark: #8c3b24;
+      --primary-darker: #732f1e;
+      --accent: #ffcc99;
+      --accent-hover: #ffb366;
+      --text: #333;
+      --text-light: #666;
+      --text-inverse: #fff;
+      --bg: #f5f5f5;
+      --bg-alt: #f0f0f0;
+      --bg-card: #ffffff;
+      --bg-sidebar: #732f1e;
+      --border-radius: 12px;
+      --shadow-sm: 0 2px 6px rgba(0,0,0,0.1);
+      --shadow: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --header-height: 64px;
+      --sidebar-width: 240px;
+      --footer-height: 60px;
     }
 
-    document.getElementById('toggleAds').addEventListener('click', ()=>{adsArea.style.display = adsArea.style.display === 'none' ? 'grid' : 'none'});
-
-    document.getElementById('openPopup').addEventListener('click', ()=>{openPopup();});
-
-    function openPopup(){
-      if(document.getElementById(popupId)) return;
-      const p = document.createElement('div');
-      p.id = popupId; p.className = 'ad-popup';
-      p.innerHTML = '<strong>Limited Time:</strong> Try Pro for 14 days <button class="btn" onclick="closePopup()">Close</button>';
-      document.body.appendChild(p);
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #e0e0e0;
+        --text-light: #aaa;
+        --bg: #1a1a1a;
+        --bg-alt: #222;
+        --bg-card: #2c2c2c;
+        --bg-sidebar: #3a281e;
+        --shadow-sm: 0 2px 6px rgba(0,0,0,0.3);
+        --shadow: 0 4px 12px rgba(0,0,0,0.4);
+        --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+      }
     }
-    function closePopup(){const el = document.getElementById(popupId); if(el) el.remove();}
 
-    // Ad format toggles
-    ['formatCard','formatBanner','formatPopup'].forEach(id=>{
-      const el = document.getElementById(id);
-      if(!el) return;
-      el.addEventListener('change', (e)=>{
-        if(id==='formatPopup'){
-          if(!e.target.checked) closePopup();
-        }
-        // For demo: just hide/show the ad-area
-        if(id==='formatCard') document.querySelectorAll('.ad-cards')[0].style.display = e.target.checked ? 'flex' : 'none';
-        if(id==='formatBanner') document.querySelectorAll('.ad-banner')[0].style.display = e.target.checked ? 'flex' : 'none';
-      });
-    });
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    // Simple accessibility: keyboard shortcut to focus search
-    window.addEventListener('keydown', e=>{ if(e.key==='k' && (e.ctrlKey||e.metaKey)){ e.preventDefault(); document.getElementById('search').focus(); }});
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background-color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-    // Demo: open popup after 6s if allowed
-    setTimeout(()=>{ if(document.getElementById('formatPopup')?.checked) openPopup(); },6000);
-  </script></body>
-  </html>
+    img { max-width: 100%; height: auto; }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    /* Layout */
+    .layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      margin-left: var(--sidebar-width);
+      padding: 2rem;
+      flex: 1;
+      transition: margin-left 0.3s ease;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--primary-dark);
+      color: var(--text-inverse);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: var(--text-inverse);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      display: none;
+      transition: background 0.3s;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .greeting {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .search-bar {
+      position: relative;
+      width: 280px;
+      max-width: 100%;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 0.8rem 0.6rem 2.5rem;
+      border-radius: 30px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: var(--text-inverse);
+      backdrop-filter: blur(10px);
+      font-size: 0.95rem;
+    }
+
+    .search-bar input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .search-bar i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.7);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-inverse);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    /* Sidebar */
+    aside {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--bg-sidebar);
+      padding: 2rem 1rem 4rem;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 90;
+      transition: transform 0.3s ease;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-inverse);
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    nav ul a {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;￼Enter<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>KLYRO Hub | Professional Dashboard</title>
+  <meta name="description" content="KLYRO Hub - Centralized platform for tools, analytics, and insights." />
+
+  <!-- Google Fonts: Inter + Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+k href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js v4 (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+
+  <style>
+    :root {
+      --primary: #a9442a;
+      --primary-dark: #8c3b24;
+      --primary-darker: #732f1e;
+      --accent: #ffcc99;
+      --accent-hover: #ffb366;
+      --text: #333;
+      --text-light: #666;
+      --text-inverse: #fff;
+      --bg: #f5f5f5;
+      --bg-alt: #f0f0f0;
+      --bg-card: #ffffff;
+      --bg-sidebar: #732f1e;
+      --border-radius: 12px;
+      --shadow-sm: 0 2px 6px rgba(0,0,0,0.1);
+      --shadow: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --header-height: 64px;
+      --sidebar-width: 240px;
+      --footer-height: 60px;
+    }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #e0e0e0;
+        --text-light: #aaa;
+        --bg: #1a1a1a;
+        --bg-alt: #222;
+        --bg-card: #2c2c2c;
+        --bg-sidebar: #3a281e;
+        --shadow-sm: 0 2px 6px rgba(0,0,0,0.3);
+        --shadow: 0 4px 12px rgba(0,0,0,0.4);
+        --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+      }
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background-color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    img { max-width: 100%; height: auto; }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    /* Layout */
+    .layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      margin-left: var(--sidebar-width);
+      padding: 2rem;
+      flex: 1;
+      transition: margin-left 0.3s ease;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--primary-dark);
+      color: var(--text-inverse);
+      height: var(--header-height);
+      display: flex;
