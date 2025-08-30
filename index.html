@@ -1,834 +1,965 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Central Hub — Unify all your SaaS platforms in one clean, searchable dashboard.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>KLYRO Hub | Role-Based Dashboard</title>
+  <meta name="description" content="KLYRO Hub - Secure, role-based dashboard with interactive project cards." />
 
-  <title>Central Hub — All Platforms</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Preload critical font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-  <!-- Favicon -->
-  <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
-
-  <!-- Structured Data (SEO) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Central Hub",
-    "description": "A unified dashboard for all your SaaS tools and platforms.",
-    "url": "https://example.com",
-    "applicationCategory": "Business Application"
-  }
-  </script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
     :root {
-      --bg: #0f1724;
-      --card: #0b1220;
-      --muted: #9aa4b2;
-      --accent: #6ee7b7;
-      --accent-hover: #50d7a7;
-      --glass: rgba(255, 255, 255, 0.04);
-      --border-light: rgba(255, 255, 255, 0.06);
-      --shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-      --gap: 16px;
-      --radius: 12px;
-      --transition: all 0.2s ease;
-      --font: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --bg: #f8f9fa;
+      --text: #2d3748;
+      --text-light: #718096;
+      --border: #e2e8f0;
+      --shadow: 0 2px 8px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Pastel Colors */
+      --card-yellow: #fffbe6;  /* Soft yellow */
+      --card-green: #f0fdf4;   /* Mint green */
+      --card-red: #fef2f2;     /* Light coral */
+      --card-orange: #fff7ed;  /* Peach */
+      --border-yellow: #faf089;
+      --border-green: #68d391;
+      --border-red: #fc8181;
+      --border-orange: #fb923c;
+
+      /* Accent for buttons and highlights */
+      --accent: #f6ad55;
+      --accent-hover: #e99648;
+
+      /* Modal & Overlay */
+      --modal-bg: rgba(0,0,0,0.5);
+
+      /* Header & Sidebar */
+      --header-bg: #2c3e50;
+      --header-text: #ecf0f1;
+      --sidebar-bg: #34495e;
+      --sidebar-active: #1abc9c;
     }
 
-    /* Dark mode override */
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #f1f5f9;
-        --card: #ffffff;
-        --muted: #64748b;
-        --accent: #0d9488;
-        --glass: rgba(0, 0, 0, 0.02);
-        --border-light: rgba(0, 0, 0, 0.1);
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
-    }
-
-    [data-theme="light"] {
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --muted: #64748b;
-      --accent: #0d9488;
-      --glass: rgba(0, 0, 0, 0.02);
-      --border-light: rgba(0, 0, 0, 0.1);
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    * {
-      box-sizing: border-box;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
       margin: 0;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
       padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
     }
 
-    *, *::before, *::after {
-      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    /* Layout */
+    .layout {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    html, body {
-      height: 100%;
-      background: linear-gradient(180deg, #071020 0%, #071427 100%);
-      color: #e6eef6;
-      font-family: var(--font);
-      line-height: 1.5;
-      scroll-behavior: smooth;
+    main {
+      margin-left: 240px;
+      padding: 2rem;
+      flex: 1;
+      transition: margin-left 0.3s ease;
     }
 
-    body[data-theme="light"] {
-      background: #f1f5f9;
-    }
-
-    img, svg {
-      max-width: 100%;
-      height: auto;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
+    /* Header */
     header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      height: 64px;
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
-    .brand {
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 1rem;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: var(--header-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .greeting {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .role-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .admin { background: #e53e3e; color: white; }
+    .editor { background: #dd6b20; color: white; }
+    .viewer { background: #3182ce; color: white; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .search-bar {
+      position: relative;
+      width: 280px;
+      max-width: 100%;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.6rem 0.8rem 0.6rem 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .search-bar i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #718096;
+    }
+
+    /* Sidebar */
+    aside {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      padding: 2rem 1rem 4rem;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 90;
+      transition: transform 0.3s ease;
     }
 
     .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--accent), #60a5fa);
-      display: grid;
-      place-items: center;
+      font-size: 1.75rem;
       font-weight: 700;
-      color: #fff;
-      box-shadow: var(--shadow-sm);
-      font-size: 1.25rem;
+      color: #ecf0f1;
+      margin-bottom: 2.5rem;
+      text-align: center;
     }
 
-    h1 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0;
+    nav ul {
+      list-style: none;
     }
 
-    p.lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.875rem;
+    nav ul li {
+      margin-bottom: 0.8rem;
     }
 
-    /* Toolbar */
-    .toolbar {
-      margin-left: auto;
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn {
-      background: var(--glass);
-      border: 1px solid var(--border-light);
-      padding: 8px 12px;
-      border-radius: var(--radius);
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.875rem;
-      color: inherit;
+    nav ul a {
       display: flex;
       align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(4px);
+      gap: 0.8rem;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: var(--transition);
     }
 
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.12);
+    nav ul a:hover {
+      background: rgba(255,255,255,0.1);
     }
 
-    .btn.accent {
-      background: var(--accent);
-      color: #052;
-      border: none;
-    }
-
-    .btn.accent:hover {
-      background: var(--accent-hover);
+    nav ul a.active {
+      background: var(--sidebar-active);
       color: white;
     }
 
-    .btn svg {
-      width: 14px;
-      height: 14px;
+    nav ul a i {
+      width: 20px;
+      text-align: center;
     }
 
-    /* Hero Section */
-    .hero {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      padding: 18px;
-      border-radius: var(--radius);
-      margin-bottom: 24px;
-      flex-wrap: wrap;
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .search {
-      flex: 1;
-      min-width: 280px;
-      display: flex;
-      gap: 8px;
-    }
-
-    .search input {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border-light);
-      background: rgba(255,255,255,0.04);
-      color: inherit;
-      font-family: var(--font);
-    }
-
-    .search input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(110, 231, 183, 0.2);
-    }
-
-    .search input::placeholder {
-      color: var(--muted);
-    }
-
-    .user-info {
-      text-align: right;
-      color: var(--muted);
-      font-size: 0.875rem;
-    }
-
-    .user-info strong {
-      color: var(--accent);
-    }
-
-    /* Showcase Grid */
-    .showcase {
-      margin-top: 20px;
-    }
-
-    h2 {
-      margin: 24px 0 16px;
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    /* Masonry with modern support */
-    @supports (grid-template-rows: masonry) {
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        grid-template-rows: masonry;
-        gap: var(--gap);
-      }
-      .card {
-        break-inside: avoid;
-      }
-    }
-
-    /* Fallback: column layout */
-    .cards {
-      column-gap: var(--gap);
-      column-fill: balance;
-      column-count: auto;
-    }
-
-    .card {
-      display: inline-block;
-      width: 100%;
-      margin: 0 0 var(--gap);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius: var(--radius);
-      padding: 16px;
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(2, 6, 23, 0.7);
-    }
-
-    .card h3 {
-      margin: 0 0 8px 0;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .card p {
-      margin: 0 0 12px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .meta {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 6px 8px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 11px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .actions .btn {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-
-    /* Container Queries (Modern) */
-    .card {
-      container-type: inline-size;
-      container-name: card;
-    }
-
-    @container card (min-width: 260px) {
-      .card {
-        padding: 18px;
-      }
-      .card h3 {
-        font-size: 18px;
-      }
-    }
-
-    /* Ads Section */
-    .ads {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: var(--gap);
-      margin-top: 24px;
-    }
-
-    .ad-slot {
-      background: linear-gradient(180deg, #081427 0%, #061826 100%);
-      border-radius: var(--radius);
-      padding: 16px;
-      border: 1px solid var(--border-light);
-    }
-
-    .ad-banner {
-      height: 120px;
-      border-radius: 10px;
-      background: linear-gradient(90deg, #1a3 0%, #2b4 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: white;
-      font-size: 1.1rem;
-    }
-
-    .ad-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    /* Popup Ad */
-    .ad-popup {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 60;
-      border-radius: var(--radius);
-      padding: 14px;
-      background: linear-gradient(180deg, #062131, #0b1f2a);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      max-width: 300px;
-      animation: fadeInUp 0.4s ease;
+    section {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-    .ad-popup button {
-      margin-left: 10px;
+    /* Login Screen */
+    .login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      flex-direction: column;
+      padding: 2rem;
     }
 
-    /* Skeleton Loader */
-    .skeleton {
-      background: var(--glass);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius);
-      height: 120px;
-      animation: pulse 1.5s infinite ease-in-out;
+    .login-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
+    .login-card h2 {
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .role-options {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .role-btn {
+      padding: 0.8rem 1.2rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .role-btn:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .role-btn.admin { border-color: #e53e3e; }
+    .role-btn.editor { border-color: #dd6b20; }
+    .role-btn.viewer { border-color: #3182ce; }
+
+    .role-btn.selected {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Card Styles */
+    .card-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin: 0 -0.75rem;
+    }
+
+    .card {
+      flex: 1 1 280px;
+      min-width: 250px;
+      padding: 1.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      border-left: 6px solid #ddd;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(145deg, rgba(255,255,255,0), rgba(255,255,255,0.4));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Role-based card coloring */
+    .card.admin-only { background: var(--card-red); border-left-color: var(--border-red); }
+    .card.editor-only { background: var(--card-orange); border-left-color: var(--border-orange); }
+    .card.shared { background: var(--card-yellow); border-left-color: var(--border-yellow); }
+    .card.info { background: var(--card-green); border-left-color: var(--border-green); }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .card .role-tag {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .card .role-tag.admin { background: #fecaca; color: #b91c1c; }
+    .card .role-tag.editor { background: #fed7aa; color: #9a3412; }
+    .card .role-tag.viewer { background: #bfdbfe; color: #1e40af; }
+
+    .card p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin: 0.5rem 0;
+    }
+
+    .card-footer {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: white;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+      transform: scale(0.9);
+      transition: transform 0.4s ease;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      background: var(--header-bg);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .modal-body {
+      padding: 2rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e0;
+    }
+
+    /* Stats Section */
+    .stats h2,
+    .tools h2,
+    .ads h2 {
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .stats h2::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    .chart-container {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     /* Responsive */
-    @media (min-width: 600px) {
-      .cards { column-width: 260px; }
-    }
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
 
-    @media (min-width: 900px) {
-      .cards { column-width: 300px; }
-    }
+      aside {
+        transform: translateX(-100%);
+      }
 
-    @media (max-width: 599px) {
-      .ads {
-        grid-template-columns: 1fr;
+      body.sidebar-open aside {
+        transform: translateX(0);
       }
-      .hero {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .search {
-        min-width: auto;
-      }
-      .toolbar {
+
+      main, footer {
         margin-left: 0;
-        margin-top: 12px;
+      }
+
+      .card-row {
+        justify-content: center;
+      }
+
+      .search-bar {
+        width: 180px;
       }
     }
 
-    /* Footer */
-    footer {
-      margin-top: 40px;
-      color: var(--muted);
-      font-size: 0.8125rem;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 1.5rem;
+      }
 
-    footer a {
-      color: var(--accent);
-    }
+      .role-options {
+        gap: 0.5rem;
+      }
 
-    /* Dark Mode Toggle */
-    .theme-toggle {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.875rem;
-    }
-
-    .theme-toggle input {
-      margin: 0;
-    }
-
-    /* Accessibility: Focus styles */
-    button:focus, input:focus, a:focus {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    /* No results */
-    .no-results {
-      text-align: center;
-      padding: 40px;
-      color: var(--muted);
-      font-style: italic;
+      .role-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
-<body data-theme="dark">
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">CH</div>
-        <div>
-          <h1>Central Hub</h1>
-          <p class="lead">A modern hub that unifies your platforms and SaaS tools — clean, discoverable, and monetizable.</p>
-        </div>
+<body class="layout">
+  <!-- Login Screen -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-card">
+      <h2>Welcome to KLYRO Hub</h2>
+      <p>Select your role to continue</p>
+      <div class="role-options" id="role-options">
+        <button class="role-btn" data-role="admin">Admin</button>
+        <button class="role-btn" data-role="editor">Editor</button>
+        <button class="role-btn" data-role="viewer">Viewer</button>
       </div>
-      <div class="toolbar">
-        <button class="btn" id="toggleDarkMode">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <span id="themeText">Dark</span>
-        </button>
-        <button class="btn" id="toggleAds">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          Hide Ads
-        </button>
-        <button class="btn accent" id="openPopup">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
-            <line x1="3" y1="22" x2="21" y2="22"></line>
-          </svg>
-          Promo
-        </button>
-      </div>
-    </header>
-
-    <section class="hero">
-      <div style="min-width:64px">
-        <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:grid;place-items:center;font-weight:700;color:#fff">S</div>
-      </div>
-      <div class="search">
-        <input id="search" type="text" placeholder="Search platforms, tools, or docs..." aria-label="Search platforms">
-        <button class="btn" id="searchBtn">Search</button>
-      </div>
-      <div class="user-info">
-        <div>Signed in as <strong>you@company.com</strong></div>
-        <div style="font-size:12px">Manage your links & ads</div>
-      </div>
-    </section>
-
-    <main class="showcase">
-      <h2>Products & Platforms</h2>
-      <div class="cards" id="cards">
-        <!-- Cards will be dynamically loaded -->
-      </div>
-
-      <div class="ads" id="adsArea">
-        <div class="ad-slot">
-          <div class="ad-banner">Featured Promotion</div>
-          <div class="ad-cards" id="adCards">
-            <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">Partner Card — 30% off</div>
-            <div style="padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);">Upgrade CTA — Try Pro</div>
-          </div>
-        </div>
-        <aside class="ad-slot">
-          <h4 style="margin:0 0 8px 0">Ad Settings</h4>
-          <p style="margin:0 0 12px;color:var(--muted)">Control which ad formats show on the hub.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatCard" checked /> Card</label>
-            <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatBanner" checked /> Banner</label>
-            <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="formatPopup" checked /> Popup</label>
-          </div>
-        </aside>
-      </div>
-    </main>
-
-    <footer>
-      <div>&copy; 2025 Central Hub</div>
-      <div>Made with ♥ — <a href="#">Settings</a> | <a href="#">Privacy</a></div>
-    </footer>
+      <button class="btn-primary" id="login-btn">Enter Dashboard</button>
+    </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Header -->
+  <header id="main-header">
+    <div class="header-left">
+      <button class="menu-toggle" aria-label="Toggle sidebar" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1 class="greeting">Good evening, <span id="user-name">User</span></h1>
+      <span class="role-badge" id="role-badge">Role</span>
+    </div>
+    <div class="header-right">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="search" placeholder="Search projects..." id="search-input" aria-label="Search" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="logo">KLYRO</div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="#"><i class="fas fa-project-diagram"></i> Projects</a></li>
+        <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
+        <li><a href="#"><i class="fas fa-users"></i> Team</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="container">
+      <!-- Featured Section -->
+      <section class="tools">
+        <h2>Your Projects</h2>
+        <div class="card-row" id="project-cards">
+          <!-- Cards will be injected here by JS -->
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section class="stats">
+        <h2>Usage Analytics</h2>
+        <div class="chart-container">
+          <canvas id="usageChart"></canvas>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="margin-left:240px; padding:1rem; background:#f1f3f5; border-top:1px solid var(--border);">
+    <p style="text-align:center; color:var(--text-light); font-size:0.9rem;">© 2024 KLYRO Hub. All rights reserved.</p>
+  </footer>
+
+  <!-- Modal Template -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">Project Details</div>
+        <button class="modal-close" id="modal-close" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-description">Loading...</p>
+        <div id="modal-permissions" style="margin-top:1rem; padding:1rem; background:#f8f9fa; border-radius:8px; font-size:0.9rem;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+        <button class="btn btn-primary" id="modal-enter">Enter Platform</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    /**
-     * @file Central Hub — Professional Upgrade
-     * @author Your Name
-     * @description Fully upgraded, accessible, performant dashboard with dark mode, search, ads, and dynamic rendering.
-     */
+    document.addEventListener("DOMContentLoaded", () => {
+      // Role system
+      let currentUserRole = null;
+      const loginScreen = document.getElementById('login-screen');
+      const roleButtons = document.querySelectorAll('.role-btn');
+      const loginBtn = document.getElementById('login-btn');
+      const userNameEl = document.getElementById('user-name');
+      const roleBadge = document.getElementById('role-badge');
+      const projectCardsContainer = document.getElementById('project-cards');
+      const modalOverlay = document.getElementById('modal-overlay');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDescription = document.getElementById('modal-description');
+      const modalPermissions = document.getElementById('modal-permissions');
+      const modalEnterBtn = document.getElementById('modal-enter');
+      const modalCancelBtn = document.getElementById('modal-close');
+      const modalFooterCancel = document.getElementById('modal-cancel');
 
-    // Data
-    const platformData = [
-      { name: "Analytics Pro", desc: "Enterprise analytics for modern SaaS — dashboards, alerts, and insights.", tags: ["SaaS", "API"], actions: ["Open", "Docs"] },
-      { name: "MailerLite", desc: "Transactional & marketing email — built for deliverability and scale.", tags: ["Email", "SMTP"], actions: ["Open", "Settings"] },
-      { name: "DocsHub", desc: "Centralized documentation portal with versioning and search.", tags: ["Docs"], actions: ["Open", "Edit"] },
-      { name: "Payments", desc: "Fast PCI-compliant payments with multi-currency support.", tags: ["Billing", "PCI"], actions: ["Open", "Reports"] },
-      { name: "Auth", desc: "Universal authentication & SSO, built for teams and customers.", tags: ["SSO"], actions: ["Open", "Users"] },
-      { name: "AI Assist", desc: "Embed LLM-powered assistants across your customer touchpoints.", tags: ["AI", "LLM"], actions: ["Open"] },
-      { name: "Scheduler", desc: "Booking & calendar integrations for teams.", tags: ["Calendar"], actions: ["Open"] },
-      { name: "Marketplace", desc: "Partner integrations & plugins for your stack.", tags: ["Plugins"], actions: ["Open"] },
-      { name: "Storage+", desc: "Secure cloud storage with encryption and sharing.", tags: ["Storage", "Cloud"], actions: ["Open", "Manage"] },
-      { name: "Monitor", desc: "Uptime & performance monitoring with alerts.", tags: ["Monitoring"], actions: ["View", "Alerts"] }
-    ];
+      // Project database with role-based access
+      const projects = [
+        {
+          id: 1,
+          name: "Alpha Campaign",
+          description: "Q4 marketing initiative focused on brand awareness and customer acquisition. Includes social media, email sequences, and influencer partnerships.",
+          type: "marketing",
+          status: "Active",
+          lastUpdated: "2 hours ago",
+          role: "admin",
+          permissions: "Full access: edit, publish, delete, manage team"
+        },
+        {
+          id: 2,
+          name: "Beta Product Launch",
+          description: "Next-generation SaaS product launch scheduled for March. Includes UX testing, onboarding flows, and pricing strategy.",
+          type: "product",
+          status: "In Development",
+          lastUpdated: "1 day ago",
+          role: "editor",
+          permissions: "Edit content, view analytics, submit changes"
+        },
+        {
+          id: 3,
+          name: "Customer Insights 2024",
+          type: "analytics",
+          description: "Comprehensive analysis of user behavior, churn rates, and satisfaction metrics across all platforms.",
+          status: "Ongoing",
+          lastUpdated: "5 days ago",
+          role: "viewer",
+          permissions: "View reports and dashboards only"
+        },
+        {
+          id: 4,
+          name: "Brand Redesign",
+          type: "design",
+          description: "Complete visual identity overhaul including logo, color palette, typography, and design system components.",
+          status: "Planning",
+          lastUpdated: "3 days ago",
+          role: "editor",
+          permissions: "Contribute designs, comment on assets"
+        },
+        {
+          id: 5,
+          name: "Security Audit",
+          type: "infrastructure",
+          description: "Comprehensive security review of all systems, APIs, and user data protection protocols.",
+          status: "Critical",
+          lastUpdated: "Just now",
+          role: "admin",
+          permissions: "Full system access and configuration rights"
+        },
+        {
+          id: 6,
+          name: "User Onboarding Flow",
+          type: "ux",
+          description: "Optimization of the new user journey from signup to first key action. Includes A/B testing and funnel analysis.",
+          status: "Testing",
+          lastUpdated: "6 hours ago",
+          role: "shared", // visible to all, but actions depend on role
+          permissions: {
+            admin: "Full control over flow configuration",
+            editor: "Edit copy and design elements",
+            viewer: "View funnel analytics only"
+          }
+        }
+      ];
 
-    // DOM Elements
-    const cardsContainer = document.getElementById('cards');
-    const searchInput = document.getElementById('search');
-    const searchBtn = document.getElementById('searchBtn');
-    const adsArea = document.getElementById('adsArea');
-    const toggleAdsBtn = document.getElementById('toggleAds');
-    const openPopupBtn = document.getElementById('openPopup');
-    const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
-    const themeText = document.getElementById('themeText');
-    const formatCard = document.getElementById('formatCard');
-    const formatBanner = document.getElementById('formatBanner');
-    const formatPopup = document.getElementById('formatPopup');
+      // Select role
+      roleButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          roleButtons.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          currentUserRole = btn.dataset.role;
+        });
+      });
 
-    const popupId = 'adPopup';
+      // Login
+      loginBtn.addEventListener('click', () => {
+        if (!currentUserRole) {
+          alert('Please select a role first');
+          return;
+        }
+        loginScreen.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        
+        // Update UI
+        userNameEl.textContent = capitalizeFirst(currentUserRole) + ' User';
+        roleBadge.textContent = capitalizeFirst(currentUserRole);
+        roleBadge.className = 'role-badge ' + currentUserRole;
+        
+        // Generate cards
+        renderProjectCards();
+      });
 
-    // State
-    let isDarkMode = true;
-    let filteredCards = [...platformData];
-
-    // Load saved preferences
-    function loadPreferences() {
-      const savedTheme = localStorage.getItem('centralHub:theme');
-      const savedAds = localStorage.getItem('centralHub:ads');
-
-      if (savedTheme === 'light') {
-        setTheme('light');
+      function capitalizeFirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
       }
 
-      if (savedAds === 'hidden') {
-        adsArea.style.display = 'none';
-        toggleAdsBtn.textContent = 'Show Ads';
+      // Render cards based on role
+      function renderProjectCards() {
+        projectCardsContainer.innerHTML = '';
+        
+        projects.forEach(project => {
+          // Skip if user doesn't have access
+          if (project.role !== 'shared' && project.role !== currentUserRole) {
+            return;
+          }
+          
+          const card = document.createElement('div');
+          card.className = `card ${project.role === 'admin' ? 'admin-only' : 
+                                   project.role === 'editor' ? 'editor-only' :
+                                   project.role === 'viewer' ? 'shared' : 'info'}`;
+          card.dataset.projectId = project.id;
+          
+          card.innerHTML = `
+            <h3>${project.name}</h3>
+            <p>${project.description}</p>
+            <div class="card-footer">
+              <small><strong>Status:</strong> ${project.status}</small><br>
+              <small>Last updated: ${project.lastUpdated}</small>
+            </div>
+            <div class="role-tag ${project.role}">${capitalizeFirst(project.role)} Access</div>
+          `;
+          
+          card.addEventListener('click', () => openModal(project));
+          projectCardsContainer.appendChild(card);
+        });
       }
-    }
 
-    // Set theme
-    function setTheme(theme) {
-      document.body.setAttribute('data-theme', theme);
-      isDarkMode = theme === 'dark';
-      localStorage.setItem('centralHub:theme', theme);
-      themeText.textContent = isDarkMode ? 'Dark' : 'Light';
-    }
-
-    // Toggle dark mode
-    toggleDarkModeBtn.addEventListener('click', () => {
-      const newTheme = isDarkMode ? 'light' : 'dark';
-      setTheme(newTheme);
-    });
-
-    // Toggle ads
-    toggleAdsBtn.addEventListener('click', () => {
-      const isHidden = adsArea.style.display === 'none';
-      adsArea.style.display = isHidden ? 'grid' : 'none';
-      toggleAdsBtn.textContent = isHidden ? 'Hide Ads' : 'Show Ads';
-      localStorage.setItem('centralHub:ads', isHidden ? 'visible' : 'hidden');
-    });
-
-    // Open popup
-    function openPopup() {
-      if (document.getElementById(popupId)) return;
-      const p = document.createElement('div');
-      p.id = popupId;
-      p.className = 'ad-popup';
-      p.innerHTML = `
-        <strong>Limited Time:</strong> Try Pro for 14 days 
-        <button class="btn" onclick="closePopup()">Close</button>
-      `;
-      document.body.appendChild(p);
-
-      // Track impression
-      console.log('Ad impression: popup shown');
-    }
-
-    function closePopup() {
-      const el = document.getElementById(popupId);
-      if (el) el.remove();
-      console.log('Ad closed');
-    }
-
-    // Ad format toggles
-    [formatCard, formatBanner, formatPopup].forEach(checkbox => {
-      checkbox.addEventListener('change', () => {
-        const id = checkbox.id;
-        const visible = checkbox.checked;
-
-        if (id === 'formatPopup') {
-          if (!visible) closePopup();
-          else openPopup();
+      // Modal functions
+      function openModal(project) {
+        modalTitle.textContent = project.name;
+        modalDescription.textContent = project.description;
+        
+        // Set permissions text
+        let permText = '';
+        if (typeof project.permissions === 'string') {
+          permText = `<strong>Permissions:</strong> ${project.permissions}`;
+        } else {
+          permText = '<strong>Role-Based Permissions:</strong><ul style="margin:0.5rem 0 0 1rem">';
+          Object.keys(project.permissions).forEach(role => {
+            permText += `<li><span class="role-tag ${role}" style="margin-right:0.5rem">${capitalizeFirst(role)}</span> ${project.permissions[role]}</li>`;
+          });
+          permText += '</ul>';
         }
+        modalPermissions.innerHTML = permText;
+        
+        // Show modal
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Set which button is active
+        modalEnterBtn.style.display = 
+          project.role === currentUserRole || project.role === 'shared' ? 'inline-block' : 'none';
+      }
 
-        if (id === 'formatCard') {
-          document.querySelectorAll('.ad-cards')[0].style.display = visible ? 'flex' : 'none';
-        }
+      function closeModal() {
+        modalOverlay.classList.remove('active');
+        setTimeout(() => {
+          document.body.style.overflow = 'auto';
+        }, 300);
+      }
 
-        if (id === 'formatBanner') {
-          document.querySelectorAll('.ad-banner')[0].style.display = visible ? 'flex' : 'none';
+      // Close modal events
+      modalCancelBtn.addEventListener('click', closeModal);
+      modalCloseBtn.addEventListener('click', closeModal);
+      modalFooterCancel.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+          closeModal();
         }
+      });
+
+      // Search functionality
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.toLowerCase().trim();
+          const cards = document.querySelectorAll('.card');
+          cards.forEach(card => {
+            const projectName = card.querySelector('h3').textContent.toLowerCase();
+            const isVisible = projectName.includes(query);
+            card.style.display = isVisible ? 'flex' : 'none';
+          });
+        });
+      }
+
+      // Sidebar toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const sidebar = document.getElementById('sidebar');
+      if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+          document.body.classList.toggle('sidebar-open');
+        });
+      }
+
+      // Click outside closes sidebar on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+          const isSidebar = sidebar.contains(e.target);
+          const isToggle = menuToggle.contains(e.target);
+          if (!isSidebar && !isToggle && document.body.classList.contains('sidebar-open')) {
+            document.body.classList.remove('sidebar-open');
+          }
+        }
+      });
+
+      // Chart
+      const ctx = document.getElementById('usageChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+              label: 'Hours Active',
+              data: [2, 3.5, 1, 4, 2.5, 5, 3],
+              backgroundColor: '#f6ad55',
+              borderColor: '#e99648',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: 'rgba(0,0,0,0.05)' }
+              },
+              x: {
+                grid: { display: false }
+              }
+            }
+          }
+        });
+      }
+
+      // Mock "Enter Platform" action
+      modalEnterBtn.addEventListener('click', () => {
+        const projectName = modalTitle.textContent;
+        alert(`Entering ${projectName} platform...`);
+        closeModal();
       });
     });
-
-    // Debounced search
-    function debounce(func, wait) {
-      let timeout;
-      return function executedFunction(...args) {
-        const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-      };
-    }
-
-    // Render cards
-    function renderCards(data) {
-      if (data.length === 0) {
-        cardsContainer.innerHTML = '<div class="no-results">No platforms found. Try a different search.</div>';
-        return;
-      }
-
-      cardsContainer.innerHTML = ''; // Clear
-      data.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <h3>${item.name}</h3>
-          <p>${item.desc}</p>
-          <div class="meta">
-            ${item.tags.map(tag => `<span class="badge">${tag}</span>`).join('')}
-          </div>
-          <div class="actions">
-            ${item.actions.map(action => `<a class="btn" href="#" data-action="${action.toLowerCase()}" role="button">${action}</a>`).join('')}
-          </div>
-        `;
-        cardsContainer.appendChild(card);
-      });
-    }
-
-    // Search handler
-    const handleSearch = debounce(() => {
-      const q = searchInput.value.toLowerCase().trim();
-      if (q === '') {
-        filteredCards = [...platformData];
-      } else {
-        filteredCards = platformData.filter(item =>
-          item.name.toLowerCase().includes(q) ||
-          item.desc.toLowerCase().includes(q) ||
-          item.tags.some(tag => tag.toLowerCase().includes(q))
-        );
-      }
-      renderCards(filteredCards);
-    }, 300);
-
-    searchInput.addEventListener('input', handleSearch);
-    searchBtn.addEventListener('click', handleSearch);
-
-    // Keyboard shortcuts
-    window.addEventListener('keydown', e => {
-      if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        searchInput.focus();
-      }
-      if (e.key === 'Escape') {
-        closePopup();
-      }
-    });
-
-    // Initial render
-    function init() {
-      // Show loading skeletons
-      cardsContainer.innerHTML = Array(6).fill('<div class="skeleton"></div>').join('');
-
-      // Simulate async load
-      setTimeout(() => {
-        renderCards(platformData);
-        loadPreferences();
-
-        // Show popup after delay if enabled
-        if (formatPopup.checked) {
-          setTimeout(openPopup, 4000);
-        }
-      }, 600);
-    }
-
-    init();
-
-    // Service Worker Registration (for offline)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(err => {
-        console.warn('SW registration failed', err);
-      });
-    }
-
-    // Optional: Create SW dynamically
-    const swScript = `
-      self.addEventListener('fetch', event => {
-        if (event.request.mode === 'navigate') {
-          event.respondWith(
-            fetch(event.request).catch(() => {
-              return new Response('<h1>Offline</h1><p>You are not connected to the internet.</p>', {
-                headers: { 'Content-Type': 'text/html' }
-              });
-            })
-          );
-        }
-      });
-    `;
-
-    const blob = new Blob([swScript], { type: 'application/javascript' });
-    const swURL = URL.createObjectURL(blob);
-    // Note: in production, serve sw.js as a real file
-  </script>
-
-  <!-- Injected Service Worker (for demo) -->
-  <script>
-    // In production, this would be a real file: sw.js
-    const swBlob = new Blob([`
-      self.addEventListener('install', e => {
-        self.skipWaiting();
-      });
-      self.addEventListener('fetch', e => {
-        if (e.request.destination === 'script' || e.request.destination === 'style') {
-          e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-        }
-      });
-    `], { type: 'text/javascript' });
-    const swUrl = URL.createObjectURL(swBlob);
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(swUrl).catch(() => {});
-    }
   </script>
 </body>
-</html>
+  </html>
