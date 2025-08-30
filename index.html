@@ -3,66 +3,232 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KLYRO Central Hub</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gradient-to-br from-gray-900 to-indigo-900 text-white font-sans">
+  <title>KLYRO Hub</title>
+  <style>
+    /* 🌅 Warm Dashboard Theme */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #a9442a;
+      color: #f5f5f5;
+    }
 
-  <!-- Navbar -->
-  <header class="flex justify-between items-center p-6">
-    <h1 class="text-2xl font-bold">KLYRO Central</h1>
-    <nav>
-      <button class="bg-indigo-600 px-4 py-2 rounded hover:bg-indigo-700">Login</button>
-    </nav>
+    header {
+      background-color: #8c3b24;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    header input {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: none;
+      width: 200px;
+    }
+
+    aside {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100vh;
+      background-color: #732f1e;
+      padding: 2rem 1rem;
+    }
+
+    aside ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    aside li {
+      margin-bottom: 1rem;
+    }
+
+    aside a {
+      color: #f5f5f5;
+      text-decoration: none;
+    }
+
+    main {
+      margin-left: 200px;
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    .featured {
+      background-color: #5a2415;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .image-placeholder {
+      background-color: #ccc;
+      height: 200px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      line-height: 200px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: #f5f5f5;
+      color: #5a2415;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .stat-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #f5f5f5;
+      color: #5a2415;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .card-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .card {
+      background-color: #6e2f1d;
+      padding: 1rem;
+      border-radius: 8px;
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .ad-banner {
+      background-color: #d9d9d9;
+      height: 100px;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 100px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #8c3b24;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      margin-left: 180px;
+    }
+
+    footer ul {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    footer a {
+      color: #f5f5f5;
+      text-decoration: none;
+    }
+  </style>
+  <script>
+    // 🧠 Simple Interactivity
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach(card => {
+        card.addEventListener("click", () => {
+          alert(`Opening ${card.textContent}...`);
+        });
+      });
+
+      const searchInput = document.querySelector("header input");
+      searchInput.addEventListener("input", () => {
+        console.log("Searching:", searchInput.value);
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Good evening, KLYRO</h1>
+    <input type="search" placeholder="Search platforms..." />
   </header>
 
-  <!-- Hero Section -->
-  <section class="text-center py-20 px-6">
-    <h2 class="text-4xl font-extrabold mb-4">Your Platforms. One Hub.</h2>
-    <p class="text-lg mb-8 max-w-xl mx-auto">Discover all your SaaS tools and services in one place — fast, simple, and beautifully organized.</p>
-    <button class="bg-pink-500 px-6 py-3 rounded-full hover:bg-pink-600">Explore Now</button>
-  </section>
+  <aside>
+    <nav>
+      <ul>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Tools</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-  <!-- Platform Showcase -->
-  <section class="max-w-6xl mx-auto px-6 py-16">
-    <h3 class="text-2xl font-bold mb-6">🚀 Platforms</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg hover:bg-opacity-20 transition">
-        <h4 class="text-xl font-semibold mb-2">AnalyticsPro</h4>
-        <p>Advanced data insights for smarter decisions.</p>
-      </div>
-      <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg hover:bg-opacity-20 transition">
-        <h4 class="text-xl font-semibold mb-2">CRMConnect</h4>
-        <p>Seamless customer relationship management.</p>
-      </div>
-      <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg hover:bg-opacity-20 transition">
-        <h4 class="text-xl font-semibold mb-2">AutoMailer</h4>
-        <p>Automated outreach with precision targeting.</p>
-      </div>
-      <!-- Add more platforms as needed -->
-    </div>
-  </section>
+  <main>
+    <section class="featured">
+      <div class="image-placeholder">[ Image Here ]</div>
+      <button>Explore Platform</button>
+    </section>
 
-  <!-- Advertising Section -->
-  <section class="max-w-6xl mx-auto px-6 py-16">
-    <h3 class="text-2xl font-bold mb-6">📢 Promotions</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-pink-600 p-6 rounded-lg shadow-lg text-white">
-        <h4 class="text-xl font-semibold mb-2">Partner Spotlight</h4>
-        <p>Check out our latest integration with FinTechFlow.</p>
-      </div>
-      <div class="bg-indigo-600 p-6 rounded-lg shadow-lg text-white">
-        <h4 class="text-xl font-semibold mb-2">Limited Offer</h4>
-        <p>Get 30% off AutoMailer Pro until Sept 15.</p>
-      </div>
-      <!-- Add pop-up or banner logic later -->
-    </div>
-  </section>
+    <section class="stats">
+      <h2>Your Insights</h2>
+      <div class="stat-circle">00h 00m</div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="text-center py-10 text-sm text-gray-400">
-    &copy; 2025 KLYRO Central — All rights reserved.
+    <section class="tools">
+      <h2>Your Tools</h2>
+      <div class="card-row">
+        <div class="card">Platform A</div>
+        <div class="card">Platform B</div>
+      </div>
+    </section>
+
+    <section class="ads">
+      <h2>Promotions & Partners</h2>
+      <div class="ad-banner">[ Ad Banner ]</div>
+    </section>
+  </main>
+
+  <footer>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Ads</a></li>
+      </ul>
+    </nav>
   </footer>
-
 </body>
-</html>
+  </html>
