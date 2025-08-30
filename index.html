@@ -1,221 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KLYRO SaaS Onboarding</title>
-<style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f4f6f8;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    background: #2c3e50;
-    color: white;
-    padding: 30px;
-    text-align: center;
-  }
-  .container {
-    max-width: 1000px;
-    margin: 30px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  h2 {
-    color: #2980b9;
-    margin-top: 0;
-  }
-  .step { display: none; }
-  .step.active { display: block; }
-  .card {
-    background: #ecf0f1;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-  .card h3 { margin: 0; color: #34495e; }
-  .card p { margin: 5px 0 0; font-size: 14px; color: #2c3e50; }
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  button {
-    padding: 10px 20px;
-    border: none;
-    background: #2980b9;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:disabled {
-    background: #bdc3c7;
-    cursor: not-allowed;
-  }
-  .industry-select {
-    margin-top: 10px;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  .dashboard-preview {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 15px;
-    border: 1px solid #ddd;
-  }
-  .success {
-    text-align: center;
-    padding: 40px;
-  }
-  .success h2 { color: #27ae60; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KLYRO Central Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<header>
-  <h1>Welcome to KLYRO Cloud</h1>
-  <p>Your all-in-one SaaS workspace</p>
-</header>
-<div class="container">
-  <!-- Step 1 -->
-  <div id="step1" class="step active">
-    <h2>Step 1: Organization Setup</h2>
-    <div class="card">
-      <h3>Organization Name</h3>
-      <input type="text" id="orgName" placeholder="Enter your organization name" style="width:100%;padding:8px;margin-top:5px;">
+<body class="bg-gradient-to-br from-gray-900 to-indigo-900 text-white font-sans">
+
+  <!-- Navbar -->
+  <header class="flex justify-between items-center p-6">
+    <h1 class="text-2xl font-bold">KLYRO Central</h1>
+    <nav>
+      <button class="bg-indigo-600 px-4 py-2 rounded hover:bg-indigo-700">Login</button>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="text-center py-20 px-6">
+    <h2 class="text-4xl font-extrabold mb-4">Your Platforms. One Hub.</h2>
+    <p class="text-lg mb-8 max-w-xl mx-auto">Discover all your SaaS tools and services in one place — fast, simple, and beautifully organized.</p>
+    <button class="bg-pink-500 px-6 py-3 rounded-full hover:bg-pink-600">Explore Now</button>
+  </section>
+
+  <!-- Platform Showcase -->
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <h3 class="text-2xl font-bold mb-6">🚀 Platforms</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg hover:bg-opacity-20 transition">
+        <h4 class="text-xl font-semibold mb-2">AnalyticsPro</h4>
+        <p>Advanced data insights for smarter decisions.</p>
+      </div>
+      <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg hover:bg-opacity-20 transition">
+        <h4 class="text-xl font-semibold mb-2">CRMConnect</h4>
+        <p>Seamless customer relationship management.</p>
+      </div>
+      <div class="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg hover:bg-opacity-20 transition">
+        <h4 class="text-xl font-semibold mb-2">AutoMailer</h4>
+        <p>Automated outreach with precision targeting.</p>
+      </div>
+      <!-- Add more platforms as needed -->
     </div>
-    <div class="card">
-      <h3>Industry</h3>
-      <select class="industry-select" id="industrySelect">
-        <option value="">Select Industry</option>
-        <option value="healthcare">Healthcare</option>
-        <option value="education">Education</option>
-        <option value="finance">Finance</option>
-        <option value="marketing">Marketing</option>
-        <option value="construction">Construction</option>
-      </select>
+  </section>
+
+  <!-- Advertising Section -->
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <h3 class="text-2xl font-bold mb-6">📢 Promotions</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-pink-600 p-6 rounded-lg shadow-lg text-white">
+        <h4 class="text-xl font-semibold mb-2">Partner Spotlight</h4>
+        <p>Check out our latest integration with FinTechFlow.</p>
+      </div>
+      <div class="bg-indigo-600 p-6 rounded-lg shadow-lg text-white">
+        <h4 class="text-xl font-semibold mb-2">Limited Offer</h4>
+        <p>Get 30% off AutoMailer Pro until Sept 15.</p>
+      </div>
+      <!-- Add pop-up or banner logic later -->
     </div>
-    <div class="dashboard-preview" id="preview1">
-      <strong>Preview:</strong> Your workspace will be tailored to your industry.
-    </div>
-  </div>
+  </section>
 
-  <!-- Step 2 -->
-  <div id="step2" class="step">
-    <h2>Step 2: Team & Roles</h2>
-    <div class="card">
-      <h3>Invite Team Members</h3>
-      <p>Mock: Alice (Admin), Bob (Manager), Clara (Contributor)</p>
-    </div>
-    <div class="card">
-      <h3>Security</h3>
-      <p>SSO Enabled, MFA Active</p>
-    </div>
-  </div>
+  <!-- Footer -->
+  <footer class="text-center py-10 text-sm text-gray-400">
+    &copy; 2025 KLYRO Central — All rights reserved.
+  </footer>
 
-  <!-- Step 3 -->
-  <div id="step3" class="step">
-    <h2>Step 3: Modules & Integrations</h2>
-    <div class="card">
-      <h3>Selected Modules</h3>
-      <p id="modulesList">Project Management, CRM, Billing, Reporting</p>
-    </div>
-    <div class="card">
-      <h3>Integrations</h3>
-      <p>Google Drive, Slack, Stripe</p>
-    </div>
-  </div>
-
-  <!-- Step 4 -->
-  <div id="step4" class="step">
-    <h2>Step 4: First Project Launch</h2>
-    <div class="card">
-      <h3>Project Name</h3>
-      <p>Mock: “Client Portal Redesign”</p>
-    </div>
-    <div class="card">
-      <h3>Tasks</h3>
-      <p>Design UI, Build API, Test Portal</p>
-    </div>
-  </div>
-
-  <!-- Step 5 -->
-  <div id="step5" class="step">
-    <div class="success">
-      <h2>🎉 Setup Complete!</h2>
-      <p id="successMsg">Your workspace is ready!</p>
-      <p>Next: Invite more users, explore automation, or launch your dashboard.</p>
-    </div>
-  </div>
-
-  <!-- Navigation -->
-  <div class="buttons">
-    <button id="prevBtn" disabled>← Back</button>
-    <button id="nextBtn">Next →</button>
-  </div>
-</div>
-
-<script>
-  const steps = document.querySelectorAll('.step');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const industrySelect = document.getElementById('industrySelect');
-  const preview1 = document.getElementById('preview1');
-  const successMsg = document.getElementById('successMsg');
-  let currentStep = 0;
-
-  const industryModules = {
-    healthcare: "Patient CRM, Compliance, Scheduling",
-    education: "Course Management, Student Portals, Grading Tools",
-    finance: "Secure Document Sharing, Billing, Audit Logs",
-    marketing: "Campaign Boards, Asset Library, Client Portals",
-    construction: "Task Dependencies, Site Logs, Vendor Management"
-  };
-
-  industrySelect.addEventListener('change', () => {
-    const industry = industrySelect.value;
-    if (industry && industryModules[industry]) {
-      preview1.innerHTML = `<strong>Preview:</strong> Modules for ${industry.charAt(0).toUpperCase() + industry.slice(1)} — ${industryModules[industry]}`;
-      document.getElementById('modulesList').textContent = industryModules[industry];
-    } else {
-      preview1.innerHTML = `<strong>Preview:</strong> Your workspace will be tailored to your industry.`;
-    }
-  });
-
-  function updateSteps() {
-    steps.forEach((step, index) => {
-      step.classList.toggle('active', index === currentStep);
-    });
-    prevBtn.disabled = currentStep === 0;
-    nextBtn.textContent = currentStep === steps.length - 1 ? 'Finish ✔' : 'Next →';
-  }
-
-  prevBtn.addEventListener('click', () => {
-    if (currentStep > 0) {
-      currentStep--;
-      updateSteps();
-    }
-  });
-
-  nextBtn.addEventListener('click', () => {
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      updateSteps();
-    } else {
-      const orgName = document.getElementById('orgName').value || "Your Organization";
-      successMsg.textContent = `Your workspace is ready, ${orgName}!`;
-      alert('🚀 You’re now live on KLYRO Cloud!');
-    }
-  });
-
-  updateSteps();
-</script>
 </body>
 </html>
