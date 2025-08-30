@@ -1,149 +1,269 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KLYRO Central Hub</title>
+  <title>KLYRO Hub</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      background: linear-gradient(to bottom right, #1a202c, #4c51bf);
-      color: white;
-    }
-    header, footer {
-      padding: 1.5rem;
-      text-align: center;
-    }
-    .grid {
-      display: grid;
-      gap: 1rem;
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .grid-cols-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .card:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .banner {
-      text-align: center;
-      font-size: 1.2rem;
-      margin: 2rem 0;
-    }
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      display: none;
-    }
-    .modal-content {
-      background: white;
-      color: black;
-      padding: 2rem;
-      border-radius: 0.5rem;
-      text-align: center;
-    }
-    button {
-      background: #ed64a6;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 9999px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #d53f8c;
-    }
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }header {
+  background-color: #8c3b24;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+header input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  width: 240px;
+  max-width: 100%;
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #732f1e;
+  padding: 2rem 1rem;
+  transition: transform 0.3s ease;
+}
+
+aside ul { list-style: none; padding: 0; }
+aside li { margin-bottom: 1rem; }
+aside a { color: #f5f5f5; text-decoration: none; font-weight: 500; }
+aside a:hover { color: #ffcc99; }
+
+main { margin-left: 220px; padding: 2rem; }
+section { margin-bottom: 2rem; }
+
+.featured {
+  background: linear-gradient(135deg, #a9442a, #732f1e);
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.featured img {
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+button {
+  background-color: #ffcc99;
+  color: #5a2415;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+button:hover { background-color: #ffb366; }
+
+.stats h2, .tools h2, .ads h2 { color: #5a2415; }
+
+.chart-container {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  min-width: 160px;
+}
+.card:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+.ad-banner {
+  background-color: #e6e6e6;
+  height: 120px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 120px;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+footer {
+  background-color: #8c3b24;
+  padding: 0.8rem;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 200px);
+  margin-left: 200px;
+  color: #fff;
+}
+
+footer ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer a { color: #fff; text-decoration: none; font-weight: 500; }
+
+@media (max-width: 768px) {
+  aside { transform: translateX(-100%); }
+  body.sidebar-open aside { transform: translateX(0); }
+  main, footer { margin-left: 0; width: 100%; }
+  header h1 { font-size: 1.2rem; }
+  .menu-toggle {
+    display: inline-block;
+    background: #ffcc99;
+    color: #5a2415;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+}
+
+.menu-toggle { display: none; }
+
   </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach(card => {
+        card.addEventListener("click", () => {
+          alert(`Opening ${card.textContent}...`);
+        });
+      });const searchInput = document.querySelector("header input");
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    document.querySelectorAll(".card").forEach(card => {
+      card.style.display = card.textContent.toLowerCase().includes(query) ? "block" : "none";
+    });
+  });
+
+  const toggleBtn = document.querySelector(".menu-toggle");
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("sidebar-open");
+  });
+
+  const ctx = document.getElementById('usageChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Hours Active',
+        data: [2, 3.5, 1, 4, 2.5, 5, 3],
+        borderColor: '#a9442a',
+        backgroundColor: 'rgba(169,68,42,0.2)',
+        borderWidth: 2,
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Hours' } },
+        x: { title: { display: true, text: 'Day of Week' } }
+      }
+    }
+  });
+});
+
+  </script>
 </head>
 <body>
-
   <header>
-    <h1 style="font-size:2rem; font-weight:bold;">KLYRO Central Hub</h1>
-    <p>AI Tools for Sales Precision</p>
-  </header>
-
-  <section class="grid grid-cols-3">
-    <div class="card">CRMConnect<br><small>Smart CRM integration</small></div>
-    <div class="card">AutoMailer<br><small>Automated email campaigns</small></div>
-    <div class="card">LeadGenPro<br><small>AI-powered lead generation</small></div>
-  </section>
-
-  <div class="banner" id="banner">🚀 Loading banner ads...</div>
-
-  <section class="grid grid-cols-3">
-    <div class="card" id="card1"></div>
-    <div class="card" id="card2"></div>
-    <div class="card">
-      <button id="triggerModal">🎉 View Promotion</button>
+    <div style="display:flex; align-items:center;">
+      <button class="menu-toggle">☰</button>
+      <h1>Good evening, KLYRO</h1>
     </div>
-  </section>
-
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <h2>🎉 50% Off CRMConnect Pro</h2>
-      <p>Limited time offer. Upgrade your CRM game now.</p>
-      <button onclick="document.getElementById('modal').style.display='none'">Close</button>
-    </div>
+    <input type="search" placeholder="Search platforms..." />
+  </header>  <aside>
+    <nav>
+      <ul>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Tools</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </nav>
+  </aside>  <main>
+    <section class="featured">
+      <img src="https://i.postimg.cc/bsh4Qx6X/your-image.jpg" alt="Featured" />
+      <button>Explore Platform</button>
+    </section><section class="stats">
+  <h2>Your Insights</h2>
+  <div class="chart-container">
+    <canvas id="usageChart"></canvas>
   </div>
+</section>
 
-  <footer>
-    &copy; 2025 KLYRO.AI — All rights reserved.
+<section class="tools">
+  <h2>Your Tools</h2>
+  <div class="card-row">
+    <div class="card">Platform A</div>
+    <div class="card">Platform B</div>
+    <div class="card">Platform C</div>
+  </div>
+</section>
+
+<section class="ads">
+  <h2>Promotions & Partners</h2>
+  <div class="ad-banner">[ Ad Banner ]</div>
+</section>
+
+  </main>  <footer>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Quick Add</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </nav>
   </footer>
-
-  <script>
-    const adData = {
-      banners: [
-        "🚀 New Feature: WhatsApp Campaigns",
-        "📢 Boost Conversions with AutoMailer",
-        "🔥 LeadGenPro: 3 Months Free Trial"
-      ],
-      cards: [
-        { title: "Partner Offer", description: "Get 3 months free with LeadGenPro" },
-        { title: "Promo Deal", description: "Save 40% on CRMConnect Pro" }
-      ]
-    };
-
-    // Banner rotation
-    let bannerIndex = 0;
-    const bannerEl = document.getElementById('banner');
-    setInterval(() => {
-      bannerEl.textContent = adData.banners[bannerIndex];
-      bannerIndex = (bannerIndex + 1) % adData.banners.length;
-    }, 4000);
-
-    // Render card ads
-    document.getElementById('card1').innerHTML = `<strong>${adData.cards[0].title}</strong><br>${adData.cards[0].description}`;
-    document.getElementById('card2').innerHTML = `<strong>${adData.cards[1].title}</strong><br>${adData.cards[1].description}`;
-
-    // Modal trigger
-    document.getElementById('triggerModal').addEventListener('click', () => {
-      document.getElementById('modal').style.display = 'flex';
-    });
-
-    // Optional scroll trigger
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        document.getElementById('modal').style.display = 'flex';
-      }
-    });
-  </script>
-
 </body>
 </html>
