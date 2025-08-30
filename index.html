@@ -3,232 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KLYRO Hub</title>
+  <title>KLYRO Central Hub</title>
   <style>
-    /* 🌅 Warm Dashboard Theme */
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #a9442a;
-      color: #f5f5f5;
+      font-family: sans-serif;
+      background: linear-gradient(to bottom right, #1a202c, #4c51bf);
+      color: white;
     }
-
-    header {
-      background-color: #8c3b24;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    header input {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: none;
-      width: 200px;
-    }
-
-    aside {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 180px;
-      height: 100vh;
-      background-color: #732f1e;
-      padding: 2rem 1rem;
-    }
-
-    aside ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    aside li {
-      margin-bottom: 1rem;
-    }
-
-    aside a {
-      color: #f5f5f5;
-      text-decoration: none;
-    }
-
-    main {
-      margin-left: 200px;
-      padding: 2rem;
-    }
-
-    section {
-      margin-bottom: 2rem;
-    }
-
-    .featured {
-      background-color: #5a2415;
-      padding: 1rem;
-      border-radius: 10px;
-    }
-
-    .image-placeholder {
-      background-color: #ccc;
-      height: 200px;
-      border-radius: 8px;
-      margin-bottom: 1rem;
+    header, footer {
+      padding: 1.5rem;
       text-align: center;
-      line-height: 200px;
-      color: #333;
-      font-weight: bold;
     }
-
-    button {
-      background-color: #f5f5f5;
-      color: #5a2415;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #e0e0e0;
-    }
-
-    .stat-circle {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background-color: #f5f5f5;
-      color: #5a2415;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-
-    .card-row {
-      display: flex;
+    .grid {
+      display: grid;
       gap: 1rem;
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
     }
-
+    .grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
     .card {
-      background-color: #6e2f1d;
+      background: rgba(255, 255, 255, 0.1);
       padding: 1rem;
-      border-radius: 8px;
-      flex: 1;
+      border-radius: 0.5rem;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: background 0.3s;
     }
-
     .card:hover {
-      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
     }
-
-    .ad-banner {
-      background-color: #d9d9d9;
-      height: 100px;
-      border-radius: 8px;
+    .banner {
       text-align: center;
-      line-height: 100px;
-      color: #333;
-      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 2rem 0;
     }
-
-    footer {
-      background-color: #8c3b24;
-      padding: 1rem;
+    .modal {
       position: fixed;
-      bottom: 0;
-      width: 100%;
-      margin-left: 180px;
-    }
-
-    footer ul {
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
       display: flex;
-      justify-content: space-around;
-      list-style: none;
-      padding: 0;
-      margin: 0;
+      justify-content: center;
+      align-items: center;
+      display: none;
     }
-
-    footer a {
-      color: #f5f5f5;
-      text-decoration: none;
+    .modal-content {
+      background: white;
+      color: black;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      text-align: center;
+    }
+    button {
+      background: #ed64a6;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #d53f8c;
     }
   </style>
-  <script>
-    // 🧠 Simple Interactivity
-    document.addEventListener("DOMContentLoaded", () => {
-      const cards = document.querySelectorAll(".card");
-      cards.forEach(card => {
-        card.addEventListener("click", () => {
-          alert(`Opening ${card.textContent}...`);
-        });
-      });
-
-      const searchInput = document.querySelector("header input");
-      searchInput.addEventListener("input", () => {
-        console.log("Searching:", searchInput.value);
-      });
-    });
-  </script>
 </head>
 <body>
+
   <header>
-    <h1>Good evening, KLYRO</h1>
-    <input type="search" placeholder="Search platforms..." />
+    <h1 style="font-size:2rem; font-weight:bold;">KLYRO Central Hub</h1>
+    <p>AI Tools for Sales Precision</p>
   </header>
 
-  <aside>
-    <nav>
-      <ul>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Tools</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Settings</a></li>
-      </ul>
-    </nav>
-  </aside>
+  <section class="grid grid-cols-3">
+    <div class="card">CRMConnect<br><small>Smart CRM integration</small></div>
+    <div class="card">AutoMailer<br><small>Automated email campaigns</small></div>
+    <div class="card">LeadGenPro<br><small>AI-powered lead generation</small></div>
+  </section>
 
-  <main>
-    <section class="featured">
-      <div class="image-placeholder">[ Image Here ]</div>
-      <button>Explore Platform</button>
-    </section>
+  <div class="banner" id="banner">🚀 Loading banner ads...</div>
 
-    <section class="stats">
-      <h2>Your Insights</h2>
-      <div class="stat-circle">00h 00m</div>
-    </section>
+  <section class="grid grid-cols-3">
+    <div class="card" id="card1"></div>
+    <div class="card" id="card2"></div>
+    <div class="card">
+      <button id="triggerModal">🎉 View Promotion</button>
+    </div>
+  </section>
 
-    <section class="tools">
-      <h2>Your Tools</h2>
-      <div class="card-row">
-        <div class="card">Platform A</div>
-        <div class="card">Platform B</div>
-      </div>
-    </section>
-
-    <section class="ads">
-      <h2>Promotions & Partners</h2>
-      <div class="ad-banner">[ Ad Banner ]</div>
-    </section>
-  </main>
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2>🎉 50% Off CRMConnect Pro</h2>
+      <p>Limited time offer. Upgrade your CRM game now.</p>
+      <button onclick="document.getElementById('modal').style.display='none'">Close</button>
+    </div>
+  </div>
 
   <footer>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">Notifications</a></li>
-        <li><a href="#">Ads</a></li>
-      </ul>
-    </nav>
+    &copy; 2025 KLYRO.AI — All rights reserved.
   </footer>
+
+  <script>
+    const adData = {
+      banners: [
+        "🚀 New Feature: WhatsApp Campaigns",
+        "📢 Boost Conversions with AutoMailer",
+        "🔥 LeadGenPro: 3 Months Free Trial"
+      ],
+      cards: [
+        { title: "Partner Offer", description: "Get 3 months free with LeadGenPro" },
+        { title: "Promo Deal", description: "Save 40% on CRMConnect Pro" }
+      ]
+    };
+
+    // Banner rotation
+    let bannerIndex = 0;
+    const bannerEl = document.getElementById('banner');
+    setInterval(() => {
+      bannerEl.textContent = adData.banners[bannerIndex];
+      bannerIndex = (bannerIndex + 1) % adData.banners.length;
+    }, 4000);
+
+    // Render card ads
+    document.getElementById('card1').innerHTML = `<strong>${adData.cards[0].title}</strong><br>${adData.cards[0].description}`;
+    document.getElementById('card2').innerHTML = `<strong>${adData.cards[1].title}</strong><br>${adData.cards[1].description}`;
+
+    // Modal trigger
+    document.getElementById('triggerModal').addEventListener('click', () => {
+      document.getElementById('modal').style.display = 'flex';
+    });
+
+    // Optional scroll trigger
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        document.getElementById('modal').style.display = 'flex';
+      }
+    });
+  </script>
+
 </body>
-  </html>
+</html>
