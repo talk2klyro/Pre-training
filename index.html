@@ -10,18 +10,39 @@
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       color: #333;
+      overflow-x: hidden;
     }
 
     header {
       text-align: center;
-      padding: 3rem 1rem;
+      padding: 4rem 1rem;
       background: linear-gradient(135deg, #6a11cb, #2575fc);
       color: white;
+      position: relative;
+      overflow: hidden;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin: 0 0 1rem;
+      animation: fadeInDown 1s ease forwards;
+      opacity: 0;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      animation: fadeInUp 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .categories {
@@ -29,23 +50,35 @@
       justify-content: center;
       gap: 1rem;
       flex-wrap: wrap;
-      padding: 2rem;
+      padding: 3rem 1rem;
     }
 
     .category {
       background: white;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 1rem 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 1.5rem 2rem;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: floatUp 0.8s ease forwards;
     }
+
+    .category:nth-child(1) { animation-delay: 0.3s; }
+    .category:nth-child(2) { animation-delay: 0.5s; }
+    .category:nth-child(3) { animation-delay: 0.7s; }
 
     .category:hover {
-      transform: translateY(-5px);
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
-    /* Hidden sections for category pages */
+    @keyframes floatUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Category pages */
     .category-page {
       display: none;
       padding: 2rem;
@@ -101,9 +134,9 @@
 
   <!-- Categories -->
   <section class="categories" id="categories">
-    <div class="category" data-category="learning">Learning Projects</div>
-    <div class="category" data-category="religious">Religious Tools</div>
-    <div class="category" data-category="utility">Utilities</div>
+    <div class="category" data-category="learning">📘 Learning Projects</div>
+    <div class="category" data-category="religious">🕌 Religious Tools</div>
+    <div class="category" data-category="utility">⚙️ Utilities</div>
   </section>
 
   <!-- Category Pages -->
@@ -156,7 +189,7 @@
       });
     });
 
-    // Function to arrange cards in stack
+    // Arrange stacked cards
     function arrangeStack(stack) {
       const cards = stack.querySelectorAll('.card');
       cards.forEach((card, i) => {
@@ -165,16 +198,16 @@
         card.style.opacity = `${1 - i * 0.1}`;
       });
 
-      // On click bring to front
-      cards.forEach((card, i) => {
-        card.addEventListener('click', e => {
-          e.preventDefault(); // stop direct link for animation
-          stack.appendChild(card); // move clicked card to end
+      // Click to bring front + open link
+      cards.forEach(card => {
+        card.onclick = e => {
+          e.preventDefault();
+          stack.appendChild(card);
           arrangeStack(stack);
           setTimeout(() => {
-            window.open(card.href, '_blank'); // open link after animation
+            window.open(card.href, '_blank');
           }, 400);
-        });
+        };
       });
     }
   </script>
