@@ -1,4 +1,4 @@
-<!DOCTYP<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -56,7 +56,7 @@
       position: relative;
       width: 300px;
       margin: 2rem auto;
-      height: 200px;
+      height: 220px;
     }
 
     .card {
@@ -72,14 +72,11 @@
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
-      transition: transform 0.4s ease, opacity 0.4s ease;
+      transition: transform 0.4s ease, opacity 0.4s ease, z-index 0.2s;
       cursor: pointer;
+      text-decoration: none;
+      color: #333;
     }
-
-    .card:nth-child(1) { transform: translateY(0) scale(1); z-index: 3; }
-    .card:nth-child(2) { transform: translateY(20px) scale(0.95); z-index: 2; opacity: 0.9; }
-    .card:nth-child(3) { transform: translateY(40px) scale(0.9); z-index: 1; opacity: 0.8; }
-    .card:nth-child(4) { transform: translateY(60px) scale(0.85); z-index: 0; opacity: 0.7; }
 
     .back-btn {
       margin-top: 2rem;
@@ -140,20 +137,46 @@
     const categoryPages = document.querySelectorAll('.category-page');
     const categoriesSection = document.getElementById('categories');
 
+    // Show category page
     categories.forEach(cat => {
       cat.addEventListener('click', () => {
         const id = cat.dataset.category;
         categoriesSection.style.display = 'none';
         document.getElementById(id).style.display = 'block';
+
+        arrangeStack(document.getElementById(id).querySelector('.stack'));
       });
     });
 
+    // Back button
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         categoryPages.forEach(page => page.style.display = 'none');
         categoriesSection.style.display = 'flex';
       });
     });
+
+    // Function to arrange cards in stack
+    function arrangeStack(stack) {
+      const cards = stack.querySelectorAll('.card');
+      cards.forEach((card, i) => {
+        card.style.zIndex = cards.length - i;
+        card.style.transform = `translateY(${i * 20}px) scale(${1 - i * 0.05})`;
+        card.style.opacity = `${1 - i * 0.1}`;
+      });
+
+      // On click bring to front
+      cards.forEach((card, i) => {
+        card.addEventListener('click', e => {
+          e.preventDefault(); // stop direct link for animation
+          stack.appendChild(card); // move clicked card to end
+          arrangeStack(stack);
+          setTimeout(() => {
+            window.open(card.href, '_blank'); // open link after animation
+          }, 400);
+        });
+      });
+    }
   </script>
 </body>
 </html>
