@@ -1,0 +1,470 @@
+<!doctype html>
+
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Klyro Hub — Ecosystem Flow (Pitch)</title>
+  <meta name="description" content="Interactive visual roadmap of the Klyro Hub ecosystem: Central Hub → Ads Marketplace → Admin Portals → Superadmin Dashboard → Future Expansion." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1020;               /* deep space */
+      --bg-alt: #0f1530;
+      --card: #121a35;             /* dark indigo */
+      --text: #e6e9f0;             /* near-white */
+      --muted: #9aa3b2;
+      --border: #1e2a52;           /* indigo edge */
+      --accent: #7c3aed;           /* violet */
+      --accent-2: #22d3ee;         /* cyan */
+      --accent-3: #60a5fa;         /* sky */
+      --shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --glow: 0 0 0 rgba(124, 58, 237, 0.0), 0 0 0 rgba(34, 211, 238, 0.0);
+      --arrow: #93a4c9;
+      --success: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --grid-gap: 26px;
+      --snap-gap: 28px;
+    }/* Light Theme */
+[data-theme="light"] {
+  --bg: #f6f7fb;
+  --bg-alt: #ffffff;
+  --card: #ffffff;
+  --text: #0b1020;
+  --muted: #5b6479;
+  --border: #e6e8f2;
+  --accent: #6d28d9;
+  --accent-2: #0891b2;
+  --accent-3: #2563eb;
+  --arrow: #94a3b8;
+  --shadow: 0 10px 30px rgba(16, 24, 40, 0.10);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(1200px 800px at 10% -10%, rgba(124, 58, 237, .18), transparent 40%),
+              radial-gradient(1000px 700px at 110% 10%, rgba(34, 211, 238, .18), transparent 40%),
+              var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  letter-spacing: 0.2px;
+}
+
+/* Header / Hero */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 46px 18px 28px;
+  background: linear-gradient(180deg, rgba(124,58,237,.18), rgba(34,211,238,.10) 50%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; display: grid; gap: 12px; align-items: center; }
+.brand { display: flex; align-items: center; gap: 12px; }
+<!doctype html>
+
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Klyro Hub — Ecosystem Flow (Pitch)</title>
+  <meta name="description" content="Interactive visual roadmap of the Klyro Hub ecosystem: Central Hub → Ads Marketplace → Admin Portals → Superadmin Dashboard → Future Expansion." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1020;               /* deep space */
+      --bg-alt: #0f1530;
+      --card: #121a35;             /* dark indigo */
+      --text: #e6e9f0;             /* near-white */
+      --muted: #9aa3b2;
+      --border: #1e2a52;           /* indigo edge */
+      --accent: #7c3aed;           /* violet */
+      --accent-2: #22d3ee;         /* cyan */
+      --accent-3: #60a5fa;         /* sky */
+      --shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --glow: 0 0 0 rgba(124, 58, 237, 0.0), 0 0 0 rgba(34, 211, 238, 0.0);
+      --arrow: #93a4c9;
+      --success: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --grid-gap: 26px;
+      --snap-gap: 28px;
+    }/* Light Theme */
+[data-theme="light"] {
+  --bg: #f6f7fb;
+  --bg-alt: #ffffff;
+  --card: #ffffff;
+  --text: #0b1020;
+  --muted: #5b6479;
+  --border: #e6e8f2;
+  --accent: #6d28d9;
+  --accent-2: #0891b2;
+  --accent-3: #2563eb;
+  --arrow: #94a3b8;
+  --shadow: 0 10px 30px rgba(16, 24, 40, 0.10);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(1200px 800px at 10% -10%, rgba(124, 58, 237, .18), transparent 40%),
+              radial-gradient(1000px 700px at 110% 10%, rgba(34, 211, 238, .18), transparent 40%),
+              var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  letter-spacing: 0.2px;
+}
+
+/* Header / Hero */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 46px 18px 28px;
+  background: linear-gradient(180deg, rgba(124,58,237,.18), rgba(34,211,238,.10) 50%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; display: grid; gap: 12px; align-items: center; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+  background: conic-gradient(from 210deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  box-shadow: 0 8px 24px rgba(124,58,237,.35), 0 0 0 4px rgba(124,58,237,.15);
+}
+.title { font-size: 1.35rem; font-weight: 800; letter-spacing: 0.2px; }
+.sub { color: var(--muted); font-size: .95rem; }
+
+.hero-actions { margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  appearance: none; border: 1px solid var(--border); background: var(--bg-alt);
+  color: var(--text); padding: 10px 14px; border-radius: 999px; font-weight: 600; font-size: 0.9rem;
+  display: inline-flex; align-items: center; gap: 10px; cursor: pointer; box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.22); border-color: rgba(124,58,237,.55); }
+.btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-color: transparent; }
+
+.toggle {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 10px; padding: 6px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-alt); cursor: pointer; box-shadow: var(--shadow);
+}
+.toggle .knob { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-3), var(--accent)); box-shadow: 0 0 0 3px rgba(124,58,237,.25); transform: translateX(0); transition: transform .25s ease; }
+[data-theme="dark"] .toggle .knob { transform: translateX(32px); }
+
+.links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+.links a { color: var(--muted); text-decoration: none; font-weight: 600; border-bottom: 1px dashed transparent; }
+.links a:hover { color: var(--text); border-bottom-color: var(--accent-2); }
+
+/* Flow Row */
+.flow-wrap { max-width: 1200px; margin: 0 auto; padding: 22px 18px 40px; }
+.flow-row {
+  display: flex; align-items: flex-start; gap: var(--snap-gap); overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory; padding: 10px 4px 16px; scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+.flow-row::-webkit-scrollbar { height: 8px; }
+.flow-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+
+.col { min-width: 260px; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+.card {
+  width: 100%; max-width: 280px; padding: 18px 16px; border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)), var(--card);
+  border: 1px solid var(--border); box-shadow: var(--shadow); text-align: center; cursor: pointer;
+  transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .3s ease;
+  position: relative; isolation: isolate;
+}
+.card:hover { transform: translateY(-5px); border-color: rgba(124,58,237,.55); box-shadow: 0 22px 60px rgba(20,20,60,.35); }
+.card::after { content: ""; position: absolute; inset: -2px; z-index: -1; border-radius: inherit; filter: blur(22px); opacity: .55;
+  background: radial-gradient(400px 120px at 50% -10%, rgba(124,58,237,.45), transparent 60%),
+              radial-gradient(300px 100px at 10% 120%, rgba(34,211,238,.35), transparent 60%);
+  transition: opacity .25s ease; }
+.card:hover::after { opacity: 1; }
+
+.icon {
+  width: 46px; height: 46px; display: grid; place-items: center; margin: 0 auto 8px;
+  border-radius: 12px; background: linear-gradient(135deg, rgba(124,58,237,.25), rgba(34,211,238,.25));
+  border: 1px solid rgba(124,58,237,.35);
+}
+.icon svg { width: 26px; height: 26px; }
+
+.card h2 { margin: 6px 0 4px; font-size: 1rem; letter-spacing: .2px; }
+.card p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+.mini { max-width: 230px; padding: 10px 12px; border-radius: var(--radius-sm); }
+.mini .badge { display: inline-block; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .3px; margin-bottom: 6px; }
+.b-accent { background: rgba(124,58,237,.14); color: #c4b5fd; border: 1px solid rgba(124,58,237,.35); }
+.b-cyan { background: rgba(34,211,238,.14); color: #a5f3fc; border: 1px solid rgba(34,211,238,.35); }
+.b-sky  { background: rgba(96,165,250,.14); color: #bfdbfe; border: 1px solid rgba(96,165,250,.35); }
+
+.stack { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+.arrow-right { width: 40px; height: 40px; color: var(--arrow); display: flex; align-items: center; justify-content: center; margin-top: 48px; flex-shrink: 0; opacity: .85; }
+.arrow-right svg { width: 100%; height: 100%; }
+
+/* Animations */
+.fade-up { opacity: 0; transform: translateY(12px); animation: fadeUp .5s forwards; }
+.d1 { animation-delay: .06s; } .d2 { animation-delay: .12s; } .d3 { animation-delay: .18s; } .d4 { animation-delay: .24s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+.pulse-arrow { animation: pulse 1.6s infinite; }
+@keyframes pulse { 0%,100%{ transform: scale(1); opacity: .85 } 50%{ transform: scale(1.08); opacity: 1 } }
+
+/* Footer */
+footer { border-top: 1px solid var(--border); padding: 28px 18px; color: var(--muted); }
+footer .inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+footer nav { margin-left: auto; display: flex; gap: 14px; flex-wrap: wrap; }
+footer a { color: var(--muted); text-decoration: none; font-weight: 600; }
+footer a:hover { color: var(--text); }
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  .col { min-width: 86%; }
+  .card { max-width: 100%; }
+  .mini { max-width: 100%; }
+}
+
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Klyro Hub — Ecosystem Flow</div>
+          <div class="sub">From Central Hub → Ads Marketplace → Admin Portals → Superadmin Dashboard → Future Expansion</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn primary" id="ctaExplore" title="Jump to flow">View Interactive Flow</button>
+        <a class="btn" href="index.html">Home</a>
+        <a class="btn" href="ads.html">Promotions</a>
+        <a class="btn" href="hub-combined.html">Hub</a>
+        <a class="btn" href="superadmin-dashboard.html">Superadmin</a>
+        <div class="toggle" id="themeToggle" aria-label="Toggle theme" role="switch" aria-checked="true">
+          <span class="knob" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="links">
+        <a href="#flow" title="Skip to flow">Skip to flow ↓</a>
+        <a href="#future" title="Jump to roadmap">See Future Modules →</a>
+      </div>
+    </div>
+  </section>  <!-- FLOW -->  <main class="flow-wrap" id="flow">
+    <div class="flow-row" role="region" aria-label="Klyro product flow" tabindex="0"><!-- Central Hub -->
+  <div class="col">
+    <article class="card fade-up d1" tabindex="0" role="button" aria-label="Central Hub">
+      <div class="icon" aria-hidden="true">
+        <!-- Globe / Home Icon -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"></path>
+        </svg>
+      </div>
+      <h2>Central Hub</h2>
+      <p>Unified entry to all platforms, search, and onboarding.</p>
+    </article>
+    <div class="stack">
+      <article class="card mini b-accent fade-up d2">
+        <div class="badge">Core</div>
+        <div>Categories & Global Search</div>
+      </article>
+      <article class="card mini b-cyan fade-up d3">
+        <div class="badge">Auth</div>
+        <div>Sign in (Visitor → Admin → Superadmin)</div>
+      </article>
+      <article class="card mini b-sky fade-up d4">
+        <div class="badge">UX</div>
+        <div>Responsive grid & stacked cards</div>
+      </article>
+    </div>
+  </div>
+
+  <div class="arrow-right pulse-arrow" aria-hidden="true">
+    <svg viewBox="0 0 32 24"><path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Ads Marketplace -->
+  <div class="col">
+    <article class="card fade-up d1" tabindex="0" role="button" aria-label="Ads Marketplace">
+      <div class="icon" aria-hidden="true">
+        <!-- Megaphone -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11l14-5v12L3 13v-2z"/>
+          <path d="M17 6v12"/>
+          <path d="M3 16s1 3 4 3 4-3 4-3"/>
+        </svg>
+      </div>
+      <h2>Ads Marketplace</h2>
+      <p>Outsider ads, featured slots, automated commission split.</p>
+    </article>
+    <div class="stack">
+      <article class="card mini b-accent fade-up d2">
+        <div class="badge">48% Klyro</div>
+        <div>Commission engine on every ad</div>
+      </article>
+      <article class="card mini b-cyan fade-up d3">
+        <div class="badge">Boost</div>
+        <div>Premium placements & badges</div>
+      </article>
+      <article class="card mini b-sky fade-up d4">
+        <div class="badge">Stripe</div>
+        <div>Pay-in & settlement logs</div>
+      </article>
+    </div>
+  </div>
+
+  <div class="arrow-right pulse-arrow" aria-hidden="true">
+    <svg viewBox="0 0 32 24"><path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Admin Portals -->
+  <div class="col">
+    <article class="card fade-up d1" tabindex="0" role="button" aria-label="Admin Portals">
+      <div class="icon" aria-hidden="true">
+        <!-- Briefcase / user -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 7h18v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7z"/>
+          <path d="M16 7V6a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v1"/>
+        </svg>
+      </div>
+      <h2>Admin Portals</h2>
+      <p>Category owners manage platforms, ads, and earnings.</p>
+    </article>
+    <div class="stack">
+      <article class="card mini b-accent fade-up d2">
+        <div class="badge">Control</div>
+        <div>Approve ads & content</div>
+      </article>
+      <article class="card mini b-cyan fade-up d3">
+        <div class="badge">Reports</div>
+        <div>Revenue & performance</div>
+      </article>
+      <article class="card mini b-sky fade-up d4">
+        <div class="badge">Limits</div>
+        <div>Per-category permissions</div>
+      </article>
+    </div>
+  </div>
+
+  <div class="arrow-right pulse-arrow" aria-hidden="true">
+    <svg viewBox="0 0 32 24"><path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Superadmin Dashboard -->
+  <div class="col">
+    <article class="card fade-up d1" tabindex="0" role="button" aria-label="Superadmin Dashboard">
+      <div class="icon" aria-hidden="true">
+        <!-- Shield -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7 4v5c0 5-3.5 9-7 9s-7-4-7-9V7l7-4z"/>
+        </svg>
+      </div>
+      <h2>Superadmin Dashboard</h2>
+      <p>Approve admins, manage categories, oversee finances.</p>
+    </article>
+    <div class="stack">
+      <article class="card mini b-accent fade-up d2">
+        <div class="badge">Access</div>
+        <div>Role assignment & bans</div>
+      </article>
+      <article class="card mini b-cyan fade-up d3">
+        <div class="badge">Insights</div>
+        <div>Commission & payouts</div>
+      </article>
+      <article class="card mini b-sky fade-up d4">
+        <div class="badge">Scale</div>
+        <div>Add features & modules</div>
+      </article>
+    </div>
+  </div>
+
+  <div class="arrow-right pulse-arrow" aria-hidden="true">
+    <svg viewBox="0 0 32 24"><path d="M2 12h24M20 4l8 8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Future Expansion -->
+  <div class="col" id="future">
+    <article class="card fade-up d1" tabindex="0" role="button" aria-label="Future Expansion">
+      <div class="icon" aria-hidden="true">
+        <!-- Rocket -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 15l-2 6 6-2 10-10a3 3 0 10-4-4L5 15z"/>
+          <path d="M14 6l4 4"/>
+        </svg>
+      </div>
+      <h2>Future Expansion</h2>
+      <p>Jobs board, events, digital products, micro‑communities.</p>
+    </article>
+    <div class="stack">
+      <article class="card mini b-accent fade-up d2">
+        <div class="badge">Jobs</div>
+        <div>Paid listings & services</div>
+      </article>
+      <article class="card mini b-cyan fade-up d3">
+        <div class="badge">Events</div>
+        <div>Tickets & attendance</div>
+      </article>
+      <article class="card mini b-sky fade-up d4">
+        <div class="badge">Products</div>
+        <div>eBooks, templates, tools</div>
+      </article>
+    </div>
+  </div>
+
+</div>
+
+  </main>  <!-- FOOTER -->  <footer>
+    <div class="inner">
+      <div>© 2025 Klyro Hub — Interactive pitch page.</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="ads.html">Promotions</a>
+        <a href="hub-combined.html">Hub</a>
+        <a href="superadmin-dashboard.html">Superadmin</a>
+      </nav>
+    </div>
+  </footer>  <script>
+    // Theme toggle
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('klyro-theme');
+    if (saved) root.setAttribute('data-theme', saved);
+
+    toggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('klyro-theme', next);
+      toggle.setAttribute('aria-checked', String(next === 'dark'));
+    });
+
+    // Smooth scroll to flow
+    document.getElementById('ctaExplore').addEventListener('click', () => {
+      document.getElementById('flow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Keyboard accessibility: activate cards with Enter
+    document.querySelectorAll('.card[role="button"]').forEach(card => {
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+      card.addEventListener('click', () => {
+        const title = card.querySelector('h2')?.textContent || 'Module';
+        alert(`${title} — demo view. In production this would deep-link into the real page or open a modal.`);
+      });
+    });
+  </script></body>
+</html>
