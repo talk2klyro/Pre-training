@@ -3,235 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hijab Store 🌸</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Interactive Avatar</title>
   <style>
-    /* Buttons & Emojis */
-    .cta-button {
-      background-color: #ff69b4;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .social-buttons a, .whatsapp-button {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      border-radius: 50px;
-      background-color: #f0f0f0;
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .social-buttons a:hover, .whatsapp-button:hover {
-      background-color: #ff69b4;
-      color: white;
-    }
-
-    /* 3D Character container */
-    #threejs-character {
-      width: 100%;
-      height: 450px;
-      display: block;
-      margin: 0 auto;
-      border-bottom: 2px solid #ff69b4;
-      position: relative;
-    }
-
-    /* Floating chat box above character */
-    #character-chat {
-      position: absolute;
-      bottom: 460px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: white;
-      border: 2px solid #ff69b4;
-      border-radius: 12px;
-      padding: 12px;
-      display: none;
-      width: 250px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      font-family: sans-serif;
-      z-index: 1000;
-    }
-
-    #character-chat img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-bottom: 6px;
-    }
-
-    #character-chat p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    #character-chat a {
-      display: inline-block;
-      margin-top: 8px;
-      background-color: #ff69b4;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    #character-chat a:hover {
-      background-color: #ff1493;
-    }
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
   </style>
 </head>
 <body>
+  <!-- The Three.js script will attach the 3D canvas here -->
 
-  <!-- HEADER -->
-  <header>
-    <nav>
-      <span class="avatar">🤗</span>
-      <a href="index.html" class="logo">HijabStore</a>
-      <ul class="nav-links">
-        <li>🏠 <a href="index.html">Home</a></li>
-        <li>🛍️ <a href="shop.html">Shop</a></li>
-        <li>ℹ️ <a href="about.html">About</a></li>
-        <li>📞 <a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="social-buttons">
-        <a href="https://instagram.com/khadijamuhammadaliyu6?igsh=ZGUzMzM3NWJiOQ==" target="_blank">📸 Instagram</a>
-        <a href="https://www.tiktok.com/@babyhadiza46?_t=ZS-8zgyGuoSfD8&_r=1" target="_blank">🎵 TikTok</a>
-        <a href="https://wa.me/2348147616483" target="_blank" class="whatsapp-button">📱 Click to WhatsApp</a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- 3D Interactive Character Section -->
-  <div id="threejs-character"></div>
-
-  <!-- Character Chat Bubble -->
-  <div id="character-chat">
-    <img src="https://i.postimg.cc/hjMN2sF5/20250913-140151-0000.png" alt="Avatar">
-    <p>Hi there! 👋 Need help picking your perfect hijab?</p>
-    <a href="https://wa.me/2348147616483" target="_blank">📱 Chat Now</a>
-  </div>
-
-  <!-- HERO SECTION -->
-  <section id="hero">
-    <h1>Discover Playful & Elegant Hijabs 🌸✨</h1>
-    <p>Shop our exclusive collection today! 💖</p>
-    <a href="shop.html" class="cta-button">🛍️ Shop Now</a>
-  </section>
-
-  <!-- FEATURED PRODUCTS -->
-  <section id="featured-products">
-    <h2>Featured Hijabs 🌟</h2>
-    <div class="product-grid" id="product-grid">
-      <!-- Products loaded dynamically from js/main.js -->
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 HijabStore. All rights reserved. 💕</p>
-    <div class="social-buttons">
-      <a href="https://instagram.com/khadijamuhammadaliyu6?igsh=ZGUzMzM3NWJiOQ==" target="_blank">📸 Instagram</a>
-      <a href="https://www.tiktok.com/@babyhadiza46?_t=ZS-8zgyGuoSfD8&_r=1" target="_blank">🎵 TikTok</a>
-      <a href="https://wa.me/2348147616483" target="_blank" class="whatsapp-button">📱 WhatsApp</a>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
-
-  <!-- Three.js 3D Character Embed -->
+  <!-- Three.js and Avatar Script -->
   <script type="module">
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
     import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
-    const container = document.getElementById('threejs-character');
-    const chatBox = document.getElementById('character-chat');
-
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enablePan = false;
-    controls.enableZoom = false;
-    controls.target.set(0, 1.7, 0);
 
     const loader = new GLTFLoader();
-    let character, mixer, actions = {};
-
-    loader.load('Stylized_Interactive_Male_Character.glb', function(gltf) {
+    let character, mixer;
+    loader.load('Interactive_Virtual_Host_Male_Character.glb', function(gltf) {
       character = gltf.scene;
-      character.position.set(0,0,0);
-      character.scale.set(1,1,1);
       scene.add(character);
-
       mixer = new THREE.AnimationMixer(character);
       gltf.animations.forEach(clip => {
-        actions[clip.name] = mixer.clipAction(clip);
-        if(clip.name.startsWith('idle')) actions[clip.name].play();
+        mixer.clipAction(clip).play();
       });
     });
 
     camera.position.set(0, 1.7, 3);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1));
+    const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+    scene.add(light);
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    function triggerAnimation(name) {
-      if(actions[name]) actions[name].reset().play();
-    }
-
     window.addEventListener('mousemove', (event) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      if(!character) return;
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(character, true);
-      if(intersects.length > 0) {
-        triggerAnimation('wave_right_hand');
-        chatBox.style.display = 'block'; // show message on hover
-      } else {
-        chatBox.style.display = 'none';
+      if (intersects.length > 0) {
+        mixer.clipAction('wave_right_hand').reset().play();
       }
     });
 
     window.addEventListener('click', (event) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-      if(!character) return;
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(character, true);
-      if(intersects.length > 0) triggerAnimation('smile_friendly');
+      if (intersects.length > 0) {
+        mixer.clipAction('smile_friendly').reset().play();
+      }
+    });
+
+    window.addEventListener('keydown', (event) => {
+      switch(event.key) {
+        case 'T': mixer.clipAction('thumbs_up').reset().play(); break;
+        case 'N': mixer.clipAction('nod_head').reset().play(); break;
+        case 'S': mixer.clipAction('surprised_face').reset().play(); break;
+        case 'W': mixer.clipAction('wink_left_eye').reset().play(); break;
+      }
     });
 
     function animate() {
       requestAnimationFrame(animate);
-      if(mixer) mixer.update(0.016);
+      if (mixer) mixer.update(0.016);
       renderer.render(scene, camera);
     }
-
     animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    });
   </script>
 </body>
 </html>
