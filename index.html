@@ -3,16 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Avatar</title>
+  <title>Smooth Interactive Virtual Host</title>
   <style>
     body { margin: 0; overflow: hidden; }
     canvas { display: block; }
   </style>
 </head>
 <body>
-  <!-- The Three.js script will attach the 3D canvas here -->
-
-  <!-- Three.js and Avatar Script -->
   <script type="module">
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
     import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
@@ -26,58 +23,103 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
 
+    const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+    scene.add(light);
+    camera.position.set(0, 1.7, 3);
+
     const loader = new GLTFLoader();
-    let character, mixer;
+    let character, mixer, clock = new THREE.Clock();
+    let currentAction;
+
     loader.load('Interactive_Virtual_Host_Male_Character.glb', function(gltf) {
       character = gltf.scene;
       scene.add(character);
       mixer = new THREE.AnimationMixer(character);
-      gltf.animations.forEach(clip => {
-        mixer.clipAction(clip).play();
-      });
-    });
 
-    camera.position.set(0, 1.7, 3);
-    const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
-    scene.add(light);
+      // Play all idle animations
+      const idleClips = gltf.animations.filter(clip => clip.name.includes('idle'));
+      idleClips.forEach(clip => {
+        const action = mixer.clipAction(clip);
+        action.play();
+        action.fadeIn(0.5);
+      });
+
+      // Start auto-animation sequence with blending
+      autoAnimate(gltf.animations);
+    });
 
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    window.addEventListener('mousemove', (event) => {
+    // Function to smoothly play a clip
+    function playSmooth(clipName) {
+      if (!mixer) return;
+      const clip = mixer._actions.find(a => a._clip.name === clipName) || null;
+      const newClip = mixer._root.animations ? mixer._root.animations.find(c => c.name === clipName) : null;
+      if (!newClip) return;
+
+      const action = mixer.clipAction(newClip);
+      if (currentAction && currentAction !== action) {
+        currentAction.fadeOut(0.5);
+      }
+      action.reset().fadeIn(0.5).play();
+      currentAction = action;
+    }
+
+    // Hover wave
+    window.addEventListener('mousemove', event => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(character, true);
-      if (intersects.length > 0) {
-        mixer.clipAction('wave_right_hand').reset().play();
-      }
+      if (intersects.length > 0) playSmooth('wave_right_hand');
     });
 
-    window.addEventListener('click', (event) => {
+    // Click smile
+    window.addEventListener('click', event => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObject(character, true);
-      if (intersects.length > 0) {
-        mixer.clipAction('smile_friendly').reset().play();
-      }
+      if (intersects.length > 0) playSmooth('smile_friendly');
     });
 
-    window.addEventListener('keydown', (event) => {
+    // Keyboard gestures
+    window.addEventListener('keydown', event => {
       switch(event.key) {
-        case 'T': mixer.clipAction('thumbs_up').reset().play(); break;
-        case 'N': mixer.clipAction('nod_head').reset().play(); break;
-        case 'S': mixer.clipAction('surprised_face').reset().play(); break;
-        case 'W': mixer.clipAction('wink_left_eye').reset().play(); break;
+        case 'T': playSmooth('thumbs_up'); break;
+        case 'N': playSmooth('nod_head'); break;
+        case 'S': playSmooth('surprised_face'); break;
+        case 'W': playSmooth('wink_left_eye'); break;
       }
     });
+
+    // Auto-animation sequence with blending
+    function autoAnimate(animations) {
+      if (!mixer) return;
+      const sequence = [
+        'wave_right_hand',
+        'smile_friendly',
+        'thumbs_up',
+        'nod_head',
+        'surprised_face',
+        'wink_left_eye'
+      ];
+      let index = 0;
+      setInterval(() => {
+        const clipName = sequence[index % sequence.length];
+        playSmooth(clipName);
+        index++;
+      }, 5000); // 5 seconds per action
+    }
 
     function animate() {
       requestAnimationFrame(animate);
-      if (mixer) mixer.update(0.016);
+      const delta = clock.getDelta();
+      if (mixer) mixer.update(delta);
       renderer.render(scene, camera);
     }
+
     animate();
   </script>
 </body>
