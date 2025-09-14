@@ -1,7 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Beauty & Glamour — Hair & Makeup | Book Now</title>
   <meta name="description" content="Professional hair & makeup services for weddings, parties, photoshoots. Book instantly via WhatsApp or secure deposit via Flutterwave." />
@@ -12,7 +12,7 @@
   <meta property="og:image" content="https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Performance hints -->
+  <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
   <link rel="preconnect" href="https://flutterwave.com" crossorigin />
   <link rel="preconnect" href="https://wa.me" crossorigin />
@@ -21,7 +21,7 @@
   <link rel="preload" href="css/style.css" as="style" />
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Favicon (replace with your icon) -->
+  <!-- Favicon -->
   <link rel="icon" href="assets/images/favicon.png" />
 
   <!-- LocalBusiness structured data -->
@@ -46,58 +46,65 @@
   </script>
 
   <style>
-    /* Minimal critical CSS inlined for faster first paint (keeps hero readable while external CSS loads) */
     :root { --brand:#e91e63; --accent:#ff4081; --muted:#666; --bg:#fff; --maxw:1200px; }
     html,body{height:100%;margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;}
-    .hero{display:grid;place-items:center;padding:40px 20px;text-align:center;background:linear-gradient(180deg,#fff,#fff);border-bottom:1px solid #f0f0f0}
-    .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);color:var(--brand);margin:0 0 10px}
-    .hero p{margin:0 0 18px;color:var(--muted)}
-    .btn{display:inline-block;padding:10px 18px;border-radius:999px;text-decoration:none;background:var(--brand);color:#fff;font-weight:600}
-    @media(min-width:900px){ .hero{padding:70px 20px} }
+    .hero{display:grid;place-items:center;padding:40px 20px;text-align:center;background:linear-gradient(180deg,#fff,#fff);border-bottom:1px solid #f0f0f0;}
+    .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);color:var(--brand);margin:0 0 10px;}
+    .hero p{margin:0 0 18px;color:var(--muted);}
+    .btn{display:inline-block;padding:10px 18px;border-radius:999px;text-decoration:none;background:var(--brand);color:#fff;font-weight:600;}
+    .btn.accent{background:var(--accent);}
+    .section{padding:50px 20px;}
+    h2{color:var(--brand);margin-bottom:20px;text-align:center;}
+    .bento-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+    .testimonial-slider,.snap-gallery{display:flex;overflow-x:auto;gap:12px;}
+    .testimonial-slider div,.snap-gallery div{flex:0 0 auto;}
+    .cta-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:900px;margin:0 auto;}
+    @media(min-width:768px){.cta-grid{grid-template-columns:1fr 1fr;}}
+    .whatsapp-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:14px;border-radius:50%;font-size:24px;text-decoration:none;z-index:999;box-shadow:0 4px 8px rgba(0,0,0,0.2);}
   </style>
 </head>
 <body>
 
-  <!-- header injected by main.js (falls back to HTML below if JS disabled) -->
-  <div id="header" role="banner">
-    <noscript>
-      <nav style="padding:12px 20px;background:#fff;border-bottom:1px solid #eee">
-        <a href="index.html" style="text-decoration:none;color:#e91e63;font-weight:700;font-size:18px">💄Beauty & Glamour</a>
-        <span style="margin-left:12px;">(enable JS for full nav)</span>
-      </nav>
-    </noscript>
-  </div>
+  <!-- Header -->
+  <div id="header" role="banner"></div>
+  <noscript>
+    <nav style="padding:12px 20px;background:#fff;border-bottom:1px solid #eee">
+      <a href="./index.html" style="text-decoration:none;color:#e91e63;font-weight:700;font-size:18px">💄Beauty & Glamour</a>
+      <span style="margin-left:12px;">(enable JS for full nav)</span>
+    </nav>
+  </noscript>
 
   <main id="main" role="main">
+
     <!-- HERO -->
     <section class="hero" aria-label="Welcome">
       <div class="hero-inner" style="max-width:var(--maxw);width:100%;">
         <h1>Beauty & Glamour</h1>
         <p>Professional hair & makeup for weddings, parties, photoshoots — mobile & in-salon services.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
-          <a class="btn" href="contact.html">Book Now</a>
-          <a class="btn" href="portfolio.html" style="background:var(--accent)">See Portfolio</a>
+          <a class="btn" href="./contact.html">Book Now</a>
+          <a class="btn accent" href="./portfolio.html">See Portfolio</a>
         </div>
       </div>
     </section>
 
-    <!-- Bento Services -->
+    <!-- Services Bento -->
     <section id="services-bento" class="section" aria-labelledby="services-heading">
       <h2 id="services-heading">Our Services</h2>
       <div class="bento-grid" id="services-bento-grid">
-        <!-- Populated from data/services.json (JSON-driven) -->
+        <!-- Populated via js/dataLoader.js -->
       </div>
       <div style="text-align:center;margin-top:18px;">
-        <a href="services.html" class="btn">View All Services</a>
+        <a href="./services.html" class="btn">View All Services</a>
       </div>
     </section>
 
-    <!-- Portfolio Preview (small snap) -->
+    <!-- Portfolio Preview -->
     <section id="portfolio-preview" class="section" aria-labelledby="portfolio-heading">
       <h2 id="portfolio-heading">Selected Work</h2>
       <div class="snap-gallery small" id="portfolio-preview-gallery" aria-hidden="false"></div>
       <div style="text-align:center;margin-top:12px;">
-        <a href="portfolio.html" class="btn">View Full Portfolio</a>
+        <a href="./portfolio.html" class="btn">View Full Portfolio</a>
       </div>
     </section>
 
@@ -106,40 +113,40 @@
       <h2 id="testimonials-heading">Happy Clients</h2>
       <div class="testimonial-slider" id="testimonial-preview" aria-live="polite"></div>
       <div style="text-align:center;margin-top:12px;">
-        <a href="testimonials.html" class="btn">Read More</a>
+        <a href="./testimonials.html" class="btn">Read More</a>
       </div>
     </section>
 
-    <!-- WhatsApp leader + Quick pay -->
+    <!-- CTA: WhatsApp + Flutterwave -->
     <section id="cta-area" class="section" aria-label="Contact and Payment">
       <div class="cta-grid">
         <div>
           <h3>Chat & Book on WhatsApp</h3>
           <p>Tap to start a direct conversation and confirm your slot.</p>
-          <a class="btn whatsapp-cta" href="https://wa.me/2349012728201?text=Hi%20I%27d%20like%20to%20book%20a%20service!" target="_blank" rel="noopener noreferrer">📲 Chat on WhatsApp</a>
+          <a class="btn whatsapp-cta" href="https://wa.me/2349012728201?text=Hi%20I'd%20like%20to%20book%20a%20service!" target="_blank" rel="noopener noreferrer">📲 Chat on WhatsApp</a>
         </div>
-
         <div>
           <h3>Secure a slot — pay deposit</h3>
           <p>Make a quick deposit to confirm. Powered by Flutterwave.</p>
-          <div class="payment-buttons">
-            <a class="pay-btn" href="https://flutterwave.com/pay/7dvrq9hz4idf" target="_blank" rel="noopener noreferrer">💳 Deposit 1</a>
-            <a class="pay-btn" href="https://flutterwave.com/pay/2nmx3028pua2" target="_blank" rel="noopener noreferrer">💳 Deposit 2</a>
-            <a class="pay-btn" href="https://flutterwave.com/pay/zuaa436p8eed" target="_blank" rel="noopener noreferrer">💳 Deposit 3</a>
-            <a class="pay-btn" href="https://flutterwave.com/pay/w5fweb1sndw4" target="_blank" rel="noopener noreferrer">💳 Deposit 4</a>
+          <div class="payment-buttons" style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn" href="https://flutterwave.com/pay/7dvrq9hz4idf" target="_blank" rel="noopener noreferrer">💳 Deposit 1</a>
+            <a class="btn" href="https://flutterwave.com/pay/2nmx3028pua2" target="_blank" rel="noopener noreferrer">💳 Deposit 2</a>
+            <a class="btn" href="https://flutterwave.com/pay/zuaa436p8eed" target="_blank" rel="noopener noreferrer">💳 Deposit 3</a>
+            <a class="btn" href="https://flutterwave.com/pay/w5fweb1sndw4" target="_blank" rel="noopener noreferrer">💳 Deposit 4</a>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- footer injected -->
+  <!-- Footer -->
   <div id="footer" role="contentinfo"></div>
 
-  <!-- Floating WhatsApp leader (always visible) -->
-  <a class="whatsapp-float" href="https://wa.me/2349012728201?text=Hi%20I%27m%20interested%20in%20booking%20a%20service!" target="_blank" aria-label="Chat on WhatsApp">📲</a>
+  <!-- Floating WhatsApp leader -->
+  <a class="whatsapp-float" href="https://wa.me/2349012728201?text=Hi%20I'm%20interested%20in%20booking%20a%20service!" target="_blank" aria-label="Chat on WhatsApp">📲</a>
 
-  <!-- Scripts: main.js must come first (injects header/footer) -->
+  <!-- Scripts -->
   <script defer src="js/main.js"></script>
   <script defer src="js/dataLoader.js"></script>
   <script defer src="js/gallery.js"></script>
@@ -147,10 +154,9 @@
   <script defer src="js/booking.js"></script>
 
   <noscript>
-    <style>
-      .whatsapp-float{display:none}
-    </style>
+    <style>.whatsapp-float{display:none}</style>
     <div style="padding:12px;background:#fffbf7;color:#333;text-align:center;border-top:1px solid #eee">This site works best with JavaScript enabled — please turn it on for full experience.</div>
   </noscript>
+
 </body>
-</html>
+  </html>
