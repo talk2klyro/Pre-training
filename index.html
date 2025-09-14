@@ -1,119 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Virtual Host</title>
-    <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern UI</title>
+  <style>
+    /* --- Global Reset --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f6fa; color: #333; }
+
+    /* --- Dropdown Menu --- */
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem;
+      background: #2c3e50;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .dropbtn {
+      background: #3498db;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 10px 14px;
+      color: #333;
+      text-decoration: none;
+    }
+    .dropdown-content a:hover { background: #f1f1f1; }
+    .dropdown:hover .dropdown-content { display: block; }
+
+    /* --- Bento Layout --- */
+    .bento-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+    .bento-item {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .bento-large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    /* --- Snap Gallery --- */
+    .gallery-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+    }
+    .gallery::-webkit-scrollbar { display: none; }
+    .gallery-item {
+      flex: 0 0 100%;
+      height: 200px;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+    }
+    .gallery-item:nth-child(1) { background: #e74c3c; }
+    .gallery-item:nth-child(2) { background: #9b59b6; }
+    .gallery-item:nth-child(3) { background: #27ae60; }
+    .gallery-item:nth-child(4) { background: #f39c12; }
+
+    /* --- Progress Bar --- */
+    .progress-bar {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      height: 6px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      width: 0;
+      background: white;
+      transition: width 0.25s ease;
+    }
+  </style>
 </head>
 <body>
 
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+  <!-- Navbar with Dropdown -->
+  <div class="navbar">
+    <div class="dropdown">
+      <button class="dropbtn">Menu</button>
+      <div class="dropdown-content">
+        <a href="#">Home</a>
+        <a href="#">Gallery</a>
+        <a href="#">About</a>
+      </div>
+    </div>
+  </div>
 
-// Load avatar metadata
-let avatarData;
-fetch('avatar.json')
-  .then(response => response.json())
-  .then(data => { avatarData = data; init(); });
+  <!-- Bento Layout -->
+  <div class="bento-container">
+    <div class="bento-item bento-large">
+      <h2>Snap Gallery</h2>
+      <div class="gallery-wrapper">
+        <div class="gallery" id="gallery">
+          <div class="gallery-item">Slide 1</div>
+          <div class="gallery-item">Slide 2</div>
+          <div class="gallery-item">Slide 3</div>
+          <div class="gallery-item">Slide 4</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+    </div>
+    <div class="bento-item"><h3>Card 1</h3><p>Some info here.</p></div>
+    <div class="bento-item"><h3>Card 2</h3><p>Extra content.</p></div>
+    <div class="bento-item"><h3>Card 3</h3><p>More details.</p></div>
+  </div>
 
-let scene, camera, renderer, controls, character, mixer, raycaster, mouse;
-const idleAnimations = [];
+  <script>
+    // Snap Gallery Progress
+    const gallery = document.getElementById("gallery");
+    const progress = document.getElementById("progress");
 
-function init() {
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    renderer = new THREE.WebGLRenderer({antialias:true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    controls = new OrbitControls(camera, renderer.domElement);
-
-    const light = new THREE.HemisphereLight(0xffffff,0x444444,1);
-    scene.add(light);
-
-    raycaster = new THREE.Raycaster();
-    mouse = new THREE.Vector2();
-
-    const loader = new GLTFLoader();
-    loader.load('Interactive_Virtual_Host_Male_Character.glb', function(gltf){
-        character = gltf.scene;
-        scene.add(character);
-        mixer = new THREE.AnimationMixer(character);
-
-        // Play all idle animations automatically
-        gltf.animations.forEach(clip => {
-            const action = mixer.clipAction(clip);
-            if (clip.name.startsWith('idle')) {
-                action.play();
-                idleAnimations.push(action);
-            }
-        });
-
-        // Keep other animations ready for triggers
-        gltf.animations.forEach(clip => {
-            if (!clip.name.startsWith('idle')) {
-                mixer.clipAction(clip); // prepare action, will trigger later
-            }
-        });
+    gallery.addEventListener("scroll", () => {
+      const scrollAmount = gallery.scrollLeft;
+      const totalWidth = gallery.scrollWidth - gallery.clientWidth;
+      const scrollPercent = (scrollAmount / totalWidth) * 100;
+      progress.style.width = scrollPercent + "%";
     });
-
-    camera.position.set(0, avatarData.orientation_scale.height, 3);
-
-    // Event Listeners
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('click', onClick);
-    window.addEventListener('keydown', onKeyDown);
-
-    animate();
-}
-
-// Mouse hover animation
-function onMouseMove(event) {
-    if (!character) return;
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(character, true);
-    if (intersects.length > 0) {
-        mixer.clipAction('wave_right_hand')?.reset().play();
-    }
-}
-
-// Mouse click animation
-function onClick(event) {
-    if (!character) return;
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(character, true);
-    if (intersects.length > 0) {
-        mixer.clipAction('smile_friendly')?.reset().play();
-    }
-}
-
-// Keyboard shortcuts
-function onKeyDown(event) {
-    if (!mixer) return;
-    switch(event.key){
-        case 'T': mixer.clipAction('thumbs_up')?.reset().play(); break;
-        case 'N': mixer.clipAction('nod_head')?.reset().play(); break;
-        case 'S': mixer.clipAction('surprised_face')?.reset().play(); break;
-        case 'W': mixer.clipAction('wink_left_eye')?.reset().play(); break;
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    if (mixer) mixer.update(0.016);
-    renderer.render(scene, camera);
-}
-</script>
+  </script>
 
 </body>
-  </html>
+</html>
