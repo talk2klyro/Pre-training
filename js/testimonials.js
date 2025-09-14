@@ -1,35 +1,47 @@
-/* testimonials.js
-   Full page testimonials: reads data/testimonials.json and creates a slider with controls.
-*/
-async function loadTestimonials(url = 'data/testimonials.json', containerSelector = '#testimonial-slider'){
-  const res = await fetch(url);
-  const data = await res.json();
-  const container = document.querySelector(containerSelector);
-  if (!container) return;
-  container.innerHTML = data.map((t, idx) => `
-    <div class="testimonial-card" role="article" data-index="${idx}">
-      <p class="testimonial-text">“${t.feedback}”</p>
-      <div class="testimonial-author">${t.name}</div>
-      <div class="stars">${'⭐'.repeat(t.rating)}</div>
+// js/testimonials.js
+// Handles testimonial slider functionality
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+  const slider = document.getElementById('testimonial-slider') || document.getElementById('testimonial-preview');
+  if (!slider) return;
+
+  // Fetch testimonials JSON
+  async function fetchTestimonials() {
+    try {
+      const response = await fetch('data/testimonials.json');
+      if (!response.ok) throw new Error('Failed to fetch testimonials.json');
+      return await response.json();
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
+  }
+
+  const testimonials = await fetchTestimonials();
+
+  // Populate slider
+  slider.innerHTML = testimonials.map(t => `
+    <div class="testimonial-item" style="flex:0 0 auto;scroll-snap-align:center;padding:16px;border-radius:12px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05);max-width:300px;margin-right:12px;">
+      <p>"${t.feedback}"</p>
+      <h3>- ${t.name}${t.occasion ? ', ' + t.occasion : ''}</h3>
     </div>
   `).join('');
 
-  let index = 0;
-  const cards = container.querySelectorAll('.testimonial-card');
-  if (!cards.length) return;
-
-  function show(i){
-    cards.forEach((c, idx) => c.style.transform = `translateX(${100 * (idx - i)}%)`);
-  }
-  show(index);
-
-  // pause on hover/focus
-  let paused = false;
-  container.addEventListener('mouseenter', ()=> paused = true);
-  container.addEventListener('mouseleave', ()=> paused = false);
+  // Optional: autoplay scroll
+  let scrollIndex = 0;
+  const interval = 4000; // 4 seconds per slide
+  const items = slider.querySelectorAll('.testimonial-item');
+  if (items.length <= 1) return; // no need for slider if 1 or 0 items
 
   setInterval(() => {
-    if (!paused) { index = (index + 1) % cards.length; show(index); }
-  }, 4000);
-}
-window.loadTestimonials = loadTestimonials;
+    scrollIndex++;
+    if (scrollIndex >= items.length) scrollIndex = 0;
+    const target = items[scrollIndex];
+    slider.scrollTo({
+      left: target.offsetLeft - slider.offsetLeft,
+      behavior: 'smooth'
+    });
+  }, interval);
+
+});
