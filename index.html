@@ -1,63 +1,156 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zainab’s Henna - Home</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/bento.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Beauty & Glamour — Hair & Makeup | Book Now</title>
+  <meta name="description" content="Professional hair & makeup services for weddings, parties, photoshoots. Book instantly via WhatsApp or secure deposit via Flutterwave." />
+
+  <!-- Open Graph + Twitter -->
+  <meta property="og:title" content="Beauty & Glamour — Hair & Makeup" />
+  <meta property="og:description" content="Professional hair & makeup services for weddings, parties, photoshoots. Book now." />
+  <meta property="og:image" content="https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
+  <link rel="preconnect" href="https://flutterwave.com" crossorigin />
+  <link rel="preconnect" href="https://wa.me" crossorigin />
+
+  <!-- Styles -->
+  <link rel="preload" href="css/style.css" as="style" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Favicon (replace with your icon) -->
+  <link rel="icon" href="assets/images/favicon.png" />
+
+  <!-- LocalBusiness structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "name": "Beauty & Glamour",
+    "telephone": "+2349012728201",
+    "url": "./index.html",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lagos",
+      "addressCountry": "NG"
+    },
+    "sameAs": [
+      "https://vt.tiktok.com/ZSDjND8xg/",
+      "https://www.instagram.com/reel/DLKr3kIh_7M/?igsh=ZHp0bmM4ZHF5NjJi",
+      "https://wa.me/2349012728201"
+    ]
+  }
+  </script>
+
+  <style>
+    /* Minimal critical CSS inlined for faster first paint (keeps hero readable while external CSS loads) */
+    :root { --brand:#e91e63; --accent:#ff4081; --muted:#666; --bg:#fff; --maxw:1200px; }
+    html,body{height:100%;margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;}
+    .hero{display:grid;place-items:center;padding:40px 20px;text-align:center;background:linear-gradient(180deg,#fff,#fff);border-bottom:1px solid #f0f0f0}
+    .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);color:var(--brand);margin:0 0 10px}
+    .hero p{margin:0 0 18px;color:var(--muted)}
+    .btn{display:inline-block;padding:10px 18px;border-radius:999px;text-decoration:none;background:var(--brand);color:#fff;font-weight:600}
+    @media(min-width:900px){ .hero{padding:70px 20px} }
+  </style>
 </head>
 <body>
-  <div id="navbar"></div>
 
-  <main class="bento-layout">
-    <!-- Hero Section -->
-    <section class="bento-item hero">
-      <h1>🌿 Zainab’s Henna</h1>
-      <p>Bridal • Festivals • Parties • Home Visits</p>
-      <a href="services.html" class="btn-main">📅 Book Now</a>
+  <!-- header injected by main.js (falls back to HTML below if JS disabled) -->
+  <div id="header" role="banner">
+    <noscript>
+      <nav style="padding:12px 20px;background:#fff;border-bottom:1px solid #eee">
+        <a href="index.html" style="text-decoration:none;color:#e91e63;font-weight:700;font-size:18px">💄Beauty & Glamour</a>
+        <span style="margin-left:12px;">(enable JS for full nav)</span>
+      </nav>
+    </noscript>
+  </div>
+
+  <main id="main" role="main">
+    <!-- HERO -->
+    <section class="hero" aria-label="Welcome">
+      <div class="hero-inner" style="max-width:var(--maxw);width:100%;">
+        <h1>Beauty & Glamour</h1>
+        <p>Professional hair & makeup for weddings, parties, photoshoots — mobile & in-salon services.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+          <a class="btn" href="contact.html">Book Now</a>
+          <a class="btn" href="portfolio.html" style="background:var(--accent)">See Portfolio</a>
+        </div>
+      </div>
     </section>
 
-    <!-- Quick Booking -->
-    <section class="bento-item booking">
-      <h2>📅 Easy Booking</h2>
-      <p>Book your henna session in just a click.</p>
-      <a href="services.html" class="btn-secondary">See Services</a>
+    <!-- Bento Services -->
+    <section id="services-bento" class="section" aria-labelledby="services-heading">
+      <h2 id="services-heading">Our Services</h2>
+      <div class="bento-grid" id="services-bento-grid">
+        <!-- Populated from data/services.json (JSON-driven) -->
+      </div>
+      <div style="text-align:center;margin-top:18px;">
+        <a href="services.html" class="btn">View All Services</a>
+      </div>
     </section>
 
-    <!-- Portfolio Highlight -->
-    <section class="bento-item portfolio-preview">
-      <h2>🎨 Portfolio</h2>
-      <img src="https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg" alt="Henna Design">
-      <a href="portfolio.html" class="btn-secondary">View Gallery</a>
+    <!-- Portfolio Preview (small snap) -->
+    <section id="portfolio-preview" class="section" aria-labelledby="portfolio-heading">
+      <h2 id="portfolio-heading">Selected Work</h2>
+      <div class="snap-gallery small" id="portfolio-preview-gallery" aria-hidden="false"></div>
+      <div style="text-align:center;margin-top:12px;">
+        <a href="portfolio.html" class="btn">View Full Portfolio</a>
+      </div>
     </section>
 
-    <!-- Shop Highlight -->
-    <section class="bento-item shop-preview">
-      <h2>🛍️ Shop</h2>
-      <img src="https://i.postimg.cc/9Mc361h2/70ac73741390a5b195f4041c330a08f8.jpg" alt="Henna Cone">
-      <a href="shop.html" class="btn-secondary">Visit Shop</a>
+    <!-- Testimonials Preview -->
+    <section id="testimonials-preview" class="section" aria-labelledby="testimonials-heading">
+      <h2 id="testimonials-heading">Happy Clients</h2>
+      <div class="testimonial-slider" id="testimonial-preview" aria-live="polite"></div>
+      <div style="text-align:center;margin-top:12px;">
+        <a href="testimonials.html" class="btn">Read More</a>
+      </div>
     </section>
 
-    <!-- Testimonials Highlight -->
-    <section class="bento-item testimonials-preview">
-      <h2>💬 What Clients Say</h2>
-      <blockquote>
-        “Her bridal henna made my day unforgettable 💕”
-      </blockquote>
-      <a href="testimonials.html" class="btn-secondary">Read More</a>
-    </section>
+    <!-- WhatsApp leader + Quick pay -->
+    <section id="cta-area" class="section" aria-label="Contact and Payment">
+      <div class="cta-grid">
+        <div>
+          <h3>Chat & Book on WhatsApp</h3>
+          <p>Tap to start a direct conversation and confirm your slot.</p>
+          <a class="btn whatsapp-cta" href="https://wa.me/2349012728201?text=Hi%20I%27d%20like%20to%20book%20a%20service!" target="_blank" rel="noopener noreferrer">📲 Chat on WhatsApp</a>
+        </div>
 
-    <!-- Contact Highlight -->
-    <section class="bento-item contact-preview">
-      <h2>📞 Contact</h2>
-      <p>Fastest reply on WhatsApp 💬</p>
-      <a href="contact.html" class="btn-secondary">Get in Touch</a>
+        <div>
+          <h3>Secure a slot — pay deposit</h3>
+          <p>Make a quick deposit to confirm. Powered by Flutterwave.</p>
+          <div class="payment-buttons">
+            <a class="pay-btn" href="https://flutterwave.com/pay/7dvrq9hz4idf" target="_blank" rel="noopener noreferrer">💳 Deposit 1</a>
+            <a class="pay-btn" href="https://flutterwave.com/pay/2nmx3028pua2" target="_blank" rel="noopener noreferrer">💳 Deposit 2</a>
+            <a class="pay-btn" href="https://flutterwave.com/pay/zuaa436p8eed" target="_blank" rel="noopener noreferrer">💳 Deposit 3</a>
+            <a class="pay-btn" href="https://flutterwave.com/pay/w5fweb1sndw4" target="_blank" rel="noopener noreferrer">💳 Deposit 4</a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <div id="footer"></div>
+  <!-- footer injected -->
+  <div id="footer" role="contentinfo"></div>
 
-  <script src="assets/js/main.js"></script>
+  <!-- Floating WhatsApp leader (always visible) -->
+  <a class="whatsapp-float" href="https://wa.me/2349012728201?text=Hi%20I%27m%20interested%20in%20booking%20a%20service!" target="_blank" aria-label="Chat on WhatsApp">📲</a>
+
+  <!-- Scripts: main.js must come first (injects header/footer) -->
+  <script defer src="js/main.js"></script>
+  <script defer src="js/dataLoader.js"></script>
+  <script defer src="js/gallery.js"></script>
+  <script defer src="js/testimonials.js"></script>
+  <script defer src="js/booking.js"></script>
+
+  <noscript>
+    <style>
+      .whatsapp-float{display:none}
+    </style>
+    <div style="padding:12px;background:#fffbf7;color:#333;text-align:center;border-top:1px solid #eee">This site works best with JavaScript enabled — please turn it on for full experience.</div>
+  </noscript>
 </body>
 </html>
