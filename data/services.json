@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Bridal Makeup",
+    "price": "From $100",
+    "description": "Full bridal package with trial session.",
+    "image": "https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg"
+  },
+  {
+    "name": "Party Makeup",
+    "price": "From $50",
+    "description": "Glamorous looks for parties & events.",
+    "image": "https://i.postimg.cc/9Mc361h2/70ac73741390a5b195f4041c330a08f8.jpg"
+  },
+  {
+    "name": "Hair Styling",
+    "price": "From $30",
+    "description": "Professional styling for any occasion.",
+    "image": "https://i.postimg.cc/0NYRXFhZ/8b23b79acae6a837740afa89a2e7f133.jpg"
+  },
+  {
+    "name": "Editorial Looks",
+    "price": "From $80",
+    "description": "Looks for photoshoots and magazine editorials.",
+    "image": "https://i.postimg.cc/qRQf4nJ3/b50ab6b8975e993b66cf829a0b823477.jpg"
+  }
+]
