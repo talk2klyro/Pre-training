@@ -1,14 +1,26 @@
 [
-  { "title": "Bridal Elegance", "url": "https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg", "alt": "Bridal Elegance Hair & Makeup" },
-  { "title": "Modern Glam", "url": "https://i.postimg.cc/9Mc361h2/70ac73741390a5b195f4041c330a08f8.jpg", "alt": "Modern Glam Hair & Makeup" },
-  { "title": "Natural Glow", "url": "https://i.postimg.cc/0NYRXFhZ/8b23b79acae6a837740afa89a2e7f133.jpg", "alt": "Natural Glow Hair & Makeup" },
-  { "title": "Chic Hair Styling", "url": "https://i.postimg.cc/kG5044Gh/950508e11529ea88ba9c5e0ac0691fe9.jpg", "alt": "Chic Hair Styling" },
-  { "title": "Party Look", "url": "https://i.postimg.cc/qRQf4nJ3/b50ab6b8975e993b66cf829a0b823477.jpg", "alt": "Party Look Hair & Makeup" },
-  { "title": "Editorial Vibes", "url": "https://i.postimg.cc/8zrVMjH2/db4413c39544c9bf5b01eaa30b5a79c9.jpg", "alt": "Editorial Vibes Hair & Makeup" },
-  { "title": "Classic Beauty", "url": "https://i.postimg.cc/hPYBX998/eda68a383db6b16f2ee1fde7bfd29e77.jpg", "alt": "Classic Beauty Hair & Makeup" },
-  { "title": "Bridal Charm", "url": "https://i.postimg.cc/Z53F07Vz/02c374d27f3a2526272b95cdda27b729.jpg", "alt": "Bridal Charm Hair & Makeup" },
-  { "title": "Elegant Glam", "url": "https://i.postimg.cc/3R3ZsXj5/066b6b8dc65f811f76211ed88e4604a1.jpg", "alt": "Elegant Glam Hair & Makeup" },
-  { "title": "Summer Glow", "url": "https://i.postimg.cc/kG4v47hT/06f6be83b777049f335447e07b645dfa.jpg", "alt": "Summer Glow Hair & Makeup" },
-  { "title": "Wedding Perfection", "url": "https://i.postimg.cc/Zq8cs7dx/1ab7c144a3500cabc88f37089095d2ad.jpg", "alt": "Wedding Perfection Hair & Makeup" },
-  { "title": "Photo Shoot Glam", "url": "https://i.postimg.cc/Kv15hvTz/32a88a1f3b813e9e6f71b6e98337c899.jpg", "alt": "Photo Shoot Glam Hair & Makeup" }
+  {
+    "title": "Elegant Bridal",
+    "image": "https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg"
+  },
+  {
+    "title": "Party Glam",
+    "image": "https://i.postimg.cc/9Mc361h2/70ac73741390a5b195f4041c330a08f8.jpg"
+  },
+  {
+    "title": "Casual Hairstyle",
+    "image": "https://i.postimg.cc/0NYRXFhZ/8b23b79acae6a837740afa89a2e7f133.jpg"
+  },
+  {
+    "title": "Photoshoot Look",
+    "image": "https://i.postimg.cc/kG5044Gh/950508e11529ea88ba9c5e0ac0691fe9.jpg"
+  },
+  {
+    "title": "Evening Glam",
+    "image": "https://i.postimg.cc/qRQf4nJ3/b50ab6b8975e993b66cf829a0b823477.jpg"
+  },
+  {
+    "title": "Red Carpet Style",
+    "image": "https://i.postimg.cc/8zrVMjH2/db4413c39544c9bf5b01eaa30b5a79c9.jpg"
+  }
 ]
