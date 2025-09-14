@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Testimonials — Beauty & Glamour</title>
+  <meta name="description" content="Read client feedback for Beauty & Glamour. See what our happy customers say about our professional hair & makeup services." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Beauty & Glamour — Testimonials" />
+  <meta property="og:description" content="Read client feedback for Beauty & Glamour. Book now." />
+  <meta property="og:image" content="https://i.postimg.cc/MG2JDq3v/22fdcacbbc1cc20bbd721df384db4e32.jpg" />
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
+  <link rel="preconnect" href="https://flutterwave.com" crossorigin />
+  <link rel="preconnect" href="https://wa.me" crossorigin />
+
+  <!-- Styles -->
+  <link rel="preload" href="css/style.css" as="style" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <link rel="icon" href="assets/images/favicon.png" />
+
+  <style>
+    :root { --brand:#e91e63; --accent:#ff4081; --muted:#666; --bg:#fff; --maxw:1200px; }
+    html,body{height:100%;margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;}
+    h1,h2,h3{color:var(--brand);}
+    .section{padding:50px 20px;}
+    .testimonial-slider{display:flex;overflow-x:auto;gap:12px;scroll-snap-type:x mandatory;padding-bottom:12px;}
+    .testimonial-slider div{flex:0 0 auto;scroll-snap-align:center;border-radius:12px;padding:16px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05);max-width:300px;}
+    .testimonial-slider p{margin:0 0 8px;color:var(--muted);}
+    .testimonial-slider h3{margin:0;font-size:1rem;color:var(--brand);}
+    .btn{display:inline-block;padding:10px 18px;border-radius:999px;text-decoration:none;background:var(--brand);color:#fff;font-weight:600;margin-top:12px;}
+    .btn.accent{background:var(--accent);}
+    .cta-grid{display:grid;grid-template-columns:1fr;gap:20px;max-width:900px;margin:50px auto 0 auto;}
+    @media(min-width:768px){.cta-grid{grid-template-columns:1fr 1fr;}}
+    .whatsapp-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:14px;border-radius:50%;font-size:24px;text-decoration:none;z-index:999;box-shadow:0 4px 8px rgba(0,0,0,0.2);}
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header" role="banner"></div>
+  <noscript>
+    <nav style="padding:12px 20px;background:#fff;border-bottom:1px solid #eee">
+      <a href="./index.html" style="text-decoration:none;color:#e91e63;font-weight:700;font-size:18px">💄Beauty & Glamour</a>
+      <span style="margin-left:12px;">(enable JS for full nav)</span>
+    </nav>
+  </noscript>
+
+  <main id="main" role="main">
+
+    <!-- Hero -->
+    <section class="section hero" aria-label="Testimonials">
+      <div style="max-width:var(--maxw);margin:0 auto;text-align:center;">
+        <h1>Happy Clients</h1>
+        <p>See what our clients say about our professional hair & makeup services.</p>
+      </div>
+    </section>
+
+    <!-- Testimonial Slider -->
+    <section class="section" aria-labelledby="testimonials-heading">
+      <h2 id="testimonials-heading">Client Feedback</h2>
+      <div class="testimonial-slider" id="testimonial-slider">
+        <!-- Populated via js/testimonials.js from data/testimonials.json -->
+      </div>
+    </section>
+
+    <!-- WhatsApp + Flutterwave CTA -->
+    <section class="section" aria-label="Contact and Payment">
+      <div class="cta-grid">
+        <div>
+          <h3>Chat & Book on WhatsApp</h3>
+          <p>Tap to start a direct conversation and confirm your slot.</p>
+          <a class="btn whatsapp-cta" href="https://wa.me/2349012728201?text=Hi%20I'd%20like%20to%20book%20a%20service!" target="_blank" rel="noopener noreferrer">📲 Chat on WhatsApp</a>
+        </div>
+        <div>
+          <h3>Secure a slot — pay deposit</h3>
+          <p>Make a quick deposit to confirm. Powered by Flutterwave.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn" href="https://flutterwave.com/pay/7dvrq9hz4idf" target="_blank" rel="noopener noreferrer">💳 Deposit 1</a>
+            <a class="btn" href="https://flutterwave.com/pay/2nmx3028pua2" target="_blank" rel="noopener noreferrer">💳 Deposit 2</a>
+            <a class="btn" href="https://flutterwave.com/pay/zuaa436p8eed" target="_blank" rel="noopener noreferrer">💳 Deposit 3</a>
+            <a class="btn" href="https://flutterwave.com/pay/w5fweb1sndw4" target="_blank" rel="noopener noreferrer">💳 Deposit 4</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <div id="footer" role="contentinfo"></div>
+
+  <!-- Floating WhatsApp -->
+  <a class="whatsapp-float" href="https://wa.me/2349012728201?text=Hi%20I'm%20interested%20in%20booking%20a%20service!" target="_blank" aria-label="Chat on WhatsApp">📲</a>
+
+  <!-- Scripts -->
+  <script defer src="js/main.js"></script>
+  <script defer src="js/testimonials.js"></script>
+
+  <noscript>
+    <style>.whatsapp-float{display:none}</style>
+    <div style="padding:12px;background:#fffbf7;color:#333;text-align:center;border-top:1px solid #eee">This site works best with JavaScript enabled — please turn it on for full experience.</div>
+  </noscript>
+
+</body>
+</html>
